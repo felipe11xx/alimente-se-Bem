@@ -18,9 +18,6 @@ import android.view.View;
 
 
 import com.example.web.alimentesebem.R;
-import com.example.web.alimentesebem.view.TabCalendario;
-import com.example.web.alimentesebem.view.TabForum;
-import com.example.web.alimentesebem.view.TabNoticia;
 
 public class MainActivity extends AppCompatActivity {
 
