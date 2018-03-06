@@ -5,6 +5,6 @@ package com.example.web.alimentesebem.view.adapter;
  */
 
 public interface AdapterInterface {
-    public void setEditar(boolean value);
-    public void notificaAtualizacao();
+    void setEditar(boolean value);
+    void notificaAtualizacao();
 }

@@ -16,7 +16,7 @@ public class TabCalendario extends android.support.v4.app.Fragment {
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
         View rootView = inflater.inflate(R.layout.tab_calendario, container, false);
-        TextView textView = (TextView) rootView.findViewById(R.id.tvCalend);
+        TextView textView = rootView.findViewById(R.id.tvCalend);
         //textView.setText(getString(R.string.section_format, getArguments().getInt(ARG_SECTION_NUMBER)));
         return rootView;
     }

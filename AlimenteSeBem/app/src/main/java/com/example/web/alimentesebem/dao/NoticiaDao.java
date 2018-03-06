@@ -71,7 +71,7 @@ public class NoticiaDao extends SQLiteOpenHelper {
 
         //pendura registro com mesmo nome
         Cursor cursor = db.rawQuery("select * from noticia " +
-                        "where lower(titulo)=?",
+                        "where lower(titulo)=h?",
                 new String[]{
                         obj.getTitulo().toLowerCase()
                 }
