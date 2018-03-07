@@ -70,8 +70,6 @@ public class NoticiaDaoOld {
             }
         }
 
-//        Pokemon pokeLocalizado = lista.get(lista.indexOf(new Pokemon(id)));
-
         return obj;
     }
 

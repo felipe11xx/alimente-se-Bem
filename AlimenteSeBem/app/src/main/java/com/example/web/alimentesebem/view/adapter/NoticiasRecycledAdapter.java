@@ -26,7 +26,7 @@ import java.util.List;
 
 public class NoticiasRecycledAdapter
         extends RecyclerView.Adapter<NoticiasRecycledAdapter.NoticiaViewHolder>
-        implements AdapterInterface{
+        implements AdapterInterface {
 
     //private NoticiaDao dao = NoticiaDao.instace;
     private NoticiaDaoOld dao = NoticiaDaoOld.instance;
