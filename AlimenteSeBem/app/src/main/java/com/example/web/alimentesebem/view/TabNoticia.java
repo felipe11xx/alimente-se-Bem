@@ -21,7 +21,7 @@ import java.util.List;
  */
 
 public class TabNoticia extends android.support.v4.app.Fragment implements OnItemClickListener {
-;
+
    private RecyclerView recyclerView;
 
    private NoticiaDaoOld daoOld = NoticiaDaoOld.instance;
@@ -39,7 +39,8 @@ public class TabNoticia extends android.support.v4.app.Fragment implements OnIte
         recyclerView.setAdapter(new NoticiaAdpter(noticias,this.getContext()));
 
         //Cria a tela com a lista das noticias recentes
-        RecyclerView.LayoutManager layout = new LinearLayoutManager(this.getContext(), LinearLayoutManager.VERTICAL, false);
+        RecyclerView.LayoutManager layout = new LinearLayoutManager(this.getContext(), LinearLayoutManager.VERTICAL,
+                false);
 
         recyclerView.setLayoutManager(layout);
         return rootView;

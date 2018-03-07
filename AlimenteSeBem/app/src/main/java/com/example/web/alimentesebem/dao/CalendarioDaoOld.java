@@ -16,7 +16,7 @@ public class CalendarioDaoOld {
 
     public static CalendarioDaoOld instance = new CalendarioDaoOld();
     private List<CalendarioBean> lista;
-    private Long id;
+    private long id;
 
     public CalendarioDaoOld () {
         lista = new ArrayList<>();

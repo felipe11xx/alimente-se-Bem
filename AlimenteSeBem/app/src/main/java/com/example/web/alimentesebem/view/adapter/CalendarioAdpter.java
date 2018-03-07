@@ -1,10 +1,9 @@
 package com.example.web.alimentesebem.view.adapter;
 
+import android.content.Context;
 import android.graphics.Bitmap;
 import android.graphics.Color;
-import android.support.v4.app.Fragment;
 import android.support.v7.widget.RecyclerView;
-import android.util.SparseLongArray;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -12,69 +11,43 @@ import android.widget.ImageView;
 import android.widget.TextView;
 
 import com.example.web.alimentesebem.R;
-import com.example.web.alimentesebem.dao.CalendarioDaoOld;
 import com.example.web.alimentesebem.model.CalendarioBean;
-import com.example.web.alimentesebem.model.NoticiaBean;
 import com.example.web.alimentesebem.utils.Utilitarios;
 
 import java.text.DateFormat;
 import java.util.List;
 
 /**
- * Created by WEB on 06/03/2018.
+ * Created by Felipe on 07/03/2018.
  */
 
-public class CalendarioRecycleAdpter extends RecyclerView.Adapter<CalendarioRecycleAdpter.CalendarioViewHolder>
-                                    implements AdapterInterface{
+public class CalendarioAdpter extends RecyclerView.Adapter{
+    private List<CalendarioBean> lista;
+    private Context context;
 
-    private CalendarioDaoOld dao = CalendarioDaoOld.instance;
-    private SparseLongArray mapa;
-    private Fragment fragment;
-    private OnItemClickListener listener;
-
-    public CalendarioRecycleAdpter(Fragment fragment, OnItemClickListener listener){
-        this.fragment = fragment;
-        this.listener = listener;
-        criarMapa();
-    }
-
-    private void criarMapa(){
-        mapa = new SparseLongArray();
-        List<Long> ids = dao.listarIds();
-
-        for (int linha = 0; linha < ids.size(); linha++){
-            mapa.put(linha, ids.get(linha));
-        }
+    public CalendarioAdpter(List<CalendarioBean> lista, Context context) {
+        this.lista = lista;
+        this.context = context;
     }
 
     @Override
-    public void notificaAtualizacao() {
-        criarMapa();
-        notificaAtualizacao();
+    public RecyclerView.ViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {
+        View view = LayoutInflater.from(context).inflate(R.layout.detalhe_evento,parent, false);
+        CalendarioViewHolder holder = new CalendarioViewHolder(view, this);
+
+        return null;
+    }
+
+    @Override
+    public void onBindViewHolder(RecyclerView.ViewHolder holder, int position) {
+        CalendarioViewHolder viewHolder = (CalendarioViewHolder) holder;
+        CalendarioBean eventos = lista.get(position);
+        ((CalendarioViewHolder) holder).setView(eventos);
     }
 
     @Override
     public int getItemCount() {
-        return mapa.size();
-    }
-
-    @Override
-    public CalendarioViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {
-        LayoutInflater scv = LayoutInflater.from(parent.getContext());
-        View layout = scv.inflate(R.layout.detalhe_evento, parent, false);
-        return new CalendarioViewHolder(layout);
-    }
-
-    @Override
-    public void onBindViewHolder(CalendarioViewHolder holder, int position) {
-        CalendarioBean obj = dao.getEvento();
-        holder.setView(obj);
-    }
-
-
-    @Override
-    public void setEditar(boolean value) {
-
+        return lista.size();
     }
 
     public class CalendarioViewHolder extends RecyclerView.ViewHolder implements View.OnClickListener {
@@ -85,12 +58,14 @@ public class CalendarioRecycleAdpter extends RecyclerView.Adapter<CalendarioRecy
         private ImageView img_capa_evento;
         private ImageView img_data;
         private View view;
+        private CalendarioAdpter adpter;
         public DateFormat dtFmt =  DateFormat.getDateInstance(DateFormat.LONG);
 
 
-        public CalendarioViewHolder(View itemView) {
+        public CalendarioViewHolder(View itemView, final CalendarioAdpter adpter) {
             super(itemView);
             this.view = itemView;
+            this.adpter = adpter;
             tv_titulo_evento = itemView.findViewById(R.id.tv_titulo_evento);
             tv_local = itemView.findViewById(R.id.tv_local);
             tv_horario = itemView.findViewById(R.id.tv_horario);
