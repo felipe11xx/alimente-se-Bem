@@ -23,7 +23,6 @@ public class NoticiaAdpter extends RecyclerView.Adapter {
    private List<NoticiaBean> noticias;
    private Context context;
 
-
    public NoticiaAdpter(List<NoticiaBean> noticias, Context context){
        this.noticias = noticias;
        this.context = context;

@@ -32,17 +32,21 @@ public class CalendarioAdpter extends RecyclerView.Adapter{
 
     @Override
     public RecyclerView.ViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {
-        View view = LayoutInflater.from(context).inflate(R.layout.detalhe_evento,parent, false);
+        View view = LayoutInflater.from(context)
+                .inflate(R.layout.detalhe_evento,parent, false);
+
         CalendarioViewHolder holder = new CalendarioViewHolder(view, this);
 
-        return null;
+        return holder;
     }
 
     @Override
     public void onBindViewHolder(RecyclerView.ViewHolder holder, int position) {
         CalendarioViewHolder viewHolder = (CalendarioViewHolder) holder;
+
         CalendarioBean eventos = lista.get(position);
-        ((CalendarioViewHolder) holder).setView(eventos);
+
+        ((CalendarioViewHolder) holder).preencher(eventos);
     }
 
     @Override
@@ -52,20 +56,23 @@ public class CalendarioAdpter extends RecyclerView.Adapter{
 
     public class CalendarioViewHolder extends RecyclerView.ViewHolder implements View.OnClickListener {
 
-        private TextView tv_titulo_evento;
-        private TextView tv_local;
-        private TextView tv_horario;
-        private ImageView img_capa_evento;
-        private ImageView img_data;
-        private View view;
-        private CalendarioAdpter adpter;
+        public final TextView tv_titulo_evento;
+        public final TextView tv_local;
+        public final TextView tv_horario;
+        public final ImageView img_capa_evento;
+        public final ImageView img_data;
+        public final CalendarioAdpter adpter;
+        private Long eventoId;
         public DateFormat dtFmt =  DateFormat.getDateInstance(DateFormat.LONG);
 
 
-        public CalendarioViewHolder(View itemView, final CalendarioAdpter adpter) {
-            super(itemView);
-            this.view = itemView;
+        public CalendarioViewHolder(final View view, final CalendarioAdpter adpter) {
+            super(view);
+
             this.adpter = adpter;
+
+            view.setOnClickListener(this);
+
             tv_titulo_evento = itemView.findViewById(R.id.tv_titulo_evento);
             tv_local = itemView.findViewById(R.id.tv_local);
             tv_horario = itemView.findViewById(R.id.tv_horario);
@@ -74,12 +81,12 @@ public class CalendarioAdpter extends RecyclerView.Adapter{
         }
 
 
-        public void setView(final CalendarioBean obj) {
+        public void preencher(CalendarioBean obj){
+            eventoId = obj.getId();
             tv_titulo_evento.setText(obj.getTitulo());
             tv_local.setText(obj.getLocal());
             tv_horario.setText(obj.getHorario());
-
-            byte[] foto = obj.getCapa();
+          /*  byte[] foto = obj.getCapa();
             if (foto != null) {
                 // Transforma o vetor de bytes de base64 para bitmap
                 Bitmap bitmap = Utilitarios.bitmapFromBase64(foto);
@@ -89,15 +96,17 @@ public class CalendarioAdpter extends RecyclerView.Adapter{
 
                 // atribui à foto
                 img_capa_evento.setBackgroundColor(Color.TRANSPARENT);
-            }
-
-    /*        // Obtem a 1ª letra do nome da pessoa e converte para Maiuscula
+            }*/
+            // Obtem a 1ª letra do nome da pessoa e converte para Maiuscula
             String dia = dtFmt.format(obj.getData()).substring(0,2);
             String mes = dtFmt.format(obj.getData()).substring(6,9);
+            String diaMes = dia + " " + mes;
             // Cria um bitmap contendo a letra
+            // Bitmap bitmap = Utilitarios.quadradoBitmapAndText(
             Bitmap bitmap = Utilitarios.circularBitmapAndText(
-                    Color.parseColor("#936A4D"), 200, 200,dia );
-            img_data.setImageBitmap(bitmap);*/
+                    Color.parseColor("#ef8219"), 150, 150,diaMes );
+            img_data.setImageBitmap(bitmap);
+
         }
         @Override
         public void onClick(View v) {

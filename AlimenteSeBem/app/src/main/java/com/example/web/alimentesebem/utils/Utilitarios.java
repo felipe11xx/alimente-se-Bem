@@ -27,6 +27,7 @@ import android.os.Environment;
 import android.os.ParcelFileDescriptor;
 import android.provider.MediaStore;
 import android.support.v4.app.NotificationCompatSideChannelService;
+import android.text.TextPaint;
 import android.util.Base64;
 import android.util.Log;
 import android.view.Surface;
@@ -303,8 +304,8 @@ public class Utilitarios {
         canvas.drawCircle(width / 2, height / 2, width / 2, paint);
         paint.setColor(Color.WHITE);
         paint.setTextAlign(Paint.Align.CENTER);
-        paint.setTextSize(100);
-        canvas.drawText(txt, width / 2, height / 2 + 30, paint);
+        paint.setTextSize(45);
+        canvas.drawText(txt, width / 2, height / 2 + 15, paint);
         return output;
     }
 

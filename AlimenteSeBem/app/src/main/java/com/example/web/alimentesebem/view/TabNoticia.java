@@ -23,7 +23,6 @@ import java.util.List;
 public class TabNoticia extends android.support.v4.app.Fragment implements OnItemClickListener {
 
    private RecyclerView recyclerView;
-
    private NoticiaDaoOld daoOld = NoticiaDaoOld.instance;
 
     @Override

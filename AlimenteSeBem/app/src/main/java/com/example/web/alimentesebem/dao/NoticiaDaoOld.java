@@ -40,8 +40,7 @@ public class NoticiaDaoOld {
         lista.add(new NoticiaBean(id++, "Beneficios da carne branca", "Lorem ipsum dolor sit amet, consectetur adipi" +
                 "scing elit, sed do eiusmod tempor incididunt ut labore",
                 new GregorianCalendar(2017, Calendar.NOVEMBER, 10).getTime()));
-        lista.add(new NoticiaBean(id++, "Como a alimentação afeta Você", "Lorem ipsum dolor sit amet, consectetur adipi" +
-                "scing elit, sed do eiusmod tempor incididunt ut labore",
+        lista.add(new NoticiaBean(id++, "Como a alimentação afeta Você", "Lorem ",
                 new GregorianCalendar(2017, Calendar.NOVEMBER, 10).getTime()));
     }
 

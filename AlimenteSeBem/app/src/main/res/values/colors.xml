@@ -3,4 +3,5 @@
     <color name="colorPrimary">#a987ba</color>
     <color name="colorPrimaryDark">#72388c</color>
     <color name="colorAccent">#acca1e</color>
+    <color name="laranjaPadrao">#ef8219</color>
 </resources>
