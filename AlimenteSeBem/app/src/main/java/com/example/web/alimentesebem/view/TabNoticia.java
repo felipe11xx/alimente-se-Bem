@@ -12,15 +12,13 @@ import com.example.web.alimentesebem.dao.NoticiaDaoOld;
 import com.example.web.alimentesebem.model.NoticiaBean;
 import com.example.web.alimentesebem.view.adapter.NoticiaAdpter;
 
-import com.example.web.alimentesebem.view.adapter.OnItemClickListener;
-
 import java.util.List;
 
 /**
  * Created by WEB on 02/03/2018.
  */
 
-public class TabNoticia extends android.support.v4.app.Fragment implements OnItemClickListener {
+public class TabNoticia extends android.support.v4.app.Fragment  {
 
    private RecyclerView recyclerView;
    private NoticiaDaoOld daoOld = NoticiaDaoOld.instance;
@@ -45,8 +43,4 @@ public class TabNoticia extends android.support.v4.app.Fragment implements OnIte
         return rootView;
     }
 
-    @Override
-    public void onItemClick() {
-
-    }
 }

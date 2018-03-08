@@ -70,7 +70,7 @@ public class NoticiaAdpter extends RecyclerView.Adapter {
             tvTitulo = view.findViewById(R.id.tv_titulo_noticia);
             tvConteudo = view.findViewById(R.id.tv_noticia);
             tvPublicacao = view.findViewById(R.id.tv_data_noticia);
-            imgCapa = view.findViewById(R.id.img_capa);
+            imgCapa = view.findViewById(R.id.img_capa_noticia);
 
         }
 

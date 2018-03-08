@@ -9,6 +9,7 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ImageView;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import com.example.web.alimentesebem.R;
 import com.example.web.alimentesebem.model.CalendarioBean;
@@ -28,6 +29,7 @@ public class CalendarioAdpter extends RecyclerView.Adapter{
     public CalendarioAdpter(List<CalendarioBean> lista, Context context) {
         this.lista = lista;
         this.context = context;
+
     }
 
     @Override
@@ -47,6 +49,7 @@ public class CalendarioAdpter extends RecyclerView.Adapter{
         CalendarioBean eventos = lista.get(position);
 
         ((CalendarioViewHolder) holder).preencher(eventos);
+
     }
 
     @Override
@@ -54,7 +57,7 @@ public class CalendarioAdpter extends RecyclerView.Adapter{
         return lista.size();
     }
 
-    public class CalendarioViewHolder extends RecyclerView.ViewHolder implements View.OnClickListener {
+    public class CalendarioViewHolder extends RecyclerView.ViewHolder implements  View.OnClickListener {
 
         public final TextView tv_titulo_evento;
         public final TextView tv_local;
@@ -110,7 +113,10 @@ public class CalendarioAdpter extends RecyclerView.Adapter{
         }
         @Override
         public void onClick(View v) {
+            Toast.makeText(v.getContext(),"Titulo:" + eventoId.toString(), Toast.LENGTH_SHORT).show();
 
         }
+
+
     }
 }

@@ -57,7 +57,7 @@ public class CalendarioDaoOld {
         return ids;
     }
 
-    public CalendarioBean getEvento(){
+    public CalendarioBean getEvento(final Long id){
         CalendarioBean obj = null;
         for (CalendarioBean evento: lista) {
             if(evento.getId() == id){
