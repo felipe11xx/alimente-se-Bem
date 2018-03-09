@@ -1,8 +1,8 @@
 <resources>
-    <string name="app_name">AlimenteSeBem</string>
-    <string name="noticias">Noticias</string>
+    <string name="app_name">Alimente-Se Bem</string>
+    <string name="noticias">Notícias</string>
     <string name="calendario">Calendário</string>
-    <string name="forum">Forúm</string>
-    <string name="action_settings">Settings</string>
-    <string name="section_format">Hello World from section: %1$d</string>
+    <string name="forum">Fórum</string>
+    <string name="login">Login</string>
+    <string name="senha">Senha</string>
 </resources>

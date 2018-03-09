@@ -1,10 +1,14 @@
 package com.example.web.alimentesebem.view;
 
+import android.annotation.SuppressLint;
 import android.content.Intent;
 import android.os.Bundle;
 import android.os.PersistableBundle;
 import android.support.annotation.Nullable;
 import android.support.v7.app.AppCompatActivity;
+import android.util.Log;
+import android.view.Menu;
+import android.view.MenuItem;
 import android.widget.ImageButton;
 import android.widget.ImageView;
 import android.widget.TextView;
@@ -32,9 +36,15 @@ public class EventoActivity extends AppCompatActivity{
     private Long id;
     private Intent i;
 
+    @SuppressLint("SetTextI18n")
     @Override
-    public void onCreate(@Nullable Bundle savedInstanceState, @Nullable PersistableBundle persistentState) {
-        super.onCreate(savedInstanceState, persistentState);
+    public void onCreate(@Nullable Bundle savedInstanceState) {
+        super.onCreate(savedInstanceState);
+        setContentView(R.layout.activity_evento);
+
+        getSupportActionBar().setDisplayHomeAsUpEnabled(true); //Mostrar o botão
+        getSupportActionBar().setHomeButtonEnabled(true);      //Ativar o botão
+        //getSupportActionBar().setTitle("Seu titulo aqui");
 
         imgCapaEvento = findViewById(R.id.img_capa_evento);
         imgData = findViewById(R.id.img_data_evento);
@@ -46,23 +56,37 @@ public class EventoActivity extends AppCompatActivity{
 
         obj = new CalendarioBean();
 
-        i = new Intent(this, TabCalendario.class);
-        Bundle bundle = getIntent().getExtras();
-        if(bundle != null){
-            id = bundle.getLong("EventoId");
-            obj = daoOld.getEvento(id);
-            tvtitulo.setText(obj.getTitulo().toString());
-            tvDecricao.setText(obj.getDescricao().toString());
-            tvLocalHorario.setText(obj.getLocal().toString() + "  " +
-                                    obj.getHorario().toString());
+        i  = getIntent();
 
-            if(obj.getCapa() != null){
-                imgCapaEvento.setImageBitmap(Utilitarios.bitmapFromBase64(obj.getCapa()));
+        if(i != null) {
+            Bundle bundle = getIntent().getExtras();
+            if(bundle != null) {
+                id = bundle.getLong("EventoId");
+                obj = daoOld.getEvento(id);
+                if(obj !=null) {
+                    tvtitulo.setText(obj.getTitulo());
+                    tvDecricao.setText(obj.getDescricao());
+                    tvLocalHorario.setText(obj.getLocal() + "  " +
+                            obj.getHorario());
+
+                    if (obj.getCapa() != null) {
+                        imgCapaEvento.setImageBitmap(Utilitarios.bitmapFromBase64(obj.getCapa()));
+                    }
+                }
             }
-
         }
+    }
 
 
-        setContentView(R.layout.activity_evento);
+    @Override
+    public boolean onOptionsItemSelected(MenuItem item) {
+        switch (item.getItemId()){
+            case android.R.id.home:
+
+                finish();
+                break;
+            default: break;
+        }
+        return true;
     }
 }

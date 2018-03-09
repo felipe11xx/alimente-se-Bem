@@ -25,10 +25,12 @@ import java.util.List;
 public class CalendarioAdpter extends RecyclerView.Adapter{
     private List<CalendarioBean> lista;
     private Context context;
+    private OnItemClick onItemClick;
 
-    public CalendarioAdpter(List<CalendarioBean> lista, Context context) {
+    public CalendarioAdpter(List<CalendarioBean> lista, Context context, OnItemClick click) {
         this.lista = lista;
         this.context = context;
+        this.onItemClick = click;
 
     }
 
@@ -67,6 +69,8 @@ public class CalendarioAdpter extends RecyclerView.Adapter{
         public final CalendarioAdpter adpter;
         private Long eventoId;
         public DateFormat dtFmt =  DateFormat.getDateInstance(DateFormat.LONG);
+        //private Intent i = new Intent(Main.getContext(), EventoActivity.class);
+
 
 
         public CalendarioViewHolder(final View view, final CalendarioAdpter adpter) {
@@ -113,8 +117,9 @@ public class CalendarioAdpter extends RecyclerView.Adapter{
         }
         @Override
         public void onClick(View v) {
-            Toast.makeText(v.getContext(),"Titulo:" + eventoId.toString(), Toast.LENGTH_SHORT).show();
-
+            //Toast.makeText(v.getContext(),"Titulo:" + eventoId.toString(), Toast.LENGTH_SHORT).show();
+            //i.putExtra("EventoId", eventoId);
+            onItemClick.onclick(eventoId);
         }
 
 
