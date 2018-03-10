@@ -1,5 +1,6 @@
 package com.example.web.alimentesebem.view;
 
+import android.graphics.Typeface;
 import android.support.design.widget.TabLayout;
 import android.support.design.widget.FloatingActionButton;
 import android.support.design.widget.Snackbar;
@@ -15,6 +16,7 @@ import android.os.Bundle;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
+import android.widget.TextView;
 
 
 import com.example.web.alimentesebem.R;
@@ -30,7 +32,7 @@ public class MainActivity extends AppCompatActivity {
      * {@link android.support.v4.app.FragmentStatePagerAdapter}.
      */
     private SectionsPagerAdapter mSectionsPagerAdapter;
-
+    private TextView toolbarTittle;
     /**
      * The {@link ViewPager} that will host the section contents.
      */
@@ -40,9 +42,12 @@ public class MainActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
-
+        toolbarTittle = findViewById(R.id.toolbar_title);
+        Typeface typeFont = Typeface.createFromAsset(getAssets(),"fonts/tahu.ttf");
+        toolbarTittle.setTypeface(typeFont);
         Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
+
         // Create the adapter that will return a fragment for each of the three
         // primary sections of the activity.
         mSectionsPagerAdapter = new SectionsPagerAdapter(getSupportFragmentManager());

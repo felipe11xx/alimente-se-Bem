@@ -5,4 +5,9 @@
     <string name="forum">Fórum</string>
     <string name="login">Login</string>
     <string name="senha">Senha</string>
+    <string name="config">configurações</string>
+    <string name="logar">Logar</string>
+    <string name="cadastrar">Cadastrar-se</string>
+    <string name="facebook">Continuar com Facebook</string>
+    <string name="google">Continuar com Google</string>
 </resources>

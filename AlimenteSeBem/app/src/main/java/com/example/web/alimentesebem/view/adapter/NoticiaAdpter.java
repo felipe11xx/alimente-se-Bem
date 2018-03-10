@@ -1,6 +1,7 @@
 package com.example.web.alimentesebem.view.adapter;
 
 import android.content.Context;
+import android.graphics.Typeface;
 import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -71,6 +72,12 @@ public class NoticiaAdpter extends RecyclerView.Adapter {
             tvConteudo = view.findViewById(R.id.tv_noticia);
             tvPublicacao = view.findViewById(R.id.tv_data_noticia);
             imgCapa = view.findViewById(R.id.img_capa_noticia);
+
+            Typeface typeFont = Typeface.createFromAsset(context.getAssets(),"fonts/Gotham_Condensed_Bold.otf");
+            tvTitulo.setTypeface(typeFont);
+            typeFont = Typeface.createFromAsset(context.getAssets(), "fonts/Gotham_Light.otf");
+            tvConteudo.setTypeface(typeFont);
+            tvPublicacao.setTypeface(typeFont);
 
         }
 

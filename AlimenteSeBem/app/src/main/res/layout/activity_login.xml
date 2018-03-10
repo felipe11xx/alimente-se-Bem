@@ -13,13 +13,14 @@
         android:layout_height="wrap_content"
         android:layout_marginEnd="8dp"
         android:layout_marginStart="8dp"
+        android:layout_marginTop="64dp"
         android:ems="10"
+        android:hint="@string/login"
         android:inputType="textPersonName"
-        android:text="@string/login"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.0"
         app:layout_constraintStart_toStartOf="parent"
-        tools:layout_editor_absoluteY="101dp" />
+        app:layout_constraintTop_toBottomOf="@+id/tv_logo_alimente_se" />
 
     <EditText
         android:id="@+id/ed_senha"
@@ -29,53 +30,68 @@
         android:layout_marginStart="8dp"
         android:layout_marginTop="8dp"
         android:ems="10"
+        android:hint="@string/senha"
         android:inputType="textPersonName"
-        android:text="@string/senha"
+        android:password="true"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/ed_login" />
 
-    <ImageButton
+    <Button
         android:id="@+id/btn_logar"
+        style="@style/Widget.AppCompat.Button"
         android:layout_width="0dp"
         android:layout_height="54dp"
         android:layout_marginStart="8dp"
         android:layout_marginTop="8dp"
+        android:backgroundTint="@color/azulPadrão"
+        android:elevation="@dimen/cardview_default_elevation"
+        android:onClick="onClick"
+        android:text="@string/logar"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/ed_senha"
         app:srcCompat="@mipmap/ic_launcher" />
 
-    <ImageButton
+    <Button
         android:id="@+id/btn_cadastrar"
         android:layout_width="wrap_content"
         android:layout_height="0dp"
         android:layout_marginTop="8dp"
+        android:backgroundTint="@color/azulPadrão"
+        android:elevation="@dimen/cardview_default_elevation"
+        android:text="@string/cadastrar"
         app:layout_constraintBottom_toBottomOf="@+id/btn_logar"
         app:layout_constraintEnd_toEndOf="@+id/ed_senha"
         app:layout_constraintTop_toBottomOf="@+id/ed_senha"
         app:layout_constraintVertical_bias="1.0"
         app:srcCompat="@mipmap/ic_launcher" />
 
-    <ImageButton
+    <Button
         android:id="@+id/btn_logar_face"
         android:layout_width="0dp"
-        android:layout_height="50"
+        android:layout_height="50dp"
         android:layout_marginEnd="8dp"
         android:layout_marginStart="8dp"
         android:layout_marginTop="32dp"
+        android:backgroundTint="@color/azulFacebook"
+        android:text="@string/facebook"
+        android:textColor="@android:color/white"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.0"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/btn_logar"
         app:srcCompat="@mipmap/ic_launcher" />
 
-    <ImageButton
+    <Button
         android:id="@+id/btn_logar_gmail"
         android:layout_width="0dp"
-        android:layout_height="50"
+        android:layout_height="50dp"
         android:layout_marginEnd="8dp"
         android:layout_marginStart="8dp"
         android:layout_marginTop="8dp"
+        android:backgroundTint="@color/vermelhoGoolgle"
+        android:text="@string/google"
+        android:textColor="@android:color/white"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/btn_logar_face"
@@ -83,9 +99,9 @@
 
     <ImageView
         android:id="@+id/img_logo"
-        android:layout_width="0dp"
+        android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginBottom="8dp"
+        android:layout_marginBottom="4dp"
         android:layout_marginEnd="8dp"
         android:layout_marginStart="8dp"
         android:layout_marginTop="8dp"
@@ -93,5 +109,21 @@
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/btn_logar_gmail"
-        app:srcCompat="@mipmap/ic_launcher" />
+        app:srcCompat="@mipmap/sesi_logo" />
+
+    <TextView
+        android:id="@+id/tv_logo_alimente_se"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginEnd="8dp"
+        android:layout_marginStart="8dp"
+        android:layout_marginTop="32dp"
+        android:fontFamily="serif"
+        android:text="Alimente-se Bem"
+        android:textSize="30sp"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.501"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent" />
+
 </android.support.constraint.ConstraintLayout>

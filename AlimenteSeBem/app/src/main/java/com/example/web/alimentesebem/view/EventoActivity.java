@@ -2,12 +2,10 @@ package com.example.web.alimentesebem.view;
 
 import android.annotation.SuppressLint;
 import android.content.Intent;
+import android.graphics.Typeface;
 import android.os.Bundle;
-import android.os.PersistableBundle;
 import android.support.annotation.Nullable;
 import android.support.v7.app.AppCompatActivity;
-import android.util.Log;
-import android.view.Menu;
 import android.view.MenuItem;
 import android.widget.ImageButton;
 import android.widget.ImageView;
@@ -36,6 +34,9 @@ public class EventoActivity extends AppCompatActivity{
     private Long id;
     private Intent i;
 
+
+
+
     @SuppressLint("SetTextI18n")
     @Override
     public void onCreate(@Nullable Bundle savedInstanceState) {
@@ -53,6 +54,12 @@ public class EventoActivity extends AppCompatActivity{
         tvDecricao = findViewById(R.id.tv_descricao_evento);
         tvLocalHorario = findViewById(R.id.tv_local_horario);
         tvtitulo = findViewById(R.id.tv_evento_titulo);
+        Typeface typeFont = Typeface.createFromAsset(getAssets(),"fonts/Gotham_Light.otf");
+
+        tvDecricao.setTypeface(typeFont);
+        tvLocalHorario.setTypeface(typeFont);
+        typeFont = Typeface.createFromAsset(getAssets(), "fonts/Gotham_Condensed_Bold.otf");
+        tvtitulo.setTypeface(typeFont);
 
         obj = new CalendarioBean();
 

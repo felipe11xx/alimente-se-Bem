@@ -3,13 +3,13 @@ package com.example.web.alimentesebem.view.adapter;
 import android.content.Context;
 import android.graphics.Bitmap;
 import android.graphics.Color;
+import android.graphics.Typeface;
 import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ImageView;
 import android.widget.TextView;
-import android.widget.Toast;
 
 import com.example.web.alimentesebem.R;
 import com.example.web.alimentesebem.model.CalendarioBean;
@@ -85,6 +85,14 @@ public class CalendarioAdpter extends RecyclerView.Adapter{
             tv_horario = itemView.findViewById(R.id.tv_horario);
             img_capa_evento = itemView.findViewById(R.id.img_capa_evento);
             img_data = itemView.findViewById(R.id.img_data);
+
+            Typeface typeFont = Typeface.createFromAsset(context.getAssets(),"fonts/Gotham_Light.otf");
+            tv_local.setTypeface(typeFont);
+            tv_horario.setTypeface(typeFont);
+
+            typeFont = Typeface.createFromAsset(context.getAssets(),"fonts/Gotham_Condensed_Bold.otf");
+            tv_titulo_evento.setTypeface(typeFont);
+
         }
 
 
