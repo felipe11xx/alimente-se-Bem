@@ -61,15 +61,6 @@ public class MainActivity extends AppCompatActivity {
         mViewPager.addOnPageChangeListener(new TabLayout.TabLayoutOnPageChangeListener(tabLayout));
         tabLayout.addOnTabSelectedListener(new TabLayout.ViewPagerOnTabSelectedListener(mViewPager));
 
-        FloatingActionButton fab = (FloatingActionButton) findViewById(R.id.fab);
-        fab.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                Snackbar.make(view, "Replace with your own action", Snackbar.LENGTH_LONG)
-                        .setAction("Action", null).show();
-            }
-        });
-
     }
 
 
@@ -88,7 +79,8 @@ public class MainActivity extends AppCompatActivity {
         int id = item.getItemId();
 
         //noinspection SimplifiableIfStatement
-        if (id == R.id.action_settings) {
+        if (id == R.id.ic_logoff) {
+            finish();
             return true;
         }
 
@@ -116,11 +108,14 @@ public class MainActivity extends AppCompatActivity {
                     TabNoticia tabNoticia = new TabNoticia();
                     return tabNoticia;
                 case 1:
-                    TabCalendario tabCalendario = new TabCalendario();
-                    return  tabCalendario;
+                    TabAgenda tabAgenda = new TabAgenda();
+                    return tabAgenda;
                 case 2:
                     TabForum tabForum = new TabForum();
                     return tabForum;
+                case 3:
+                    TabVideos tabVideos = new TabVideos();
+                    return tabVideos;
 
                 default:
                     return null;
@@ -129,8 +124,8 @@ public class MainActivity extends AppCompatActivity {
 
         @Override
         public int getCount() {
-            // Show 3 total pages.
-            return 3;
+            // Show 4 total pages.
+            return 4;
         }
 
 
@@ -144,6 +139,8 @@ public class MainActivity extends AppCompatActivity {
                     return "Calendario";
                 case 2:
                     return "Forúm";
+                case 3:
+                    return "Vídeos";
             }
 
             return null;

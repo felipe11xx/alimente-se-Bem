@@ -52,29 +52,39 @@ public class LoginActivity extends AppCompatActivity implements View.OnClickList
     @Override
     public void onClick(View v) {
         int idView = v.getId();
+        switch (idView){
+            case R.id.btn_logar:
+                String login = edLogin.getText().toString();
+                String senha = edSenha.getText().toString();
 
-        if(idView == R.id.btn_logar){
-
-            String login = edLogin.getText().toString();
-            String senha = edSenha.getText().toString();
-
-           if(!login.isEmpty() && !senha.isEmpty()){
-               i = new Intent(this, MainActivity.class);
-               finish();
-               startActivity(i);
-           }else{
-               String msg;
+                if(!login.isEmpty() && !senha.isEmpty()){
+                    i = new Intent(this, MainActivity.class);
+                    finish();
+                    startActivity(i);
+                }else{
+                    String msg;
 
 
-               if(login.isEmpty()){
-                   msg = "Preencha o campo de Login !";
-               }else{
-                   msg = "Insira a sua Senha !";
-               }
+                    if(login.isEmpty()){
+                        msg = "Preencha o campo de Login !";
+                    }else{
+                        msg = "Insira a sua Senha !";
+                    }
 
-               Toast.makeText(this, msg, Toast.LENGTH_LONG).show();
-           }
+                    Toast.makeText(this, msg, Toast.LENGTH_LONG).show();
+                }
+
+                break;
+            case R.id.btn_cadastrar:
+                i = new Intent(this, CadastroActivity.class);
+                startActivity(i);
+                break;
 
         }
+
+
+
+
+
     }
 }

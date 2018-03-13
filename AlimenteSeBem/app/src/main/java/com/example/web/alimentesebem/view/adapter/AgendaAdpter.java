@@ -22,12 +22,12 @@ import java.util.List;
  * Created by Felipe on 07/03/2018.
  */
 
-public class CalendarioAdpter extends RecyclerView.Adapter{
+public class AgendaAdpter extends RecyclerView.Adapter{
     private List<CalendarioBean> lista;
     private Context context;
     private OnItemClick onItemClick;
 
-    public CalendarioAdpter(List<CalendarioBean> lista, Context context, OnItemClick click) {
+    public AgendaAdpter(List<CalendarioBean> lista, Context context, OnItemClick click) {
         this.lista = lista;
         this.context = context;
         this.onItemClick = click;
@@ -66,14 +66,14 @@ public class CalendarioAdpter extends RecyclerView.Adapter{
         public final TextView tv_horario;
         public final ImageView img_capa_evento;
         public final ImageView img_data;
-        public final CalendarioAdpter adpter;
+        public final AgendaAdpter adpter;
         private Long eventoId;
         public DateFormat dtFmt =  DateFormat.getDateInstance(DateFormat.LONG);
         //private Intent i = new Intent(Main.getContext(), EventoActivity.class);
 
 
 
-        public CalendarioViewHolder(final View view, final CalendarioAdpter adpter) {
+        public CalendarioViewHolder(final View view, final AgendaAdpter adpter) {
             super(view);
 
             this.adpter = adpter;

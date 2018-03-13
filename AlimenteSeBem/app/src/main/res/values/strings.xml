@@ -1,13 +1,24 @@
 <resources>
     <string name="app_name">Alimente-Se Bem</string>
     <string name="noticias">Notícias</string>
-    <string name="calendario">Calendário</string>
+    <string name="agenda">Agenda</string>
     <string name="forum">Fórum</string>
     <string name="login">Login</string>
     <string name="senha">Senha</string>
     <string name="config">configurações</string>
     <string name="logar">Logar</string>
-    <string name="cadastrar">Cadastrar-se</string>
+    <string name="cadastrar">Cadastra-se</string>
     <string name="facebook">Continuar com Facebook</string>
     <string name="google">Continuar com Google</string>
+    <string name="nome">Nome</string>
+    <string name="email">Email</string>
+    <string name="cpf">CPF</string>
+    <string name="telfone">Telefone</string>
+    <string name="confirmaSenha">Confirma Senha</string>
+    <string name="feminino">Feminino</string>
+    <string name="masculino">Masculino</string>
+    <string name="sexo">Sexo</string>
+    <string name="videos">Vídeos</string>
+    <string name="logoff">logoff</string>
+
 </resources>

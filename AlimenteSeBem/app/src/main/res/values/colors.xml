@@ -1,12 +1,14 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
-    <color name="colorPrimary">#a987ba</color>
+  <!--  <color name="colorPrimary">#a987ba</color>-->
+    <color name="colorPrimary">#72388c</color>
     <color name="colorPrimaryDark">#72388c</color>
     <color name="colorAccent">#acca1e</color>
     <color name="laranjaPadrao">#ef8219</color>
     <color name="cianoPadrao">#04aa9f</color>
     <color name="salmaoPadrão">#e84a53</color>
     <color name="azulPadrão">#009de2</color>
+    <color name="lilasPadrão">#a987ba</color>
     <color name="azulFacebook">#4267b1</color>
-    <color name="vermelhoGoolgle">#de4a32</color>
+    <color name="vermelhoGoolgle">#f3521f</color>
 </resources>

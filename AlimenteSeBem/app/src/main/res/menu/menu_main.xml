@@ -3,8 +3,9 @@
     xmlns:tools="http://schemas.android.com/tools"
     tools:context="com.example.web.alimentesebem.view.view.MainActivity">
     <item
-        android:id="@+id/action_settings"
+        android:id="@+id/ic_logoff"
+        android:icon="@drawable/ic_exit_to_app_white_24dp"
         android:orderInCategory="100"
-        android:title="@string/config"
-        app:showAsAction="never" />
+        android:title="@string/logoff"
+        app:showAsAction="always|withText" />
 </menu>
