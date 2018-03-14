@@ -20,5 +20,19 @@
     <string name="sexo">Sexo</string>
     <string name="videos">Vídeos</string>
     <string name="logoff">logoff</string>
+    <string name="title_activity_login2">Sign in</string>
+
+    <!-- Strings related to login -->
+    <string name="prompt_email">Email</string>
+    <string name="prompt_password">Senha</string>
+    <string name="action_sign_in">Logar ou cadastrar</string>
+    <string name="action_sign_in_short">logar</string>
+    <string name="error_invalid_email">Email inválido</string>
+    <string name="error_incorrect_password">Senha incorreta</string>
+    <string name="error_password_required">Preencha sua senha</string>
+    <string name="error_email_required">Preencha seu email</string>
+    <string name="permission_rationale">"Contacts permissions are needed for providing email
+        completions."
+    </string>
 
 </resources>

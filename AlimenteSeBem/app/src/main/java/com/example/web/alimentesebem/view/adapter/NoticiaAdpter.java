@@ -23,10 +23,12 @@ public class NoticiaAdpter extends RecyclerView.Adapter {
 
    private List<NoticiaBean> noticias;
    private Context context;
+   private OnItemClick onItemClick;
 
-   public NoticiaAdpter(List<NoticiaBean> noticias, Context context){
+   public NoticiaAdpter(List<NoticiaBean> noticias, Context context, OnItemClick click){
        this.noticias = noticias;
        this.context = context;
+       this.onItemClick = click;
    }
     @Override
     public RecyclerView.ViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {
@@ -93,7 +95,7 @@ public class NoticiaAdpter extends RecyclerView.Adapter {
 
         @Override
         public void onClick(View v) {
-
+            onItemClick.onclick(noticiaId);
 
         }
 

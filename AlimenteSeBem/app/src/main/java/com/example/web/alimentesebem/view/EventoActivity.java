@@ -34,9 +34,6 @@ public class EventoActivity extends AppCompatActivity{
     private Long id;
     private Intent i;
 
-
-
-
     @SuppressLint("SetTextI18n")
     @Override
     public void onCreate(@Nullable Bundle savedInstanceState) {
@@ -45,7 +42,6 @@ public class EventoActivity extends AppCompatActivity{
 
         getSupportActionBar().setDisplayHomeAsUpEnabled(true); //Mostrar o botão
         getSupportActionBar().setHomeButtonEnabled(true);      //Ativar o botão
-        //getSupportActionBar().setTitle("Seu titulo aqui");
 
         imgCapaEvento = findViewById(R.id.img_capa_evento);
         imgData = findViewById(R.id.img_data_evento);

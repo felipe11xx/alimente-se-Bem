@@ -4,8 +4,16 @@
     xmlns:app="http://schemas.android.com/apk/res-auto"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:background="@color/colorPrimary">
-
+    android:background="@color/colorPrimary"
+    >
+    <!-- Login progress -->
+    <ProgressBar
+        android:id="@+id/login_progress"
+        style="?android:attr/progressBarStyleLarge"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginBottom="8dp"
+        android:visibility="gone" />
     <android.support.design.widget.TextInputLayout
         android:id="@+id/layoutLogin"
         android:layout_width="match_parent"
@@ -18,11 +26,14 @@
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/tv_logo_alimente_se">
 
-        <EditText
-            android:id="@+id/ed_login"
+        <AutoCompleteTextView
+            android:id="@+id/ed_email"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:hint="@string/login" />
+            android:hint="@string/email"
+            android:inputType="textEmailAddress"
+            android:maxLines="1"
+            android:singleLine="true"/>
     </android.support.design.widget.TextInputLayout>
 
     <android.support.design.widget.TextInputLayout
@@ -40,9 +51,13 @@
             android:id="@+id/ed_senha"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:hint="senha"
+            android:imeActionId="6"
+            android:hint="@string/senha"
+            android:imeActionLabel="@string/senha"
+            android:imeOptions="actionUnspecified"
             android:inputType="textPassword"
-           />
+            android:maxLines="1"
+            android:singleLine="true" />
     </android.support.design.widget.TextInputLayout>
 
 
@@ -54,8 +69,7 @@
         android:layout_marginStart="64dp"
         android:layout_marginTop="24dp"
         android:backgroundTint="@color/lilasPadrão"
-        android:elevation="@dimen/cardview_default_elevation"
-        android:onClick="onClick"
+        android:elevation="10dp"
         android:text="@string/logar"
         app:layout_constraintStart_toStartOf="@+id/layoutEmail"
         app:layout_constraintTop_toBottomOf="@+id/layoutEmail"
@@ -68,8 +82,7 @@
         android:layout_marginEnd="64dp"
         android:layout_marginTop="24dp"
         android:backgroundTint="@color/lilasPadrão"
-        android:elevation="@dimen/cardview_default_elevation"
-        android:onClick="onClick"
+        android:elevation="10dp"
         android:text="@string/cadastrar"
         app:layout_constraintBottom_toBottomOf="@+id/btn_logar"
         app:layout_constraintEnd_toEndOf="@+id/layoutEmail"
