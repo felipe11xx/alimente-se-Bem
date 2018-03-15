@@ -2,19 +2,28 @@ package com.example.web.alimentesebem.view;
 
 import android.annotation.SuppressLint;
 import android.content.Intent;
+import android.graphics.Bitmap;
+import android.graphics.Color;
 import android.graphics.Typeface;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.support.v7.app.AppCompatActivity;
+import android.support.v7.widget.GridLayoutManager;
+import android.support.v7.widget.LinearLayoutManager;
+import android.support.v7.widget.RecyclerView;
+import android.support.v7.widget.StaggeredGridLayoutManager;
 import android.view.MenuItem;
 import android.widget.ImageButton;
 import android.widget.ImageView;
 import android.widget.TextView;
-
 import com.example.web.alimentesebem.R;
-import com.example.web.alimentesebem.dao.CalendarioDaoOld;
-import com.example.web.alimentesebem.model.CalendarioBean;
+import com.example.web.alimentesebem.dao.AgendaDaoOld;
+import com.example.web.alimentesebem.model.AgendaBean;
 import com.example.web.alimentesebem.utils.Utilitarios;
+import com.example.web.alimentesebem.view.adapter.TagAdapter;
+import java.text.DateFormat;
+import java.util.ArrayList;
+import java.util.List;
 
 /**
  * Created by WEB on 07/03/2018.
@@ -29,16 +38,19 @@ public class EventoActivity extends AppCompatActivity{
     private TextView tvLocalHorario;
     private TextView tvDecricao;
     private TextView tvtitulo;
-    private CalendarioBean obj;
-    private CalendarioDaoOld daoOld = CalendarioDaoOld.instance;
+    private AgendaBean obj;
+    private AgendaDaoOld daoOld = AgendaDaoOld.instance;
     private Long id;
-    private Intent i;
+    private Intent intent;
+    private DateFormat dtFmt = DateFormat.getDateInstance(DateFormat.LONG);
+    private List<String> tags;
+    private RecyclerView recyclerView;
 
     @SuppressLint("SetTextI18n")
     @Override
     public void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_agenda);
+        setContentView(R.layout.activity_evento);
 
         getSupportActionBar().setDisplayHomeAsUpEnabled(true); //Mostrar o botão
         getSupportActionBar().setHomeButtonEnabled(true);      //Ativar o botão
@@ -50,18 +62,48 @@ public class EventoActivity extends AppCompatActivity{
         tvDecricao = findViewById(R.id.tv_descricao_evento);
         tvLocalHorario = findViewById(R.id.tv_local_horario);
         tvtitulo = findViewById(R.id.tv_evento_titulo);
+        //Muda a fonte de alguns textView
         Typeface typeFont = Typeface.createFromAsset(getAssets(),"fonts/Gotham_Light.otf");
-
         tvDecricao.setTypeface(typeFont);
         tvLocalHorario.setTypeface(typeFont);
         typeFont = Typeface.createFromAsset(getAssets(), "fonts/Gotham_Condensed_Bold.otf");
         tvtitulo.setTypeface(typeFont);
 
-        obj = new CalendarioBean();
+        obj = new AgendaBean();
 
-        i  = getIntent();
+        tags = new ArrayList<>();
+        tags.add("bacon");
+        tags.add("Churrasco");
+        tags.add("frango");
+        tags.add("fit");
+        tags.add("bacon");
+        tags.add("Churrasco");
+        tags.add("frango");
+        tags.add("fit");
+        tags.add("bacon");
+        tags.add("Churrasco");
+        tags.add("frango");
+        tags.add("fit");
+        tags.add("bacon");
+        tags.add("Churrasco");
+        tags.add("frango");
+        tags.add("fit");
+        recyclerView = findViewById(R.id.rv_tag);
+        recyclerView.setAdapter(new TagAdapter(tags,this));
 
-        if(i != null) {
+/*        RecyclerView.LayoutManager layout = new LinearLayoutManager(this,
+                LinearLayoutManager.HORIZONTAL, false);
+
+         recyclerView.setLayoutManager(layout);*/
+
+       // RecyclerView.LayoutManager layoutManager = new GridLayoutManager(this, 1);
+        recyclerView.setLayoutManager(new StaggeredGridLayoutManager(3, StaggeredGridLayoutManager.HORIZONTAL));
+
+       // recyclerView.setLayoutManager(layoutManager);
+
+        intent  = getIntent();
+        //usa o ID no Bundle para criar a tela
+        if(intent != null) {
             Bundle bundle = getIntent().getExtras();
             if(bundle != null) {
                 id = bundle.getLong("EventoId");
@@ -75,15 +117,24 @@ public class EventoActivity extends AppCompatActivity{
                     if (obj.getCapa() != null) {
                         imgCapaEvento.setImageBitmap(Utilitarios.bitmapFromBase64(obj.getCapa()));
                     }
+                    // Obtem a 1ª letra do nome da pessoa e converte para Maiuscula
+                    String dia = dtFmt.format(obj.getData()).substring(0,2);
+                    String mes = dtFmt.format(obj.getData()).substring(6,9);
+                    String diaMes = dia + " " + mes;
+                    // Cria um bitmap contendo a letra
+                    // Bitmap bitmap = Utilitarios.quadradoBitmapAndText(
+                    Bitmap bitmap = Utilitarios.circularBitmapAndText(
+                            Color.parseColor("#ef8219"), 150, 150,diaMes, 45 );
+                    imgData.setImageBitmap(bitmap);
                 }
             }
         }
     }
 
-
     @Override
     public boolean onOptionsItemSelected(MenuItem item) {
         switch (item.getItemId()){
+            //fecha a activity ao clicar na setinha do actionBar
             case android.R.id.home:
 
                 finish();

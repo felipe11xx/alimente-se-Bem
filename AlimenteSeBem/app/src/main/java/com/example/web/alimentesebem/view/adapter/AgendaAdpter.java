@@ -12,7 +12,7 @@ import android.widget.ImageView;
 import android.widget.TextView;
 
 import com.example.web.alimentesebem.R;
-import com.example.web.alimentesebem.model.CalendarioBean;
+import com.example.web.alimentesebem.model.AgendaBean;
 import com.example.web.alimentesebem.utils.Utilitarios;
 
 import java.text.DateFormat;
@@ -23,11 +23,11 @@ import java.util.List;
  */
 
 public class AgendaAdpter extends RecyclerView.Adapter{
-    private List<CalendarioBean> lista;
+    private List<AgendaBean> lista;
     private Context context;
     private OnItemClick onItemClick;
 
-    public AgendaAdpter(List<CalendarioBean> lista, Context context, OnItemClick click) {
+    public AgendaAdpter(List<AgendaBean> lista, Context context, OnItemClick click) {
         this.lista = lista;
         this.context = context;
         this.onItemClick = click;
@@ -37,7 +37,7 @@ public class AgendaAdpter extends RecyclerView.Adapter{
     @Override
     public RecyclerView.ViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {
         View view = LayoutInflater.from(context)
-                .inflate(R.layout.detalhe_evento,parent, false);
+                .inflate(R.layout.detalhe_agenda,parent, false);
 
         CalendarioViewHolder holder = new CalendarioViewHolder(view, this);
 
@@ -48,7 +48,7 @@ public class AgendaAdpter extends RecyclerView.Adapter{
     public void onBindViewHolder(RecyclerView.ViewHolder holder, int position) {
         CalendarioViewHolder viewHolder = (CalendarioViewHolder) holder;
 
-        CalendarioBean eventos = lista.get(position);
+        AgendaBean eventos = lista.get(position);
 
         ((CalendarioViewHolder) holder).preencher(eventos);
 
@@ -61,11 +61,11 @@ public class AgendaAdpter extends RecyclerView.Adapter{
 
     public class CalendarioViewHolder extends RecyclerView.ViewHolder implements  View.OnClickListener {
 
-        public final TextView tv_titulo_evento;
-        public final TextView tv_local;
-        public final TextView tv_horario;
-        public final ImageView img_capa_evento;
-        public final ImageView img_data;
+        public final TextView tvTituloEvento;
+        public final TextView tvLocal;
+        public final TextView tvHorario;
+        public final ImageView imgCapaEvento;
+        public final ImageView imgData;
         public final AgendaAdpter adpter;
         private Long eventoId;
         public DateFormat dtFmt =  DateFormat.getDateInstance(DateFormat.LONG);
@@ -80,27 +80,27 @@ public class AgendaAdpter extends RecyclerView.Adapter{
 
             view.setOnClickListener(this);
 
-            tv_titulo_evento = itemView.findViewById(R.id.tv_titulo_evento);
-            tv_local = itemView.findViewById(R.id.tv_local);
-            tv_horario = itemView.findViewById(R.id.tv_horario);
-            img_capa_evento = itemView.findViewById(R.id.img_capa_evento);
-            img_data = itemView.findViewById(R.id.img_data);
+            tvTituloEvento = itemView.findViewById(R.id.tv_titulo_evento);
+            tvLocal = itemView.findViewById(R.id.tv_local);
+            tvHorario = itemView.findViewById(R.id.tv_horario);
+            imgCapaEvento = itemView.findViewById(R.id.img_capa_evento);
+            imgData = itemView.findViewById(R.id.img_data);
 
             Typeface typeFont = Typeface.createFromAsset(context.getAssets(),"fonts/Gotham_Light.otf");
-            tv_local.setTypeface(typeFont);
-            tv_horario.setTypeface(typeFont);
+            tvLocal.setTypeface(typeFont);
+            tvHorario.setTypeface(typeFont);
 
             typeFont = Typeface.createFromAsset(context.getAssets(),"fonts/Gotham_Condensed_Bold.otf");
-            tv_titulo_evento.setTypeface(typeFont);
+            tvTituloEvento.setTypeface(typeFont);
 
         }
 
 
-        public void preencher(CalendarioBean obj){
+        public void preencher(AgendaBean obj){
             eventoId = obj.getId();
-            tv_titulo_evento.setText(obj.getTitulo());
-            tv_local.setText(obj.getLocal());
-            tv_horario.setText(obj.getHorario());
+            tvTituloEvento.setText(obj.getTitulo());
+            tvLocal.setText(obj.getLocal());
+            tvHorario.setText(obj.getHorario());
           /*  byte[] foto = obj.getCapa();
             if (foto != null) {
                 // Transforma o vetor de bytes de base64 para bitmap
@@ -119,14 +119,14 @@ public class AgendaAdpter extends RecyclerView.Adapter{
             // Cria um bitmap contendo a letra
             // Bitmap bitmap = Utilitarios.quadradoBitmapAndText(
             Bitmap bitmap = Utilitarios.circularBitmapAndText(
-                    Color.parseColor("#ef8219"), 150, 150,diaMes );
-            img_data.setImageBitmap(bitmap);
+                    Color.parseColor("#ef8219"), 150, 150,diaMes,45 );
+            imgData.setImageBitmap(bitmap);
 
         }
+
         @Override
         public void onClick(View v) {
-            //Toast.makeText(v.getContext(),"Titulo:" + eventoId.toString(), Toast.LENGTH_SHORT).show();
-            //i.putExtra("EventoId", eventoId);
+            //Pega o id do eventon clincado do cardView
             onItemClick.onclick(eventoId);
         }
 

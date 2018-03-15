@@ -291,7 +291,7 @@ public class Utilitarios {
     /*
      * Cria um Bitmat com um contorno Circular
      */
-    public static Bitmap circularBitmapAndText(int cor, int width, int height, String txt) {
+    public static Bitmap circularBitmapAndText(int cor, int width, int height, String txt, int textSize) {
         Bitmap output = Bitmap.createBitmap(width, height, Bitmap.Config.ARGB_8888);
         Canvas canvas = new Canvas(output);
 
@@ -304,7 +304,7 @@ public class Utilitarios {
         canvas.drawCircle(width / 2, height / 2, width / 2, paint);
         paint.setColor(Color.WHITE);
         paint.setTextAlign(Paint.Align.CENTER);
-        paint.setTextSize(45);
+        paint.setTextSize(textSize);
         canvas.drawText(txt, width / 2, height / 2 + 15, paint);
         return output;
     }

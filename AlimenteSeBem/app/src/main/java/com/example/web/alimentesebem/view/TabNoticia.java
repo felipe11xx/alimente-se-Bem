@@ -43,6 +43,7 @@ public class TabNoticia extends android.support.v4.app.Fragment implements OnIte
                 false);
 
         recyclerView.setLayoutManager(layout);
+
         return rootView;
     }
 

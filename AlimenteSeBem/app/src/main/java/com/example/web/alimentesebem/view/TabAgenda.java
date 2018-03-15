@@ -9,8 +9,8 @@ import android.view.View;
 import android.view.ViewGroup;
 
 import com.example.web.alimentesebem.R;
-import com.example.web.alimentesebem.dao.CalendarioDaoOld;
-import com.example.web.alimentesebem.model.CalendarioBean;
+import com.example.web.alimentesebem.dao.AgendaDaoOld;
+import com.example.web.alimentesebem.model.AgendaBean;
 import com.example.web.alimentesebem.view.adapter.AgendaAdpter;
 import com.example.web.alimentesebem.view.adapter.OnItemClick;
 
@@ -23,8 +23,8 @@ import java.util.List;
 public class TabAgenda extends android.support.v4.app.Fragment implements OnItemClick {
 
     private RecyclerView recyclerView;
-    private CalendarioDaoOld daoOld = CalendarioDaoOld.instance;
-    private CalendarioBean obj;
+    private AgendaDaoOld daoOld = AgendaDaoOld.instance;
+    private AgendaBean obj;
     private Intent i;
     private final int CHAMA_EVENTO = 0;
 
@@ -34,7 +34,7 @@ public class TabAgenda extends android.support.v4.app.Fragment implements OnItem
                              Bundle savedInstanceState) {
 
         View rootView = inflater.inflate(R.layout.tab_agenda, container, false);
-        List<CalendarioBean> calendarios = daoOld.getLista();
+        List<AgendaBean> calendarios = daoOld.getLista();
         recyclerView = rootView.findViewById(R.id.rvCalendario);
         recyclerView.setAdapter(new AgendaAdpter(calendarios, this.getContext(),this));
         //Cria a tela com a lista das noticias recentes
