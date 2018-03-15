@@ -24,19 +24,19 @@ public class AgendaDaoOld {
         lista.add(new AgendaBean(id++,"Feira da Fruta","Lorem ipsum dolor sit amet, ad nec tamquam disputando voluptatibus." +
                 " In eam dicam vidisse philosophia, et est alia persecuti. An per sonet cetero. Ne per vitae nusquam vivendum." +
                 " Eius mucius posidonium ad ius, vero maluisset maiestatis vis an. Vim singulis platonem complectitur te, nonumy" +
-                " ponderum an mel.","Sesi Santos",new GregorianCalendar(2017, Calendar.NOVEMBER, 10).getTime(),"10:00"));
+                " ponderum an mel.","Sesi Santos",new GregorianCalendar(2017, Calendar.NOVEMBER, 10).getTime(),"10:00",20.00));
         lista.add(new AgendaBean(id++,"Curso De Nutrição","Lorem ipsum dolor sit amet, ad nec tamquam disputando voluptatibus." +
                 " In eam dicam vidisse philosophia, et est alia persecuti. An per sonet cetero. Ne per vitae nusquam vivendum." +
                 " Eius mucius posidonium ad ius, vero maluisset maiestatis vis an. Vim singulis platonem complectitur te, nonumy" +
-                " ponderum an mel.","Sesi Santo Amaro",new GregorianCalendar(2017, Calendar.DECEMBER, 12).getTime(),"12:00"));
+                " ponderum an mel.","Sesi Santo Amaro",new GregorianCalendar(2017, Calendar.DECEMBER, 12).getTime(),"12:00",0));
         lista.add(new AgendaBean(id++,"Feira da Fruta","Lorem ipsum dolor sit amet, ad nec tamquam disputando voluptatibus." +
                 " In eam dicam vidisse philosophia, et est alia persecuti. An per sonet cetero. Ne per vitae nusquam vivendum." +
                 " Eius mucius posidonium ad ius, vero maluisset maiestatis vis an. Vim singulis platonem complectitur te, nonumy" +
-                " ponderum an mel.","Sesi Santos",new GregorianCalendar(2018, Calendar.JANUARY, 22).getTime(),"14:00"));
+                " ponderum an mel.","Sesi Santos",new GregorianCalendar(2018, Calendar.JANUARY, 22).getTime(),"14:00",10.00));
         lista.add(new AgendaBean(id++,"Feira da Fruta","Lorem ipsum dolor sit amet, ad nec tamquam disputando voluptatibus." +
                 " In eam dicam vidisse philosophia, et est alia persecuti. An per sonet cetero. Ne per vitae nusquam vivendum." +
                 " Eius mucius posidonium ad ius, vero maluisset maiestatis vis an. Vim singulis platonem complectitur te, nonumy" +
-                " ponderum an mel.","Sesi Santos",new GregorianCalendar(2018, Calendar.FEBRUARY, 15).getTime(),"11:30"));
+                " ponderum an mel.","Sesi Santos",new GregorianCalendar(2018, Calendar.FEBRUARY, 15).getTime(),"11:30",15.99));
 
     }
 

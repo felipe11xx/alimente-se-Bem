@@ -16,6 +16,7 @@ public class AgendaBean {
     private String horario;
     private byte[] capa;
     private String[] tags;
+    private double preco;
 
     public AgendaBean(){}
 
@@ -23,13 +24,14 @@ public class AgendaBean {
         this.id = id;
     }
 
-    public AgendaBean(Long id, String titulo, String descricao, String local, Date data, String horario) {
+    public AgendaBean(Long id, String titulo, String descricao, String local, Date data, String horario, double preco) {
         this.id = id;
         this.titulo = titulo;
         this.descricao = descricao;
         this.local = local;
         this.data = data;
         this.horario = horario;
+        this.preco = preco;
 
     }
 
@@ -95,5 +97,13 @@ public class AgendaBean {
 
     public void setTags(String[] tags) {
         this.tags = tags;
+    }
+
+    public double getPreco() {
+        return preco;
+    }
+
+    public void setPreco(double preco) {
+        this.preco = preco;
     }
 }

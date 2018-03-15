@@ -116,7 +116,7 @@ public class AgendaAdpter extends RecyclerView.Adapter{
             String dia = dtFmt.format(obj.getData()).substring(0,2);
             String mes = dtFmt.format(obj.getData()).substring(6,9);
             String diaMes = dia + " " + mes;
-            // Cria um bitmap contendo a letra
+            // Cria um bitmap contendo o dia e Mês
             // Bitmap bitmap = Utilitarios.quadradoBitmapAndText(
             Bitmap bitmap = Utilitarios.circularBitmapAndText(
                     Color.parseColor("#ef8219"), 150, 150,diaMes,45 );

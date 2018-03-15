@@ -31,13 +31,9 @@ import java.util.List;
 
 public class EventoActivity extends AppCompatActivity{
 
-    private ImageView imgCapaEvento;
-    private ImageView imgData;
-    private ImageButton shareFace;
-    private ImageButton shareWhat;
-    private TextView tvLocalHorario;
-    private TextView tvDecricao;
-    private TextView tvtitulo;
+    private ImageView imgCapaEvento,imgData;
+    private ImageButton shareFace,shareWhat;
+    private TextView tvLocalHorario,tvDecricao,tvtitulo,lblPreco,tvPreco;
     private AgendaBean obj;
     private AgendaDaoOld daoOld = AgendaDaoOld.instance;
     private Long id;
@@ -62,44 +58,41 @@ public class EventoActivity extends AppCompatActivity{
         tvDecricao = findViewById(R.id.tv_descricao_evento);
         tvLocalHorario = findViewById(R.id.tv_local_horario);
         tvtitulo = findViewById(R.id.tv_evento_titulo);
+        lblPreco = findViewById(R.id.lbl_preco);
+        tvPreco = findViewById(R.id.tv_preco);
         //Muda a fonte de alguns textView
-        Typeface typeFont = Typeface.createFromAsset(getAssets(),"fonts/Gotham_Light.otf");
+        Typeface typeFont = Typeface.createFromAsset(getAssets(), "fonts/Gotham_Condensed_Bold.otf");
+        tvtitulo.setTypeface(typeFont);
+        lblPreco.setTypeface(typeFont);
+
+        typeFont = Typeface.createFromAsset(getAssets(),"fonts/Gotham_Light.otf");
         tvDecricao.setTypeface(typeFont);
         tvLocalHorario.setTypeface(typeFont);
-        typeFont = Typeface.createFromAsset(getAssets(), "fonts/Gotham_Condensed_Bold.otf");
-        tvtitulo.setTypeface(typeFont);
+        tvPreco.setTypeface(typeFont);
+
 
         obj = new AgendaBean();
 
         tags = new ArrayList<>();
-        tags.add("bacon");
-        tags.add("Churrasco");
-        tags.add("frango");
-        tags.add("fit");
-        tags.add("bacon");
-        tags.add("Churrasco");
-        tags.add("frango");
-        tags.add("fit");
-        tags.add("bacon");
-        tags.add("Churrasco");
-        tags.add("frango");
-        tags.add("fit");
-        tags.add("bacon");
-        tags.add("Churrasco");
-        tags.add("frango");
-        tags.add("fit");
+        tags.add("bacon1");
+        tags.add("Churrasco1");
+        tags.add("frango1");
+        tags.add("fit1");
+        tags.add("bacon2");
+        tags.add("Churrasco2");
+        tags.add("frango2");
+        tags.add("fit2");
+        tags.add("bacon3");
+        tags.add("Churrasco3");
+        tags.add("frango3");
+        tags.add("fit3");
+
         recyclerView = findViewById(R.id.rv_tag);
         recyclerView.setAdapter(new TagAdapter(tags,this));
 
-/*        RecyclerView.LayoutManager layout = new LinearLayoutManager(this,
-                LinearLayoutManager.HORIZONTAL, false);
 
-         recyclerView.setLayoutManager(layout);*/
-
-       // RecyclerView.LayoutManager layoutManager = new GridLayoutManager(this, 1);
         recyclerView.setLayoutManager(new StaggeredGridLayoutManager(3, StaggeredGridLayoutManager.HORIZONTAL));
 
-       // recyclerView.setLayoutManager(layoutManager);
 
         intent  = getIntent();
         //usa o ID no Bundle para criar a tela
@@ -114,6 +107,12 @@ public class EventoActivity extends AppCompatActivity{
                     tvLocalHorario.setText(obj.getLocal() + "  " +
                             obj.getHorario());
 
+                    if(obj.getPreco() == 0){
+                        tvPreco.setText("Gratuito");
+                    }else{
+                        tvPreco.setText("R$: " + String.valueOf(obj.getPreco()));
+                    }
+
                     if (obj.getCapa() != null) {
                         imgCapaEvento.setImageBitmap(Utilitarios.bitmapFromBase64(obj.getCapa()));
                     }
@@ -121,7 +120,7 @@ public class EventoActivity extends AppCompatActivity{
                     String dia = dtFmt.format(obj.getData()).substring(0,2);
                     String mes = dtFmt.format(obj.getData()).substring(6,9);
                     String diaMes = dia + " " + mes;
-                    // Cria um bitmap contendo a letra
+                    // Cria um bitmap contendo Dia e mês
                     // Bitmap bitmap = Utilitarios.quadradoBitmapAndText(
                     Bitmap bitmap = Utilitarios.circularBitmapAndText(
                             Color.parseColor("#ef8219"), 150, 150,diaMes, 45 );
