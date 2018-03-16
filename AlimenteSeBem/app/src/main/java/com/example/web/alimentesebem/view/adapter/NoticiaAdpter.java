@@ -30,6 +30,7 @@ public class NoticiaAdpter extends RecyclerView.Adapter {
        this.context = context;
        this.onItemClick = click;
    }
+
     @Override
     public RecyclerView.ViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {
         View view = LayoutInflater.from(context)
@@ -70,8 +71,8 @@ public class NoticiaAdpter extends RecyclerView.Adapter {
 
             view.setOnClickListener(this);
 
-            tvTitulo = view.findViewById(R.id.tv_titulo_noticia);
-            tvConteudo = view.findViewById(R.id.tv_noticia);
+            tvTitulo = view.findViewById(R.id.tv_titulo_forum);
+            tvConteudo = view.findViewById(R.id.tv_autor);
             tvPublicacao = view.findViewById(R.id.tv_data_noticia);
             imgCapa = view.findViewById(R.id.img_capa_noticia);
 

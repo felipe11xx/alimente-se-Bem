@@ -19,6 +19,7 @@ import java.util.List;
  */
 
 public class ForumAdapter extends RecyclerView.Adapter{
+
     private Context context;
     private List<ForumBean> lista;
     private OnItemClick onItemClick;
@@ -34,9 +35,9 @@ public class ForumAdapter extends RecyclerView.Adapter{
         View view = LayoutInflater.from(context)
                 .inflate(R.layout.detalhe_forum,parent,false);
 
-        ForumViewHolder forumViewHolder = new ForumViewHolder(view,this);
+        ForumViewHolder holder = new ForumViewHolder(view,this);
 
-        return forumViewHolder;
+        return holder;
     }
 
     @Override
@@ -61,7 +62,7 @@ public class ForumAdapter extends RecyclerView.Adapter{
         public DateFormat dtFmt =  DateFormat.getDateInstance(DateFormat.LONG);
         public ForumAdapter adapter;
 
-        public ForumViewHolder(final View view, ForumAdapter adapter) {
+        public ForumViewHolder(final View view, final ForumAdapter adapter) {
             super(view);
             this.adapter = adapter;
 
@@ -84,15 +85,13 @@ public class ForumAdapter extends RecyclerView.Adapter{
             tvTitulo.setText(obj.getTitulo());
             tvAutor.setText(obj.getAutor().getNome());
             tvCategoria.setText(obj.getCategoria().getNome());
-
-            String dataAbertura = dtFmt.format(obj.getDataAbertura());
-            tvDataAbertura.setText(dataAbertura);
+            tvDataAbertura.setText(dtFmt.format(obj.getDataAbertura()));
 
         }
 
         @Override
         public void onClick(View v) {
-
+            onItemClick.onclick(forumId);
         }
     }
 

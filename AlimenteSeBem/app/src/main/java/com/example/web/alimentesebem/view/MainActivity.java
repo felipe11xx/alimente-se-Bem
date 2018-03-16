@@ -138,6 +138,7 @@ public class MainActivity extends AppCompatActivity {
                 case 2:
                     TabForum tabForum = new TabForum();
                     return tabForum;
+
                 case 3:
                     TabVideos tabVideos = new TabVideos();
                     return tabVideos;

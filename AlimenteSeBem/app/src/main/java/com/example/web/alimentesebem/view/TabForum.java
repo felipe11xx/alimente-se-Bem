@@ -37,9 +37,10 @@ public class TabForum extends Fragment implements OnItemClick {
         recyclerView = rootView.findViewById(R.id.rv_forum);
         recyclerView.setAdapter(new ForumAdapter(this.getContext(),foruns,this));
 
-        //Cria a tela com a lista das
-        RecyclerView.LayoutManager layout = new LinearLayoutManager(this.getContext(), LinearLayout.VERTICAL,
-                                            false);
+        //Cria a tela com a lista dos Foruns
+        RecyclerView.LayoutManager layout = new LinearLayoutManager(this.getContext(), LinearLayoutManager.VERTICAL,
+                false);
+
         recyclerView.setLayoutManager(layout);
 
         return rootView;
