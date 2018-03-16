@@ -16,6 +16,7 @@ public class AgendaBean {
     private String horario;
     private byte[] capa;
     private String[] tags;
+    private CategoriaAgendaBean categoria;
     private double preco;
 
     public AgendaBean(){}
@@ -105,5 +106,13 @@ public class AgendaBean {
 
     public void setPreco(double preco) {
         this.preco = preco;
+    }
+
+    public CategoriaAgendaBean getCategoria() {
+        return categoria;
+    }
+
+    public void setCategoria(CategoriaAgendaBean categoria) {
+        this.categoria = categoria;
     }
 }

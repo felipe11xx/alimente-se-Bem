@@ -40,14 +40,12 @@ public class AgendaDaoOld {
 
     }
 
-
     public List<AgendaBean> getLista(){
         return Collections.synchronizedList(lista);
     }
 
 
     public List<Long> listarIds(){
-
 
         List<Long> ids = new ArrayList<>();
         for(AgendaBean obj: lista){

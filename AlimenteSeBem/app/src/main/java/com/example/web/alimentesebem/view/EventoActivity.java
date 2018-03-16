@@ -12,9 +12,12 @@ import android.support.v7.widget.GridLayoutManager;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.support.v7.widget.StaggeredGridLayoutManager;
+import android.view.LayoutInflater;
 import android.view.MenuItem;
+import android.view.View;
 import android.widget.ImageButton;
 import android.widget.ImageView;
+import android.widget.LinearLayout;
 import android.widget.TextView;
 import com.example.web.alimentesebem.R;
 import com.example.web.alimentesebem.dao.AgendaDaoOld;
@@ -89,9 +92,11 @@ public class EventoActivity extends AppCompatActivity{
 
         recyclerView = findViewById(R.id.rv_tag);
         recyclerView.setAdapter(new TagAdapter(tags,this));
-
-
         recyclerView.setLayoutManager(new StaggeredGridLayoutManager(3, StaggeredGridLayoutManager.HORIZONTAL));
+
+//        LinearLayout layoutTag = findViewById(R.id.layoutTag);
+//        layoutTag.setBackgroundColor(getResources().getColor(R.color.laranjaPadrao));
+
 
 
         intent  = getIntent();
@@ -110,7 +115,7 @@ public class EventoActivity extends AppCompatActivity{
                     if(obj.getPreco() == 0){
                         tvPreco.setText("Gratuito");
                     }else{
-                        tvPreco.setText("R$: " + String.valueOf(obj.getPreco()));
+                        tvPreco.setText("R$: " + String.valueOf(String.format("%.2f", obj.getPreco())));
                     }
 
                     if (obj.getCapa() != null) {

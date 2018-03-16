@@ -71,8 +71,6 @@ public class AgendaAdpter extends RecyclerView.Adapter{
         public DateFormat dtFmt =  DateFormat.getDateInstance(DateFormat.LONG);
         //private Intent i = new Intent(Main.getContext(), EventoActivity.class);
 
-
-
         public CalendarioViewHolder(final View view, final AgendaAdpter adpter) {
             super(view);
 
