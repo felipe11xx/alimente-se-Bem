@@ -8,8 +8,6 @@ import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.LinearLayout;
-import android.widget.TextView;
 
 import com.example.web.alimentesebem.R;
 import com.example.web.alimentesebem.dao.ForumDaoOld;
@@ -49,7 +47,7 @@ public class TabForum extends Fragment implements OnItemClick {
     }
 
     @Override
-    public void onclick(Long id) {
+    public void onClick(Long id) {
 
         intent = new Intent(this.getContext(), TopicoActivity.class);
         intent.putExtra("TopicoId", id);

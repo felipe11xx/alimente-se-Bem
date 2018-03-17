@@ -21,9 +21,12 @@
         <meta-data
             android:name="preloaded_fonts"
             android:resource="@array/preloaded_fonts" />
-        <activity android:name=".view.LoginActivity"
+
+        <activity
+            android:name=".view.LoginActivity"
             android:theme="@style/AppTheme.NoActionBar"
-            android:screenOrientation="portrait">
+            android:screenOrientation="portrait"
+            android:windowSoftInputMode="adjustPan">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN"/>
 
@@ -45,23 +48,40 @@
             </intent-filter>
             -->
         </activity>
+
         <activity
             android:name=".view.EventoActivity"
             android:screenOrientation="portrait">
+
             <intent-filter>
                 <category android:name="android.intent.category.DEFAULT" />
             </intent-filter>
         </activity>
+
         <activity
             android:name=".view.CadastroActivity"
-            android:screenOrientation="portrait">
+            android:screenOrientation="portrait"
+            android:windowSoftInputMode="adjustPan">
+
             <intent-filter>
                 <category android:name="android.intent.category.DEFAULT" />
             </intent-filter>
         </activity>
-        <activity android:name=".view.NoticiaActivity"
-                  android:screenOrientation="portrait"
-                 >
+
+        <activity
+            android:name=".view.NoticiaActivity"
+            android:screenOrientation="portrait">
+
+            <intent-filter>
+                <category android:name="android.intent.category.DEFAULT"/>
+            </intent-filter>
+        </activity>
+
+        <activity
+            android:name=".view.TopicoActivity"
+            android:screenOrientation="portrait"
+            android:windowSoftInputMode="adjustPan">
+
             <intent-filter>
                 <category android:name="android.intent.category.DEFAULT"/>
             </intent-filter>

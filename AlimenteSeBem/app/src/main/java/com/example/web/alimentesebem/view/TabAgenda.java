@@ -1,6 +1,7 @@
 package com.example.web.alimentesebem.view;
 import android.content.Intent;
 import android.os.Bundle;
+import android.support.v4.app.Fragment;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 
@@ -20,12 +21,12 @@ import java.util.List;
  * Created by WEB on 02/03/2018.
  */
 
-public class TabAgenda extends android.support.v4.app.Fragment implements OnItemClick {
+public class TabAgenda extends Fragment implements OnItemClick {
 
     private RecyclerView recyclerView;
     private AgendaDaoOld daoOld = AgendaDaoOld.instance;
     private AgendaBean obj;
-    private Intent i;
+    private Intent intent;
     private final int CHAMA_EVENTO = 0;
 
     
@@ -48,9 +49,9 @@ public class TabAgenda extends android.support.v4.app.Fragment implements OnItem
 
 
     @Override
-    public void onclick(Long id) {
-        i = new Intent(this.getContext(), EventoActivity.class);
-        i.putExtra("EventoId",id);
-        startActivity(i);
+    public void onClick(Long id) {
+        intent = new Intent(this.getContext(), EventoActivity.class);
+        intent.putExtra("EventoId",id);
+        startActivity(intent);
     }
 }

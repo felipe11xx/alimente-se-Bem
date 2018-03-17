@@ -6,5 +6,5 @@ package com.example.web.alimentesebem.view.adapter;
 
 public interface OnItemClick {
 
-    void onclick(Long id);
+    void onClick(Long id);
 }

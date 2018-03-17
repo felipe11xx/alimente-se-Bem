@@ -20,10 +20,11 @@ public class ComentarioForumBean {
         this.id = id;
     }
 
-    public ComentarioForumBean(Long id,String comentario, Date data) {
+    public ComentarioForumBean(Long id,String comentario, Date data, UsuarioBean usuario) {
         this.id = id;
         this.comentario = comentario;
         this.data = data;
+        this.usuario = usuario;
     }
 
     public ComentarioForumBean(Long id, String comentario, UsuarioBean usuario, ForumBean topico, Date data) {

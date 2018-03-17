@@ -96,7 +96,7 @@ public class NoticiaAdpter extends RecyclerView.Adapter {
 
         @Override
         public void onClick(View v) {
-            onItemClick.onclick(noticiaId);
+            onItemClick.onClick(noticiaId);
 
         }
 

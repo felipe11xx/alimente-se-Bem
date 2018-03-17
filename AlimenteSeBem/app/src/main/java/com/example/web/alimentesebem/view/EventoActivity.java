@@ -49,7 +49,7 @@ public class EventoActivity extends AppCompatActivity{
 
         getSupportActionBar().setDisplayHomeAsUpEnabled(true); //Mostrar o botão
         getSupportActionBar().setHomeButtonEnabled(true);      //Ativar o botão
-
+        //cria os objetos da tela
         imgCapaEvento = findViewById(R.id.img_capa_evento);
         imgData = findViewById(R.id.img_data_evento);
         shareFace = findViewById(R.id.btn_share_facebook);
@@ -59,6 +59,7 @@ public class EventoActivity extends AppCompatActivity{
         tvtitulo = findViewById(R.id.tv_evento_titulo);
         lblPreco = findViewById(R.id.lbl_preco);
         tvPreco = findViewById(R.id.tv_preco);
+
         //Muda a fonte de alguns textView
         Typeface typeFont = Typeface.createFromAsset(getAssets(), "fonts/Gotham_Condensed_Bold.otf");
         tvtitulo.setTypeface(typeFont);
@@ -90,13 +91,8 @@ public class EventoActivity extends AppCompatActivity{
         recyclerView.setAdapter(new TagEventoAdapter(tags,this));
         recyclerView.setLayoutManager(new StaggeredGridLayoutManager(3, StaggeredGridLayoutManager.HORIZONTAL));
 
-//        LinearLayout layoutTag = findViewById(R.id.layoutTag);
-//        layoutTag.setBackgroundColor(getResources().getColor(R.color.laranjaPadrao));
-
-
-
         intent  = getIntent();
-        //usa o ID no Bundle para criar a tela
+        //usa o ID no Bundle para atribuir valor aos elementos da tela
         if(intent != null) {
             Bundle bundle = getIntent().getExtras();
             if(bundle != null) {

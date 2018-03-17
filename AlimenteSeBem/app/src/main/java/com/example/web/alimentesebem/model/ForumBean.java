@@ -58,7 +58,9 @@ public class ForumBean {
     public void setCometarios(List<ComentarioForumBean> cometarios) {
         this.cometarios = cometarios;
     }
-
+    public void addComentarios(List<ComentarioForumBean> cometarios,ComentarioForumBean comentario){
+        cometarios.add(comentario);
+    }
     public NutricionistaBean getAutor() {
         return autor;
     }

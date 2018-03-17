@@ -46,4 +46,6 @@ public class TagForumBean {
     public void setForumBeans(List<ForumBean> forumBeans) {
         this.forumBeans = forumBeans;
     }
+
+
 }

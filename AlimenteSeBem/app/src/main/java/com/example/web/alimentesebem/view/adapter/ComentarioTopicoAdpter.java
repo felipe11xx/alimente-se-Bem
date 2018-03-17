@@ -22,7 +22,7 @@ public class ComentarioTopicoAdpter extends RecyclerView.Adapter {
     private Context context;
     private List<ComentarioForumBean> comentarios;
 
-    public ComentarioTopicoAdpter(Context context, List<ComentarioForumBean> comentarios) {
+    public ComentarioTopicoAdpter(List<ComentarioForumBean> comentarios, Context context) {
         this.context = context;
         this.comentarios = comentarios;
     }
@@ -69,7 +69,7 @@ public class ComentarioTopicoAdpter extends RecyclerView.Adapter {
 
             Typeface typeFont = Typeface.createFromAsset(context.getAssets(),"fonts/Gotham_Condensed_Bold.otf");
             tvAutor.setTypeface(typeFont);
-            typeFont.createFromAsset(context.getAssets(),"fonts/Gothan_ligth.otf");
+            typeFont = Typeface.createFromAsset(context.getAssets(),"fonts/Gotham_Light.otf");
             tvData.setTypeface(typeFont);
             tvComentario.setTypeface(typeFont);
         }
@@ -78,7 +78,7 @@ public class ComentarioTopicoAdpter extends RecyclerView.Adapter {
         public void preencher(ComentarioForumBean comentario){
             comentarioId = comentario.getId();
 
-            tvAutor.setText("Bulma");
+            tvAutor.setText(comentario.getUsuario().getNome());
             tvComentario.setText(comentario.getComentario());
             tvData.setText(dtFmt.format(comentario.getData()));
         }

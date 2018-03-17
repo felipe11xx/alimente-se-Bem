@@ -18,6 +18,11 @@ public class UsuarioBean {
         this.id = id;
     }
 
+    public UsuarioBean(Long id, String nome) {
+        this.id = id;
+        this.nome = nome;
+    }
+
     public UsuarioBean(Long id, String nome, String email, String senha, boolean ativo) {
         this.id = id;
         this.nome = nome;

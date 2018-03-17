@@ -24,7 +24,7 @@ public class TabNoticia extends android.support.v4.app.Fragment implements OnIte
 
    private RecyclerView recyclerView;
    private NoticiaDaoOld daoOld = NoticiaDaoOld.instance;
-   private Intent i;
+   private Intent intent;
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
@@ -48,9 +48,9 @@ public class TabNoticia extends android.support.v4.app.Fragment implements OnIte
     }
 
     @Override
-    public void onclick(Long id) {
-        i = new Intent(this.getContext(),NoticiaActivity.class );
-        i.putExtra("NoticiaId",id);
-        startActivity(i);
+    public void onClick(Long id) {
+        intent = new Intent(this.getContext(),NoticiaActivity.class );
+        intent.putExtra("NoticiaId",id);
+        startActivity(intent);
     }
 }

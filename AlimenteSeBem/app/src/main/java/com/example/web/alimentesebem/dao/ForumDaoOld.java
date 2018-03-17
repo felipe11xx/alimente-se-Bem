@@ -5,6 +5,7 @@ import com.example.web.alimentesebem.model.ComentarioForumBean;
 import com.example.web.alimentesebem.model.ForumBean;
 import com.example.web.alimentesebem.model.NutricionistaBean;
 import com.example.web.alimentesebem.model.TagForumBean;
+import com.example.web.alimentesebem.model.UsuarioBean;
 
 import java.util.ArrayList;
 import java.util.Calendar;
@@ -27,6 +28,7 @@ public class ForumDaoOld {
     private long idComentario;
     private long idNutricionista;
     private long idCatergoria;
+    private long idUsuario;
 
     public ForumDaoOld() {
 
@@ -35,22 +37,28 @@ public class ForumDaoOld {
         comentarios = new ArrayList<ComentarioForumBean>();
 
         comentarios.add(new ComentarioForumBean(idComentario++,"Diga Vegeta qual o poder de luta do Kakarotto",
-                new GregorianCalendar(2018, Calendar.JANUARY, 22).getTime()));
+                new GregorianCalendar(2018, Calendar.JANUARY, 22).getTime(),
+                new UsuarioBean(idUsuario++,"Nappa")));
 
         comentarios.add(new ComentarioForumBean(idComentario++,"É de mais de Oito mil !!!",
-                new GregorianCalendar(2018, Calendar.JANUARY, 22).getTime()));
+                new GregorianCalendar(2018, Calendar.JANUARY, 22).getTime(),
+                new UsuarioBean(idUsuario++,"Vegeta")));
 
         comentarios.add(new ComentarioForumBean(idComentario++,"Isso deve ser um engano este aparelho deve estar quebrado",
-                new GregorianCalendar(2018, Calendar.JANUARY, 22).getTime()));
+                new GregorianCalendar(2018, Calendar.JANUARY, 22).getTime(),
+                new UsuarioBean(idUsuario++,"Nappa")));
 
         comentarios.add(new ComentarioForumBean(idComentario++,"Oi eu sou o Goku",
-                new GregorianCalendar(2018, Calendar.JANUARY, 22).getTime()));
+                new GregorianCalendar(2018, Calendar.JANUARY, 22).getTime(),
+                new UsuarioBean(idUsuario++,"Goku")));
 
         comentarios.add(new ComentarioForumBean(idComentario++,"Mas eu sou calmo e meu coração é puro meu coração é pura maldade",
-                new GregorianCalendar(2018, Calendar.JANUARY, 22).getTime()));
+                new GregorianCalendar(2018, Calendar.JANUARY, 22).getTime(),
+                new UsuarioBean(idUsuario++,"Vegeta")));
 
-        comentarios.add(new ComentarioForumBean(idComentario++,"Diga Vegeta qual o poder de luta do Kakarotto",
-                new GregorianCalendar(2018, Calendar.JANUARY, 22).getTime()));
+        comentarios.add(new ComentarioForumBean(idComentario++,"Hum que nojo",
+                new GregorianCalendar(2018, Calendar.JANUARY, 22).getTime(),
+                new UsuarioBean(idUsuario++,"Piccolo")));
 
         tags.add(new TagForumBean(idTags++,"Kiabe"));
         tags.add(new TagForumBean(idTags++,"Kale"));

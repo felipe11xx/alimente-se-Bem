@@ -7,12 +7,14 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import com.example.web.alimentesebem.R;
 import com.example.web.alimentesebem.model.ForumBean;
 
 import java.text.DateFormat;
 import java.util.List;
+import java.util.Locale;
 
 /**
  * Created by WEB on 15/03/2018.
@@ -54,17 +56,18 @@ public class ForumAdapter extends RecyclerView.Adapter{
         return lista.size();
     }
 
-
     public class ForumViewHolder extends RecyclerView.ViewHolder implements View.OnClickListener{
 
         public final TextView tvTitulo, tvAutor,tvCategoria,tvDataAbertura,tvLblAutor;
         private Long forumId;
-        public DateFormat dtFmt =  DateFormat.getDateInstance(DateFormat.LONG);
-        public ForumAdapter adapter;
+        public DateFormat dtFmt =  DateFormat.getDateInstance(DateFormat.LONG, new Locale("pt","BR"));
+        public final ForumAdapter adapter;
 
         public ForumViewHolder(final View view, final ForumAdapter adapter) {
             super(view);
             this.adapter = adapter;
+
+            view.setOnClickListener(this);
 
             tvTitulo = view.findViewById(R.id.tv_titulo_forum);
             tvAutor = view.findViewById(R.id.tv_autor);
@@ -93,7 +96,9 @@ public class ForumAdapter extends RecyclerView.Adapter{
 
         @Override
         public void onClick(View v) {
-            onItemClick.onclick(forumId);
+            //Pega o id do topico clincado do cardView
+           // Toast.makeText(context,"ID"+forumId, Toast.LENGTH_SHORT).show();
+            onItemClick.onClick(forumId);
         }
     }
 

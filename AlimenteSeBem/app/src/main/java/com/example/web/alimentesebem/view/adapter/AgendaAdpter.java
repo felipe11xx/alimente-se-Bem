@@ -69,9 +69,8 @@ public class AgendaAdpter extends RecyclerView.Adapter{
         public final ImageView imgData;
         public final AgendaAdpter adpter;
         private Long eventoId;
-        public DateFormat dtFmt =  DateFormat.getDateInstance(DateFormat.LONG, new Locale("pt","BR" +
-                ""));
-        //private Intent i = new Intent(Main.getContext(), EventoActivity.class);
+        public DateFormat dtFmt =  DateFormat.getDateInstance(DateFormat.LONG, new Locale("pt","BR"));
+
 
         public CalendarioViewHolder(final View view, final AgendaAdpter adpter) {
             super(view);
@@ -112,12 +111,10 @@ public class AgendaAdpter extends RecyclerView.Adapter{
                 // atribui à foto
                 img_capa_evento.setBackgroundColor(Color.TRANSPARENT);
             }*/
-            // Obtem a 1ª letra do nome da pessoa e converte para Maiuscula
+            // Cria um bitmap contendo o dia e Mês
             String dia = dtFmt.format(obj.getData()).substring(0,2);
             String mes = dtFmt.format(obj.getData()).substring(6,9);
             String diaMes = dia + " " + mes;
-            // Cria um bitmap contendo o dia e Mês
-            // Bitmap bitmap = Utilitarios.quadradoBitmapAndText(
             Bitmap bitmap = Utilitarios.circularBitmapAndText(
                     Color.parseColor("#ef8219"), 150, 150,diaMes,45 );
             imgData.setImageBitmap(bitmap);
@@ -126,8 +123,8 @@ public class AgendaAdpter extends RecyclerView.Adapter{
 
         @Override
         public void onClick(View v) {
-            //Pega o id do eventon clincado do cardView
-            onItemClick.onclick(eventoId);
+            //Pega o id do evento clincado do cardView
+            onItemClick.onClick(eventoId);
         }
 
 
