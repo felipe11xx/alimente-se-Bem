@@ -8,25 +8,21 @@ import android.graphics.Typeface;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.support.v7.app.AppCompatActivity;
-import android.support.v7.widget.GridLayoutManager;
-import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.support.v7.widget.StaggeredGridLayoutManager;
-import android.view.LayoutInflater;
 import android.view.MenuItem;
-import android.view.View;
 import android.widget.ImageButton;
 import android.widget.ImageView;
-import android.widget.LinearLayout;
 import android.widget.TextView;
 import com.example.web.alimentesebem.R;
 import com.example.web.alimentesebem.dao.AgendaDaoOld;
 import com.example.web.alimentesebem.model.AgendaBean;
 import com.example.web.alimentesebem.utils.Utilitarios;
-import com.example.web.alimentesebem.view.adapter.TagAdapter;
+import com.example.web.alimentesebem.view.adapter.TagEventoAdapter;
 import java.text.DateFormat;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Locale;
 
 /**
  * Created by WEB on 07/03/2018.
@@ -41,7 +37,7 @@ public class EventoActivity extends AppCompatActivity{
     private AgendaDaoOld daoOld = AgendaDaoOld.instance;
     private Long id;
     private Intent intent;
-    private DateFormat dtFmt = DateFormat.getDateInstance(DateFormat.LONG);
+    private DateFormat dtFmt = DateFormat.getDateInstance(DateFormat.LONG, new Locale("pt", "BR"));
     private List<String> tags;
     private RecyclerView recyclerView;
 
@@ -91,7 +87,7 @@ public class EventoActivity extends AppCompatActivity{
         tags.add("fit3");
 
         recyclerView = findViewById(R.id.rv_tag);
-        recyclerView.setAdapter(new TagAdapter(tags,this));
+        recyclerView.setAdapter(new TagEventoAdapter(tags,this));
         recyclerView.setLayoutManager(new StaggeredGridLayoutManager(3, StaggeredGridLayoutManager.HORIZONTAL));
 
 //        LinearLayout layoutTag = findViewById(R.id.layoutTag);

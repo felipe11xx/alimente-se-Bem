@@ -17,6 +17,7 @@ import com.example.web.alimentesebem.utils.Utilitarios;
 
 import java.text.DateFormat;
 import java.util.List;
+import java.util.Locale;
 
 /**
  * Created by Felipe on 07/03/2018.
@@ -68,7 +69,8 @@ public class AgendaAdpter extends RecyclerView.Adapter{
         public final ImageView imgData;
         public final AgendaAdpter adpter;
         private Long eventoId;
-        public DateFormat dtFmt =  DateFormat.getDateInstance(DateFormat.LONG);
+        public DateFormat dtFmt =  DateFormat.getDateInstance(DateFormat.LONG, new Locale("pt","BR" +
+                ""));
         //private Intent i = new Intent(Main.getContext(), EventoActivity.class);
 
         public CalendarioViewHolder(final View view, final AgendaAdpter adpter) {

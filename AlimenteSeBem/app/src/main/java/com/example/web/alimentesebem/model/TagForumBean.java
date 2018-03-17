@@ -1,5 +1,7 @@
 package com.example.web.alimentesebem.model;
 
+import java.util.List;
+
 /**
  * Created by WEB on 15/03/2018.
  */
@@ -7,6 +9,7 @@ package com.example.web.alimentesebem.model;
 public class TagForumBean {
     private Long id;
     private String tag;
+    private List<ForumBean> forumBeans;
 
     public TagForumBean(){}
 
@@ -17,6 +20,7 @@ public class TagForumBean {
     public TagForumBean(Long id, String tag) {
         this.id = id;
         this.tag = tag;
+
     }
 
     public Long getId() {
@@ -33,5 +37,13 @@ public class TagForumBean {
 
     public void setTag(String tag) {
         this.tag = tag;
+    }
+
+    public List<ForumBean> getForumBeans() {
+        return forumBeans;
+    }
+
+    public void setForumBeans(List<ForumBean> forumBeans) {
+        this.forumBeans = forumBeans;
     }
 }

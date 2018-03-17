@@ -16,5 +16,13 @@
     <style name="AppTheme.AppBarOverlay" parent="ThemeOverlay.AppCompat.Dark.ActionBar" />
 
     <style name="AppTheme.PopupOverlay" parent="ThemeOverlay.AppCompat.Light" />
-
+    <style name="Button" parent="Base.TextAppearance.AppCompat.Button" >
+        <item name="backgroundTint">@color/lilasPadrão</item>
+    </style>
+    <style name="ButtonFace" parent="Base.TextAppearance.AppCompat.Button" >
+        <item name="backgroundTint">@color/azulFacebook</item>
+    </style>
+    <style name="ButtonGoogle" parent="Base.TextAppearance.AppCompat.Button" >
+        <item name="backgroundTint">@color/vermelhoGoolgle</item>
+    </style>
 </resources>

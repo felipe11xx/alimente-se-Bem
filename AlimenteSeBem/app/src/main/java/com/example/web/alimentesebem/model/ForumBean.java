@@ -23,12 +23,16 @@ public class ForumBean {
         this.id = id;
     }
 
-    public ForumBean(long id, String titulo, NutricionistaBean autor, CategoriaForumBean categoria, Date dataAbertura) {
+    public ForumBean(long id, String titulo, NutricionistaBean autor, CategoriaForumBean categoria,
+                     Date dataAbertura,List<TagForumBean> tags,List<ComentarioForumBean> cometarios) {
         this.id = id;
         this.titulo = titulo;
         this.autor = autor;
         this.categoria = categoria;
         this.dataAbertura = dataAbertura;
+        this.tags = tags;
+        this.cometarios = cometarios;
+
     }
 
     public Long getId() {

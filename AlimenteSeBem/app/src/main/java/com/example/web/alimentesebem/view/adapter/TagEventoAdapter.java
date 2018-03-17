@@ -15,11 +15,11 @@ import java.util.List;
  * Created by WEB on 14/03/2018.
  */
 
-public class TagAdapter extends RecyclerView.Adapter {
+public class TagEventoAdapter extends RecyclerView.Adapter {
     private List<String> tags;
     private Context context;
 
-    public TagAdapter(List<String> tags,Context context){
+    public TagEventoAdapter(List<String> tags, Context context){
         this.context = context;
         this.tags = tags;
     }
@@ -27,18 +27,18 @@ public class TagAdapter extends RecyclerView.Adapter {
     @Override
     public RecyclerView.ViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {
         View view = LayoutInflater.from(context)
-                .inflate(R.layout.detalhe_tag,parent,false);
+                .inflate(R.layout.detalhe_tag_evento,parent,false);
 
-        TagViewHolder holder = new TagViewHolder(view,this);
+        TagEventoViewHolder holder = new TagEventoViewHolder(view,this);
 
         return holder;
     }
 
     @Override
     public void onBindViewHolder(RecyclerView.ViewHolder holder, int position) {
-        TagViewHolder TagHolder = (TagViewHolder) holder;
+        TagEventoViewHolder TagHolder = (TagEventoViewHolder) holder;
         String tag = tags.get(position);
-        ((TagViewHolder) holder).preencher(tag);
+        ((TagEventoViewHolder) holder).preencher(tag);
     }
 
     @Override
@@ -46,15 +46,15 @@ public class TagAdapter extends RecyclerView.Adapter {
         return tags.size();
     }
 
-    public class TagViewHolder extends RecyclerView.ViewHolder{
+    public class TagEventoViewHolder extends RecyclerView.ViewHolder{
        // private final List<String> tags;
-        private final TagAdapter adapter;
+        private final TagEventoAdapter adapter;
         private final TextView tvTag;
 
-        public TagViewHolder(View view, TagAdapter adapter) {
+        public TagEventoViewHolder(View view, TagEventoAdapter adapter) {
             super(view);
             this.adapter = adapter;
-            tvTag = view.findViewById(R.id.tv_tag);
+            tvTag = view.findViewById(R.id.tv_tag_evento);
             // tvTag.setBackgroundColor(Color.WHITE);
         }
 

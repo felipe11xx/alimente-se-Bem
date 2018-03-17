@@ -1,5 +1,6 @@
 package com.example.web.alimentesebem.view;
 
+import android.content.Intent;
 import android.support.v4.app.Fragment;
 import android.os.Bundle;
 import android.support.v7.widget.LinearLayoutManager;
@@ -27,6 +28,7 @@ public class TabForum extends Fragment implements OnItemClick {
     private RecyclerView recyclerView;
     private ForumDaoOld daoOld = ForumDaoOld.instance;
     private ForumBean obj;
+    private Intent intent;
 
 
     @Override
@@ -48,6 +50,10 @@ public class TabForum extends Fragment implements OnItemClick {
 
     @Override
     public void onclick(Long id) {
+
+        intent = new Intent(this.getContext(), TopicoActivity.class);
+        intent.putExtra("TopicoId", id);
+        startActivity(intent);
 
     }
 }

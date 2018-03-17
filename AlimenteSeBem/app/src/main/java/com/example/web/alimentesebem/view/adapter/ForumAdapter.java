@@ -57,7 +57,7 @@ public class ForumAdapter extends RecyclerView.Adapter{
 
     public class ForumViewHolder extends RecyclerView.ViewHolder implements View.OnClickListener{
 
-        public final TextView tvTitulo, tvAutor,tvCategoria,tvDataAbertura;
+        public final TextView tvTitulo, tvAutor,tvCategoria,tvDataAbertura,tvLblAutor;
         private Long forumId;
         public DateFormat dtFmt =  DateFormat.getDateInstance(DateFormat.LONG);
         public ForumAdapter adapter;
@@ -70,20 +70,22 @@ public class ForumAdapter extends RecyclerView.Adapter{
             tvAutor = view.findViewById(R.id.tv_autor);
             tvCategoria = view.findViewById(R.id.tv_categoria_forum);
             tvDataAbertura = view.findViewById(R.id.tv_data_forum);
-
+            tvLblAutor = view.findViewById(R.id.tv_lbl_autor);
             Typeface typeFont = Typeface.createFromAsset(context.getAssets(),"fonts/Gotham_Light.otf");
             tvAutor.setTypeface(typeFont);
             tvCategoria.setTypeface(typeFont);
             tvDataAbertura.setTypeface(typeFont);
             typeFont = Typeface.createFromAsset(context.getAssets(),"fonts/Gotham_Condensed_Bold.otf");
             tvTitulo.setTypeface(typeFont);
+            tvLblAutor.setTypeface(typeFont);
 
         }
 
         public void preencher(ForumBean obj){
             forumId = obj.getId();
             tvTitulo.setText(obj.getTitulo());
-            tvAutor.setText(obj.getAutor().getNome());
+            tvLblAutor.setText("Aberto por: ");
+            tvAutor.setText( obj.getAutor().getNome());
             tvCategoria.setText(obj.getCategoria().getNome());
             tvDataAbertura.setText(dtFmt.format(obj.getDataAbertura()));
 
