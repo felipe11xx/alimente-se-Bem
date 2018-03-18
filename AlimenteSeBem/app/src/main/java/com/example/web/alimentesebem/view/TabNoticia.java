@@ -34,7 +34,7 @@ public class TabNoticia extends android.support.v4.app.Fragment implements OnIte
 
         List<NoticiaBean> noticias = daoOld.getList();
 
-        recyclerView = rootView.findViewById(R.id.rvNoticias);
+        recyclerView = rootView.findViewById(R.id.rv_noticias);
 
         recyclerView.setAdapter(new NoticiaAdpter(noticias,this.getContext(),this));
 

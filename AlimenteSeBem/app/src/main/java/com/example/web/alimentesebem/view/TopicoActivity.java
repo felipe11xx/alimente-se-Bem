@@ -7,6 +7,7 @@ import android.support.annotation.Nullable;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
+import android.text.TextUtils;
 import android.view.MenuItem;
 import android.view.View;
 import android.view.inputmethod.InputMethodManager;
@@ -92,7 +93,11 @@ public class TopicoActivity extends AppCompatActivity{
 
                     recyclerComentario = findViewById(R.id.rv_comentarios);
                     recyclerComentario.setAdapter(new ComentarioTopicoAdpter(topico.getCometarios(),this));
-                    recyclerComentario.setLayoutManager(new LinearLayoutManager(this, LinearLayoutManager.VERTICAL, false));
+                    LinearLayoutManager layoutManager = new LinearLayoutManager(this, LinearLayoutManager.VERTICAL, false);
+                    //faz a lista começar pelo fim
+                    layoutManager.setStackFromEnd(true);
+                    recyclerComentario.setLayoutManager(layoutManager);
+
 
                     lblAutor.setText("Aberto por: ");
                     tvAutor.setText(topico.getAutor().getNome());
@@ -110,19 +115,25 @@ public class TopicoActivity extends AppCompatActivity{
         btnEnviar.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                List<ComentarioForumBean> comentarios = topico.getCometarios();
-                long comentarioId = comentarios.size();
-                long usuarioId = comentarios.size();
-                 ComentarioForumBean comentarioNovo = new ComentarioForumBean(comentarioId,edComentario.getText().toString(),
-                         new GregorianCalendar(2018, Calendar.JANUARY, 22).getTime() ,
-                         new UsuarioBean(usuarioId,"Eu"));
-                topico.addComentarios(comentarios,comentarioNovo);
-                InputMethodManager inputManager = (InputMethodManager)
-                        getSystemService(TopicoActivity.INPUT_METHOD_SERVICE);
+                String coment = edComentario.getText().toString();
+               if(!TextUtils.isEmpty(coment)) {
+                   List<ComentarioForumBean> comentarios = topico.getCometarios();
+                   long comentarioId = comentarios.size();
+                   long usuarioId = comentarios.size();
+                   ComentarioForumBean comentarioNovo = new ComentarioForumBean(comentarioId, edComentario.getText().toString(),
+                           new GregorianCalendar(2018, Calendar.JANUARY, 22).getTime(),
+                           new UsuarioBean(usuarioId, "Eu"));
+                   topico.addComentarios(comentarios, comentarioNovo);
+                   InputMethodManager inputManager = (InputMethodManager)
+                           getSystemService(TopicoActivity.INPUT_METHOD_SERVICE);
 
-                inputManager.hideSoftInputFromWindow((null == getCurrentFocus()) ? null : getCurrentFocus().getWindowToken(), InputMethodManager.HIDE_NOT_ALWAYS);
-                edComentario.setText("");
-                recyclerComentario.getAdapter().notifyDataSetChanged();
+                   inputManager.hideSoftInputFromWindow((null == getCurrentFocus()) ? null : getCurrentFocus().getWindowToken(), InputMethodManager.HIDE_NOT_ALWAYS);
+                   edComentario.setText("");
+
+                   recyclerComentario.smoothScrollToPosition(recyclerComentario.getAdapter().getItemCount() -1);
+                   recyclerComentario.getAdapter().notifyDataSetChanged();
+
+               }
             }
         });
 

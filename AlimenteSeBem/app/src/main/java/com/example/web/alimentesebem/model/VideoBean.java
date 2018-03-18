@@ -20,12 +20,11 @@ public class VideoBean {
         this.id = id;
     }
 
-    public VideoBean(Long id, String titulo, String descricao, Date data, UsuarioBean usuario, String url) {
+    public VideoBean(Long id, String titulo, String descricao, Date data, String url) {
         this.id = id;
         this.titulo = titulo;
         this.descricao = descricao;
         this.data = data;
-        this.usuario = usuario;
         this.url = url;
     }
 

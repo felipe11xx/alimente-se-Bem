@@ -1,6 +1,8 @@
 package com.example.web.alimentesebem.view.adapter;
 
 import android.content.Context;
+import android.support.v4.content.ContextCompat;
+import android.support.v7.widget.CardView;
 import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -54,6 +56,7 @@ public class TagTopicoAdpter extends RecyclerView.Adapter {
     public class TagTopicoViewHolder extends RecyclerView.ViewHolder{
 
         private final TextView tvTag;
+        private final CardView card;
         private final TagTopicoAdpter adpter;
         private long tagId;
 
@@ -61,11 +64,25 @@ public class TagTopicoAdpter extends RecyclerView.Adapter {
             super(itemView);
             this.adpter = adpter;
             tvTag = itemView.findViewById(R.id.tv_tag_topico);
+            card = itemView.findViewById(R.id.cv_tag_topico);
         }
 
         public void preencher (TagForumBean tag){
             tagId = tag.getId();
             tvTag.setText(tag.getTag());
+
+            //pega primeira letra da tag
+            String primeiraLetra = tvTag.getText().toString().substring(0,1).toLowerCase();
+            //muda cores da tag de acordo com a letra
+            if(primeiraLetra.equals("b") ) {
+                card.setCardBackgroundColor(ContextCompat.getColor(context, R.color.laranjaPadrao));
+            }else if (primeiraLetra.equals("k")){
+                card.setCardBackgroundColor(ContextCompat.getColor(context, R.color.colorAccent));
+            }else if (primeiraLetra.equals("v")){
+                card.setCardBackgroundColor(ContextCompat.getColor(context, R.color.lilasPadrão));
+            }else{
+                card.setCardBackgroundColor(ContextCompat.getColor(context, R.color.azulPadrão));
+            }
         }
     }
 }

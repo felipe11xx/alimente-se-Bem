@@ -14,6 +14,7 @@ import com.example.web.alimentesebem.model.NoticiaBean;
 
 import java.text.DateFormat;
 import java.util.List;
+import java.util.Locale;
 
 /**
  * Created by Felipe on 04/03/2018.
@@ -62,7 +63,7 @@ public class NoticiaAdpter extends RecyclerView.Adapter {
         public final ImageView imgCapa;
         private Long noticiaId;
         public final NoticiaAdpter adpter;
-        public DateFormat dtFmt =  DateFormat.getDateInstance(DateFormat.LONG);
+        public DateFormat dtFmt =  DateFormat.getDateInstance(DateFormat.LONG,new Locale("pt","BR"));
 
         public NoticiaViewHolder(final View view, final NoticiaAdpter adpter) {
             super(view);

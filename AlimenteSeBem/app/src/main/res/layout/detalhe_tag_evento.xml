@@ -7,16 +7,17 @@
     xmlns:app="http://schemas.android.com/apk/res-auto">
 
     <android.support.v7.widget.CardView
+        android:id="@+id/cv_tag_evento"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-
+        app:cardBackgroundColor="@color/cinzaPadrao"
         app:cardCornerRadius="5dp">
 
         <LinearLayout
             android:id="@+id/layout_tag_evento"
             android:layout_width="match_parent"
             android:layout_height="match_parent"
-            android:background="@color/cinzaPadrao"
+
             android:orientation="horizontal">
 
             <TextView

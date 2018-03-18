@@ -7,15 +7,17 @@
     xmlns:app="http://schemas.android.com/apk/res-auto">
 
     <android.support.v7.widget.CardView
+        android:id="@+id/cv_tag_topico"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
+        app:cardBackgroundColor="@color/cinzaPadrao"
         app:cardCornerRadius="5dp">
 
         <LinearLayout
             android:id="@+id/layoutTagTopico"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:background="@color/cinzaPadrao"
+
             android:orientation="horizontal">
 
             <TextView
@@ -25,6 +27,7 @@
                 android:layout_margin="2dp"
                 android:layout_weight="1"
                 android:text="TextView"
+                android:textColor="@android:color/white"
                 android:textSize="14sp" />
         </LinearLayout>
     </android.support.v7.widget.CardView>

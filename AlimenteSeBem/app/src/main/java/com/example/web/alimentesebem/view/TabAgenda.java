@@ -36,7 +36,7 @@ public class TabAgenda extends Fragment implements OnItemClick {
 
         View rootView = inflater.inflate(R.layout.tab_agenda, container, false);
         List<AgendaBean> calendarios = daoOld.getLista();
-        recyclerView = rootView.findViewById(R.id.rvCalendario);
+        recyclerView = rootView.findViewById(R.id.rv_calendario);
         recyclerView.setAdapter(new AgendaAdpter(calendarios, this.getContext(),this));
         //Cria a tela com a lista das noticias recentes
         RecyclerView.LayoutManager layout = new LinearLayoutManager(this.getContext(), LinearLayoutManager.VERTICAL,
