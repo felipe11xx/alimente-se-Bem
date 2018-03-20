@@ -5,7 +5,9 @@ import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.webkit.WebSettings;
 import android.webkit.WebView;
+import android.webkit.WebViewClient;
 import android.widget.TextView;
 
 import com.example.web.alimentesebem.R;
@@ -81,8 +83,21 @@ public class VideoAdpeter extends RecyclerView.Adapter {
             tvDesc.setText(video.getDescricao());
             tvTitulo.setText(video.getTitulo());
             tvData.setText(dtFmt.format(video.getData()));
-            webVideo.getSettings().setJavaScriptEnabled(true);
-            webVideo.loadUrl(video.getUrl());
+
+            String frameVideo = "<html><body><iframe width=\"100% !important\" height=\"100% !important\" src=\"" +
+                    "https://www.youtube.com/embed/"+ video.getUrl() +
+                    "\" frameborder=\"0\" allowfullscreen></iframe></body></html>";
+
+
+/*            webVideo.setWebViewClient(new WebViewClient() {
+                @Override
+                public boolean shouldOverrideUrlLoading(WebView view, String url) {
+                    return false;
+                }
+            });*/
+            WebSettings webSettings = webVideo.getSettings();
+            webSettings.setJavaScriptEnabled(true);
+            webVideo.loadData(frameVideo, "text/html", "utf-8");
 
         }
 

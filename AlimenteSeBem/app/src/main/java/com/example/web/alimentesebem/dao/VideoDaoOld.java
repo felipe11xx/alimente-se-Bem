@@ -23,29 +23,45 @@ public class VideoDaoOld {
     public VideoDaoOld() {
         lista = new ArrayList<>();
 
-    lista.add(new VideoBean(id++,"Ninjas Terroristas e o Recheio de Chili",
+    lista.add(new VideoBean(id++,"Sesi Chef - RECEITA SANDUICHE",
                 "Lorem ipsum dolor sit amet, consectetur adipi" +
                         "scing elit, sed do eiusmod tempor incididunt ut labore",
                 new GregorianCalendar(2017, Calendar.NOVEMBER, 10).getTime(),
-                "https://www.youtube.com/watch?v=5w5zSiZnC9M"));
-
+                "XXf5JQs4c7g"));
+    lista.add(new VideoBean(id++,"Concurso Sesi Chef - 16/08/2017",
+                "Lorem ipsum dolor sit amet, consectetur adipi" +
+                        "scing elit, sed do eiusmod tempor incididunt ut labore",
+                new GregorianCalendar(2017, Calendar.NOVEMBER, 10).getTime(),
+                "1eneYODBl60"));
+    lista.add(new VideoBean(id++,"Final Sesi Chef 2016",
+                "Lorem ipsum dolor sit amet, consectetur adipi" +
+                        "scing elit, sed do eiusmod tempor incididunt ut labore",
+                new GregorianCalendar(2017, Calendar.NOVEMBER, 10).getTime(),
+                "4uq2Dhy-xx4"));
+    lista.add(new VideoBean(id++,"Sesi Chef - RECEITA SORVETE",
+                "Lorem ipsum dolor sit amet, consectetur adipi" +
+                        "scing elit, sed do eiusmod tempor incididunt ut labore",
+                new GregorianCalendar(2017, Calendar.NOVEMBER, 10).getTime(),
+                "b-5n8tmrvUE"));
+/*
     lista.add(new VideoBean(id++,"Battlefield 4 - Pedrinho O Tarado do BF",
                 "Lorem ipsum dolor sit amet, consectetur adipi" +
                         "scing elit, sed do eiusmod tempor incididunt ut labore",
                 new GregorianCalendar(2017, Calendar.NOVEMBER, 10).getTime(),
-                "https://www.youtube.com/watch?v=JdI5zRQBSAk"));
+                "JdI5zRQBSAk"));
 
     lista.add(new VideoBean(id++,"Battlefield 3 - Pescadores de Jatos, snipers falidos",
                 "Lorem ipsum dolor sit amet, consectetur adipi" +
                         "scing elit, sed do eiusmod tempor incididunt ut labore",
                 new GregorianCalendar(2017, Calendar.NOVEMBER, 10).getTime(),
-                "https://www.youtube.com/watch?v=70MSFxyGTEg"));
+                "70MSFxyGTEg"));
 
     lista.add(new VideoBean(id++,"Os Heróis da Cidade - Saints Row the third",
                 "Lorem ipsum dolor sit amet, consectetur adipi" +
                         "scing elit, sed do eiusmod tempor incididunt ut labore",
                 new GregorianCalendar(2017, Calendar.NOVEMBER, 10).getTime(),
-                "https://www.youtube.com/watch?v=Z2ki9jyhrwQ"));
+                "Z2ki9jyhrwQ"));
+*/
 
     }
 

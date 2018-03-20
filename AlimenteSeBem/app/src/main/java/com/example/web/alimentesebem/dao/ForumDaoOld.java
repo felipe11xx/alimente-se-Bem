@@ -51,14 +51,14 @@ public class ForumDaoOld {
         comentarios.add(new ComentarioForumBean(idComentario++,"Oi eu sou o Goku",
                 new GregorianCalendar(2018, Calendar.JANUARY, 22).getTime(),
                 new UsuarioBean(idUsuario++,"Goku")));
-
+/*
         comentarios.add(new ComentarioForumBean(idComentario++,"Mas eu sou calmo e meu coração é puro meu coração é pura maldade",
                 new GregorianCalendar(2018, Calendar.JANUARY, 22).getTime(),
                 new UsuarioBean(idUsuario++,"Vegeta")));
 
         comentarios.add(new ComentarioForumBean(idComentario++,"Hum que nojo",
                 new GregorianCalendar(2018, Calendar.JANUARY, 22).getTime(),
-                new UsuarioBean(idUsuario++,"Piccolo")));
+                new UsuarioBean(idUsuario++,"Piccolo")));*/
 
         tags.add(new TagForumBean(idTags++,"Kiabe"));
         tags.add(new TagForumBean(idTags++,"Kale"));

@@ -4,10 +4,14 @@ import android.content.Intent;
 import android.graphics.Typeface;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
+import android.support.v7.app.ActionBar;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
+import android.text.Spannable;
+import android.text.SpannableString;
 import android.text.TextUtils;
+import android.text.style.TypefaceSpan;
 import android.view.MenuItem;
 import android.view.View;
 import android.view.inputmethod.InputMethodManager;
@@ -51,6 +55,12 @@ public class TopicoActivity extends AppCompatActivity{
 
         getSupportActionBar().setDisplayHomeAsUpEnabled(true); //Mostrar o botão
         getSupportActionBar().setHomeButtonEnabled(true);      //Ativar o botão
+
+/*
+        int titleId  =  R.id.action_bar_title;
+        TextView actionBarTitle = findViewById(titleId);
+*/
+
         //cria os objetos da tela
         tvAutor = findViewById(R.id.tv_autor_topico);
         tvCategoria = findViewById(R.id.tv_categoria_topico);
@@ -73,10 +83,12 @@ public class TopicoActivity extends AppCompatActivity{
         tvCategoria.setTypeface(typeFont);
         tvAutor.setTypeface(typeFont);
         tvData.setTypeface(typeFont);
+/*
+        typeFont = Typeface.createFromAsset(getAssets(),"fonts/tahu.ttf");
+        actionBarTitle.setTypeface(typeFont);
+*/
 
         topico = new ForumBean();
-
-
 
         intent = getIntent();
 
