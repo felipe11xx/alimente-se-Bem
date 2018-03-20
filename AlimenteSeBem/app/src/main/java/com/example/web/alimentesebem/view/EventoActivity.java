@@ -13,6 +13,7 @@ import android.support.v7.widget.CardView;
 import android.support.v7.widget.RecyclerView;
 import android.support.v7.widget.StaggeredGridLayoutManager;
 import android.view.MenuItem;
+import android.view.View;
 import android.widget.ImageButton;
 import android.widget.ImageView;
 import android.widget.TextView;
@@ -33,8 +34,8 @@ import java.util.Locale;
 public class EventoActivity extends AppCompatActivity{
 
     private ImageView imgCapaEvento,imgData;
-    private ImageButton shareFace,shareWhat;
-    private TextView tvLocalHorario,tvDecricao,tvtitulo,lblPreco,tvPreco;
+    private ImageButton shareFace,shareWhat,btnVoltar;
+    private TextView tvLocalHorario,tvDecricao,tvtitulo,lblPreco,tvPreco,tvToolbar;
     private AgendaBean obj;
     private AgendaDaoOld daoOld = AgendaDaoOld.instance;
     private Long id;
@@ -49,8 +50,6 @@ public class EventoActivity extends AppCompatActivity{
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_evento);
 
-        getSupportActionBar().setDisplayHomeAsUpEnabled(true); //Mostrar o botão
-        getSupportActionBar().setHomeButtonEnabled(true);      //Ativar o botão
         //cria os objetos da tela
         imgCapaEvento = findViewById(R.id.img_capa_evento);
         imgData = findViewById(R.id.img_data_evento);
@@ -61,6 +60,8 @@ public class EventoActivity extends AppCompatActivity{
         tvtitulo = findViewById(R.id.tv_evento_titulo);
         lblPreco = findViewById(R.id.lbl_preco);
         tvPreco = findViewById(R.id.tv_preco);
+        tvToolbar = findViewById(R.id.toolbar_evento_text);
+        btnVoltar = findViewById(R.id.btn_voltar_evento);
 
         //Muda a fonte de alguns textView
         Typeface typeFont = Typeface.createFromAsset(getAssets(), "fonts/Gotham_Condensed_Bold.otf");
@@ -72,6 +73,8 @@ public class EventoActivity extends AppCompatActivity{
         tvLocalHorario.setTypeface(typeFont);
         tvPreco.setTypeface(typeFont);
 
+        typeFont = Typeface.createFromAsset(getAssets(),"fonts/tahu.ttf");
+        tvToolbar.setTypeface(typeFont);
 
         obj = new AgendaBean();
 
@@ -127,18 +130,14 @@ public class EventoActivity extends AppCompatActivity{
                 }
             }
         }
-    }
 
-    @Override
-    public boolean onOptionsItemSelected(MenuItem item) {
-        switch (item.getItemId()){
-            //fecha a activity ao clicar na setinha do actionBar
-            case android.R.id.home:
-
+        btnVoltar.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
                 finish();
-                break;
-            default: break;
-        }
-        return true;
+            }
+        });
     }
+
+
 }

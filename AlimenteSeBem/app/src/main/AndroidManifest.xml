@@ -51,7 +51,8 @@
 
         <activity
             android:name=".view.EventoActivity"
-            android:screenOrientation="portrait">
+            android:screenOrientation="portrait"
+            android:theme="@style/AppTheme.NoActionBar">
 
             <intent-filter>
                 <category android:name="android.intent.category.DEFAULT" />
@@ -70,7 +71,8 @@
 
         <activity
             android:name=".view.NoticiaActivity"
-            android:screenOrientation="portrait">
+            android:screenOrientation="portrait"
+            android:theme="@style/AppTheme.NoActionBar">
 
             <intent-filter>
                 <category android:name="android.intent.category.DEFAULT"/>
@@ -80,7 +82,7 @@
         <activity
             android:name=".view.TopicoActivity"
             android:screenOrientation="portrait"
-
+            android:theme="@style/AppTheme.NoActionBar"
             android:windowSoftInputMode="adjustPan">
 
             <intent-filter>

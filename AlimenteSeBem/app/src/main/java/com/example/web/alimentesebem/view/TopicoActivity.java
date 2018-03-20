@@ -17,6 +17,7 @@ import android.view.View;
 import android.view.inputmethod.InputMethodManager;
 import android.widget.Button;
 import android.widget.EditText;
+import android.widget.ImageButton;
 import android.widget.TextView;
 
 import com.example.web.alimentesebem.R;
@@ -38,9 +39,10 @@ import java.util.Locale;
  */
 
 public class TopicoActivity extends AppCompatActivity{
-    private TextView tvTitulo,tvAutor,lblAutor,tvCategoria,lblCategoria,lblData,tvData;
+    private TextView tvTitulo,tvAutor,lblAutor,tvCategoria,lblCategoria,lblData,tvData,tvToolbar;
     private RecyclerView recyclerTag, recyclerComentario;
     private Button btnEnviar;
+    private ImageButton btnVoltar;
     private EditText edComentario;
     private ForumBean topico;
     private ForumDaoOld daoOld = ForumDaoOld.instance;
@@ -53,14 +55,6 @@ public class TopicoActivity extends AppCompatActivity{
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_topico);
 
-        getSupportActionBar().setDisplayHomeAsUpEnabled(true); //Mostrar o botão
-        getSupportActionBar().setHomeButtonEnabled(true);      //Ativar o botão
-
-/*
-        int titleId  =  R.id.action_bar_title;
-        TextView actionBarTitle = findViewById(titleId);
-*/
-
         //cria os objetos da tela
         tvAutor = findViewById(R.id.tv_autor_topico);
         tvCategoria = findViewById(R.id.tv_categoria_topico);
@@ -71,7 +65,8 @@ public class TopicoActivity extends AppCompatActivity{
         lblData = findViewById(R.id.tv_lbl_data_topico);
         btnEnviar = findViewById(R.id.btn_enviar_coment);
         edComentario = findViewById(R.id.ed_comentario);
-
+        tvToolbar = findViewById(R.id.toolbar_topico_text);
+        btnVoltar =  findViewById(R.id.btn_voltar_topico);
 
         //Muda a fonte de alguns textView
         Typeface typeFont = Typeface.createFromAsset(getAssets(),"fonts/Gotham_Condensed_Bold.otf");
@@ -83,10 +78,8 @@ public class TopicoActivity extends AppCompatActivity{
         tvCategoria.setTypeface(typeFont);
         tvAutor.setTypeface(typeFont);
         tvData.setTypeface(typeFont);
-/*
         typeFont = Typeface.createFromAsset(getAssets(),"fonts/tahu.ttf");
-        actionBarTitle.setTypeface(typeFont);
-*/
+        tvToolbar.setTypeface(typeFont);
 
         topico = new ForumBean();
 
@@ -107,7 +100,6 @@ public class TopicoActivity extends AppCompatActivity{
                     recyclerComentario.setAdapter(new ComentarioTopicoAdpter(topico.getCometarios(),this));
                     LinearLayoutManager layoutManager = new LinearLayoutManager(this, LinearLayoutManager.VERTICAL, false);
                     //faz a lista começar pelo fim
-                    layoutManager.setStackFromEnd(true);
                     recyclerComentario.setLayoutManager(layoutManager);
 
 
@@ -149,21 +141,13 @@ public class TopicoActivity extends AppCompatActivity{
             }
         });
 
-
-
-    }
-
-
-    @Override
-    public boolean onOptionsItemSelected(MenuItem item) {
-        switch (item.getItemId()){
-            //fecha a activity ao clicar na setinha do actionBar
-            case android.R.id.home:
-
+        btnVoltar.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
                 finish();
-                break;
-            default: break;
-        }
-        return true;
+            }
+        });
+
     }
+
 }

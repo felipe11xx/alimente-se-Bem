@@ -1,10 +1,14 @@
 package com.example.web.alimentesebem.view;
 
 import android.content.Intent;
+import android.graphics.Typeface;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.support.v7.app.AppCompatActivity;
+import android.view.View;
 import android.webkit.WebView;
+import android.widget.ImageButton;
+import android.widget.TextView;
 
 import com.example.web.alimentesebem.R;
 import com.example.web.alimentesebem.utils.Utilitarios;
@@ -16,6 +20,8 @@ import com.example.web.alimentesebem.utils.Utilitarios;
 
 public class NoticiaActivity extends AppCompatActivity {
     private WebView web;
+    private TextView tvToolbar;
+    private ImageButton btnVoltar;
     private Intent i;
     private Long id;
 
@@ -23,6 +29,10 @@ public class NoticiaActivity extends AppCompatActivity {
     protected void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.acticity_noticia);
+
+        tvToolbar = findViewById(R.id.toolbar_noticia_text);
+        btnVoltar = findViewById(R.id.btn_voltar_noticia);
+
         i  = getIntent();
 
         if(i != null) {
@@ -43,5 +53,14 @@ public class NoticiaActivity extends AppCompatActivity {
         web.getSettings().setJavaScriptEnabled(true);
         web.loadUrl(url);
 
+        Typeface typeFont = Typeface.createFromAsset(getAssets(),"fonts/tahu.ttf");
+        tvToolbar.setTypeface(typeFont);
+        btnVoltar.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+
+                finish();
+            }
+        });
     }
 }
