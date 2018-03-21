@@ -12,6 +12,7 @@ public class NoticiaBean {
     private String titulo;
     private String conteudo;
     private Date dataPublica;
+    private CategoriaNoticiaBean categoria;
     private byte[] capa;
 
     public NoticiaBean(){
@@ -70,5 +71,11 @@ public class NoticiaBean {
         this.capa = capa;
     }
 
+    public CategoriaNoticiaBean getCategoria() {
+        return categoria;
+    }
 
+    public void setCategoria(CategoriaNoticiaBean categoria) {
+        this.categoria = categoria;
+    }
 }

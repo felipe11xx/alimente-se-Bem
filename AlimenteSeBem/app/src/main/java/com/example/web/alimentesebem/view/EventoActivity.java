@@ -34,7 +34,7 @@ import java.util.Locale;
 public class EventoActivity extends AppCompatActivity{
 
     private ImageView imgCapaEvento,imgData;
-    private ImageButton shareFace,shareWhat,btnVoltar;
+    private ImageButton btnShare,btnVoltar;
     private TextView tvLocalHorario,tvDecricao,tvtitulo,lblPreco,tvPreco,tvToolbar;
     private AgendaBean obj;
     private AgendaDaoOld daoOld = AgendaDaoOld.instance;
@@ -53,8 +53,7 @@ public class EventoActivity extends AppCompatActivity{
         //cria os objetos da tela
         imgCapaEvento = findViewById(R.id.img_capa_evento);
         imgData = findViewById(R.id.img_data_evento);
-        shareFace = findViewById(R.id.btn_share_facebook);
-        shareWhat = findViewById(R.id.btn_share_what);
+        btnShare = findViewById(R.id.btn_share);
         tvDecricao = findViewById(R.id.tv_descricao_evento);
         tvLocalHorario = findViewById(R.id.tv_local_horario);
         tvtitulo = findViewById(R.id.tv_evento_titulo);

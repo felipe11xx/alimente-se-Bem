@@ -48,8 +48,8 @@ public class MainActivity extends AppCompatActivity {
         toolbarTittle = findViewById(R.id.toolbar_title);
         Typeface typeFont = Typeface.createFromAsset(getAssets(),"fonts/tahu.ttf");
         toolbarTittle.setTypeface(typeFont);
-        Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
-        setSupportActionBar(toolbar);
+/*        Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
+        setSupportActionBar(toolbar);*/
 
         // Create the adapter that will return a fragment for each of the three
         // primary sections of the activity.
@@ -65,7 +65,6 @@ public class MainActivity extends AppCompatActivity {
         tabLayout.addOnTabSelectedListener(new TabLayout.ViewPagerOnTabSelectedListener(mViewPager));
 
     }
-
 
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
