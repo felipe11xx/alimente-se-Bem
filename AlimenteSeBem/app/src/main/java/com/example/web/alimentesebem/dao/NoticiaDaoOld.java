@@ -1,6 +1,5 @@
 package com.example.web.alimentesebem.dao;
 
-import android.util.Log;
 
 import com.example.web.alimentesebem.model.NoticiaBean;
 

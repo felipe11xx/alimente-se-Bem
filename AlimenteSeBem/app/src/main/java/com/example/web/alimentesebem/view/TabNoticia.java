@@ -10,7 +10,6 @@ import android.view.ViewGroup;
 
 import com.example.web.alimentesebem.R;
 import com.example.web.alimentesebem.dao.NoticiaDaoOld;
-import com.example.web.alimentesebem.model.NoticiaBean;
 import com.example.web.alimentesebem.view.adapter.NoticiaAdpter;
 import com.example.web.alimentesebem.view.adapter.OnItemClick;
 
@@ -32,11 +31,12 @@ public class TabNoticia extends android.support.v4.app.Fragment implements OnIte
 
         View rootView = inflater.inflate(R.layout.tab_noticias, container, false);
 
-        List<NoticiaBean> noticias = daoOld.getList();
+        String ordem = "titulo";
+        List<Long> noticiasId = daoOld.listarIds();
 
         recyclerView = rootView.findViewById(R.id.rv_noticias);
 
-        recyclerView.setAdapter(new NoticiaAdpter(noticias,this.getContext(),this));
+        recyclerView.setAdapter(new NoticiaAdpter(noticiasId,this.getContext(),this));
 
         //Cria a tela com a lista das noticias recentes
         RecyclerView.LayoutManager layout = new LinearLayoutManager(this.getContext(), LinearLayoutManager.VERTICAL,

@@ -1,19 +1,26 @@
 package com.example.web.alimentesebem.model;
 
+import android.annotation.SuppressLint;
+import android.support.annotation.NonNull;
+
+import java.text.SimpleDateFormat;
 import java.util.Date;
 
 /**
  * Created by Felipe on 03/03/2018.
  */
-
-public class NoticiaBean {
+@SuppressLint("SimpleDateFormat")
+public class NoticiaBean implements  Comparable<NoticiaBean> {
 
     private Long id;
     private String titulo;
     private String conteudo;
+    private String headLine;
     private Date dataPublica;
     private CategoriaNoticiaBean categoria;
-    private byte[] capa;
+    private String capa;
+    private static SimpleDateFormat fmtData =
+            new SimpleDateFormat("dd 'de' MMMM 'de' yyyy");
 
     public NoticiaBean(){
 
@@ -63,11 +70,11 @@ public class NoticiaBean {
         this.dataPublica = dataPublica;
     }
 
-    public byte[] getCapa() {
+    public String getCapa() {
         return capa;
     }
 
-    public void setCapa(byte[] capa) {
+    public void setCapa(String capa) {
         this.capa = capa;
     }
 
@@ -77,5 +84,52 @@ public class NoticiaBean {
 
     public void setCategoria(CategoriaNoticiaBean categoria) {
         this.categoria = categoria;
+    }
+
+    public String getHeadLine() {
+        return headLine;
+    }
+
+    public void setHeadLine(String headLine) {
+        this.headLine = headLine;
+    }
+
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) return true;
+        if (o == null || getClass() != o.getClass()) return false;
+
+       NoticiaBean noticia = (NoticiaBean) o;
+
+        if (!id.equals(noticia.id)) return false;
+
+        return true;
+    }
+
+    @Override
+    public int hashCode() {
+        return id.hashCode();
+    }
+
+    @Override
+    public String toString() {
+        return "Album{" +
+                "id=" + id +
+                ", titulo='" + titulo + '\'' +
+                ", headline='" + headLine + '\'' +
+                ", descricao='" + conteudo + '\'' +
+                ", data_Criacao=" + dataPublica + '\'' +
+                ", imagem=" + capa + '\'' +
+                ", link_Externo=" + '\'' +
+                ", categorias_Noticias="+ null+ '\'' +
+                ", id_Cat_Noticias" + categoria.getId() +
+                '}';
+
+
+    }
+
+    @Override
+    public int compareTo(@NonNull NoticiaBean outra) {
+        return titulo.compareToIgnoreCase(outra.titulo) ;
     }
 }

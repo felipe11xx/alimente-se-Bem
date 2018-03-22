@@ -22,12 +22,13 @@ import java.util.Locale;
 
 public class NoticiaAdpter extends RecyclerView.Adapter {
 
-   private List<NoticiaBean> noticias;
+   private List<Long> noticiasId;
    private Context context;
    private OnItemClick onItemClick;
+   public NoticiaDao dao = NoticiaDao.instance;
 
-   public NoticiaAdpter(List<NoticiaBean> noticias, Context context, OnItemClick click){
-       this.noticias = noticias;
+   public NoticiaAdpter(List<Long> noticiasId, Context context, OnItemClick click){
+       this.noticiasId = noticiasId;
        this.context = context;
        this.onItemClick = click;
    }
@@ -46,14 +47,14 @@ public class NoticiaAdpter extends RecyclerView.Adapter {
     public void onBindViewHolder(RecyclerView.ViewHolder holder, int position) {
         NoticiaViewHolder viewHolder = (NoticiaViewHolder) holder;
 
-        NoticiaBean noticiaBean = noticias.get(position);
+        NoticiaBean noticiaBean = dao.localizar(noticiasId.get(position));
 
         ((NoticiaViewHolder)holder).preencher(noticiaBean);
     }
 
     @Override
     public int getItemCount() {
-        return noticias.size();
+        return noticiasId.size();
     }
 
     public class NoticiaViewHolder extends RecyclerView.ViewHolder implements View.OnClickListener {
