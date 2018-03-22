@@ -1,5 +1,6 @@
 package com.example.web.alimentesebem.dao;
 
+import android.util.Log;
 
 import com.example.web.alimentesebem.model.NoticiaBean;
 
@@ -21,7 +22,7 @@ public class NoticiaDaoOld {
 
     public NoticiaDaoOld() {
         lista = new ArrayList<>();
-        lista.add(new NoticiaBean(id++, "Novos cursos", "Lorem ipsum dolor sit amet, consectetur adipi" +
+    /*    lista.add(new NoticiaBean(id++, "Novos cursos", "Lorem ipsum dolor sit amet, consectetur adipi" +
                 "scing elit, sed do eiusmod tempor incididunt ut labore",
                 new GregorianCalendar(2017, Calendar.NOVEMBER, 10).getTime()));
         lista.add(new NoticiaBean(id++, "Beneficios da Cenoura", "Lorem ipsum dolor sit amet, consectetur adipi" +
@@ -40,7 +41,7 @@ public class NoticiaDaoOld {
                 "scing elit, sed do eiusmod tempor incididunt ut labore",
                 new GregorianCalendar(2017, Calendar.NOVEMBER, 10).getTime()));
         lista.add(new NoticiaBean(id++, "Como a alimentação afeta Você", "Lorem ",
-                new GregorianCalendar(2017, Calendar.NOVEMBER, 10).getTime()));
+                new GregorianCalendar(2017, Calendar.NOVEMBER, 10).getTime()));*/
     }
 
     public List<NoticiaBean> getList(){

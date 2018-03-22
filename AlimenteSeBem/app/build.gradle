@@ -16,10 +16,6 @@ android {
             proguardFiles getDefaultProguardFile('proguard-android.txt'), 'proguard-rules.pro'
         }
     }
-    packagingOptions {
-        exclude 'META-INF/LICENSE'
-        exclude 'META-INF/ASL2.0'
-    }
 }
 
 dependencies {
@@ -31,7 +27,6 @@ dependencies {
     androidTestImplementation 'com.android.support.test:runner:1.0.1'
     androidTestImplementation 'com.android.support.test.espresso:espresso-core:3.0.1'
     implementation 'com.android.support:cardview-v7:26.+'
-    // implementation 'org.codehaus.jackson:jackson-mapper-asl:1.9.13'
 
     // retrofit library
     compile 'com.google.code.gson:gson:2.8.2'

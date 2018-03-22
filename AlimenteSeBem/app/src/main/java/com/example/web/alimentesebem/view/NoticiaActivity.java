@@ -39,12 +39,7 @@ public class NoticiaActivity extends AppCompatActivity {
             Bundle bundle = getIntent().getExtras();
             if(bundle != null) {
                 id = bundle.getLong("NoticiaId");
-              /*  obj = daoOld.getEvento(id);
-                if(obj !=null) {
-                    tvtitulo.setText(obj.getTitulo());
-                    tvDecricao.setText(obj.getDescricao());
 
-                }*/
             }
         }
 

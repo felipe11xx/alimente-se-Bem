@@ -48,8 +48,8 @@ public class MainActivity extends AppCompatActivity {
         toolbarTittle = findViewById(R.id.toolbar_title);
         Typeface typeFont = Typeface.createFromAsset(getAssets(),"fonts/tahu.ttf");
         toolbarTittle.setTypeface(typeFont);
-/*        Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
-        setSupportActionBar(toolbar);*/
+        Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
+        setSupportActionBar(toolbar);
 
         // Create the adapter that will return a fragment for each of the three
         // primary sections of the activity.
@@ -75,15 +75,11 @@ public class MainActivity extends AppCompatActivity {
 
     @Override
     public boolean onOptionsItemSelected(MenuItem item) {
-        // Handle action bar item clicks here. The action bar will
-        // automatically handle clicks on the Home/Up button, so long
-        // as you specify a parent activity in AndroidManifest.xml.
-        int id = item.getItemId();
+        int idView = item.getItemId();
 
-        //noinspection SimplifiableIfStatement
-        if (id == R.id.ic_logoff) {
+        if (idView == R.id.ic_logoff){
 
-            //Cria o Builder do dialogo de exclusão
+             //Cria o Builder do dialogo de exclusão
             AlertDialog.Builder builder = new AlertDialog.Builder(this);
             builder.setMessage("Deseja mesmo Sair ?")
                     .setTitle("Logoff");
@@ -105,10 +101,10 @@ public class MainActivity extends AppCompatActivity {
             AlertDialog dialog = builder.create();
             dialog.show();
 
-            return true;
-        }
+         }
 
-        return super.onOptionsItemSelected(item);
+
+        return true;
     }
 
     /**

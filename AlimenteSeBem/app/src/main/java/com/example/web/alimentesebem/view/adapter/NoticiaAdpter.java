@@ -1,8 +1,10 @@
 package com.example.web.alimentesebem.view.adapter;
 
 import android.content.Context;
+import android.content.Intent;
 import android.graphics.Typeface;
 import android.support.v7.widget.RecyclerView;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -11,6 +13,7 @@ import android.widget.TextView;
 
 import com.example.web.alimentesebem.R;
 import com.example.web.alimentesebem.model.NoticiaBean;
+import com.example.web.alimentesebem.view.NoticiaActivity;
 
 import java.text.DateFormat;
 import java.util.List;
@@ -22,15 +25,12 @@ import java.util.Locale;
 
 public class NoticiaAdpter extends RecyclerView.Adapter {
 
-   private List<Long> noticiasId;
+   private List<NoticiaBean> noticias;
    private Context context;
-   private OnItemClick onItemClick;
-   public NoticiaDao dao = NoticiaDao.instance;
 
-   public NoticiaAdpter(List<Long> noticiasId, Context context, OnItemClick click){
-       this.noticiasId = noticiasId;
+   public NoticiaAdpter(List<NoticiaBean> noticias, Context context) {
+       this.noticias = noticias;
        this.context = context;
-       this.onItemClick = click;
    }
 
     @Override
@@ -47,14 +47,14 @@ public class NoticiaAdpter extends RecyclerView.Adapter {
     public void onBindViewHolder(RecyclerView.ViewHolder holder, int position) {
         NoticiaViewHolder viewHolder = (NoticiaViewHolder) holder;
 
-        NoticiaBean noticiaBean = dao.localizar(noticiasId.get(position));
+        NoticiaBean noticiaBean = noticias.get(position);
 
         ((NoticiaViewHolder)holder).preencher(noticiaBean);
     }
 
     @Override
     public int getItemCount() {
-        return noticiasId.size();
+        return noticias.size();
     }
 
     public class NoticiaViewHolder extends RecyclerView.ViewHolder implements View.OnClickListener {
@@ -88,18 +88,19 @@ public class NoticiaAdpter extends RecyclerView.Adapter {
 
         public void preencher(NoticiaBean noticiaBean){
 
-
             noticiaId = noticiaBean.getId();
             tvTitulo.setText(noticiaBean.getTitulo());
-            tvConteudo.setText(noticiaBean.getConteudo());
+            tvConteudo.setText(noticiaBean.getDescricao());
             tvPublicacao.setText(dtFmt.format(noticiaBean.getDataPublica()) );
         }
 
 
         @Override
         public void onClick(View v) {
-            onItemClick.onClick(noticiaId);
-
+            //Log.d("idNoticia: ", noticiaId.toString());
+            Intent intent = new Intent(v.getContext(),NoticiaActivity.class );
+            intent.putExtra("NoticiaId", noticiaId);
+            v.getContext().startActivity(intent);
         }
 
 
