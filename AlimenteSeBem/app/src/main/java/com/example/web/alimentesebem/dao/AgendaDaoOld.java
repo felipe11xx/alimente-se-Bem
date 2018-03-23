@@ -21,6 +21,8 @@ public class AgendaDaoOld {
     public AgendaDaoOld() {
         lista = new ArrayList<>();
 
+        //construtor da agenda desatualizado
+/*
         lista.add(new AgendaBean(id++,"Feira da Fruta","Lorem ipsum dolor sit amet, ad nec tamquam disputando voluptatibus." +
                 " In eam dicam vidisse philosophia, et est alia persecuti. An per sonet cetero. Ne per vitae nusquam vivendum." +
                 " Eius mucius posidonium ad ius, vero maluisset maiestatis vis an. Vim singulis platonem complectitur te, nonumy" +
@@ -37,6 +39,7 @@ public class AgendaDaoOld {
                 " In eam dicam vidisse philosophia, et est alia persecuti. An per sonet cetero. Ne per vitae nusquam vivendum." +
                 " Eius mucius posidonium ad ius, vero maluisset maiestatis vis an. Vim singulis platonem complectitur te, nonumy" +
                 " ponderum an mel.","Sesi Santos",new GregorianCalendar(2018, Calendar.FEBRUARY, 15).getTime(),"11:30",15.99));
+*/
 
     }
 

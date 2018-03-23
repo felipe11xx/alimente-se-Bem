@@ -25,12 +25,12 @@ public class VideoAdpeter extends RecyclerView.Adapter {
 
     private Context context;
     private List<VideoBean> lista;
-    private OnItemClick click;
 
-    public VideoAdpeter(Context context, List<VideoBean> lista, OnItemClick click) {
+
+    public VideoAdpeter(Context context, List<VideoBean> lista) {
         this.context = context;
         this.lista = lista;
-        this.click = click;
+
     }
 
     @Override
@@ -82,10 +82,10 @@ public class VideoAdpeter extends RecyclerView.Adapter {
             videoId = video.getId();
             tvDesc.setText(video.getDescricao());
             tvTitulo.setText(video.getTitulo());
-            tvData.setText(dtFmt.format(video.getData()));
-
+//            tvData.setText(dtFmt.format(video.getData()));
+            String url = video.getUrl().substring(video.getUrl().lastIndexOf("v=")+2);
             String frameVideo = "<html><body><iframe width=\"100% !important\" height=\"100% !important\" src=\"" +
-                    "https://www.youtube.com/embed/"+ video.getUrl() +
+                    "https://www.youtube.com/embed/"+ url +
                     "\" frameborder=\"0\" allowfullscreen></iframe></body></html>";
 
 
@@ -103,7 +103,8 @@ public class VideoAdpeter extends RecyclerView.Adapter {
 
         @Override
         public void onClick(View v) {
-            click.onClick(videoId);
+
+            //click.onClick(videoId);
         }
     }
 }

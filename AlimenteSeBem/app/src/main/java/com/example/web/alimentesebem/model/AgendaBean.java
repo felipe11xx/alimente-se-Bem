@@ -11,8 +11,8 @@ public class AgendaBean {
     private Long id;
     private String titulo;
     private String descricao;
-    private String local;
-    private Date data;
+    private UnidadeBean unidades_Sesi;
+    private Date data_Evento;
     private String horario;
     private byte[] capa;
     private String[] tags;
@@ -25,12 +25,12 @@ public class AgendaBean {
         this.id = id;
     }
 
-    public AgendaBean(Long id, String titulo, String descricao, String local, Date data, String horario, double preco) {
+    public AgendaBean(Long id, String titulo, String descricao, UnidadeBean unidades_Sesi, Date data_Evento, String horario, double preco) {
         this.id = id;
         this.titulo = titulo;
         this.descricao = descricao;
-        this.local = local;
-        this.data = data;
+        this.unidades_Sesi = unidades_Sesi;
+        this.data_Evento = data_Evento;
         this.horario = horario;
         this.preco = preco;
 
@@ -60,20 +60,20 @@ public class AgendaBean {
         this.descricao = descricao;
     }
 
-    public String getLocal() {
-        return local;
+    public UnidadeBean getUnidades_Sesi() {
+        return unidades_Sesi;
     }
 
-    public void setLocal(String local) {
-        this.local = local;
+    public void setUnidades_Sesi(String local) {
+        this.unidades_Sesi = unidades_Sesi;
     }
 
-    public Date getData() {
-        return data;
+    public Date getData_Evento() {
+        return data_Evento;
     }
 
-    public void setData(Date data) {
-        this.data = data;
+    public void setData_Evento(Date data) {
+        this.data_Evento = data;
     }
 
     public String getHorario() {

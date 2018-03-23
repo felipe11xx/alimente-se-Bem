@@ -1,6 +1,7 @@
 package com.example.web.alimentesebem.view.adapter;
 
 import android.content.Context;
+import android.content.Intent;
 import android.graphics.Bitmap;
 import android.graphics.Color;
 import android.graphics.Typeface;
@@ -14,6 +15,7 @@ import android.widget.TextView;
 import com.example.web.alimentesebem.R;
 import com.example.web.alimentesebem.model.AgendaBean;
 import com.example.web.alimentesebem.utils.Utilitarios;
+import com.example.web.alimentesebem.view.EventoActivity;
 
 import java.text.DateFormat;
 import java.util.List;
@@ -26,12 +28,11 @@ import java.util.Locale;
 public class AgendaAdpter extends RecyclerView.Adapter{
     private List<AgendaBean> lista;
     private Context context;
-    private OnItemClick onItemClick;
 
-    public AgendaAdpter(List<AgendaBean> lista, Context context, OnItemClick click) {
+
+    public AgendaAdpter(List<AgendaBean> lista, Context context) {
         this.lista = lista;
         this.context = context;
-        this.onItemClick = click;
 
     }
 
@@ -98,8 +99,9 @@ public class AgendaAdpter extends RecyclerView.Adapter{
         public void preencher(AgendaBean obj){
             eventoId = obj.getId();
             tvTituloEvento.setText(obj.getTitulo());
-            tvLocal.setText(obj.getLocal());
-            tvHorario.setText(obj.getHorario());
+            tvLocal.setText(obj.getUnidades_Sesi().getNome() );
+            String horario = String.valueOf(obj.getData_Evento());
+            tvHorario.setText(horario.substring(11,16));
           /*  byte[] foto = obj.getCapa();
             if (foto != null) {
                 // Transforma o vetor de bytes de base64 para bitmap
@@ -112,8 +114,8 @@ public class AgendaAdpter extends RecyclerView.Adapter{
                 img_capa_evento.setBackgroundColor(Color.TRANSPARENT);
             }*/
             // Cria um bitmap contendo o dia e Mês
-            String dia = dtFmt.format(obj.getData()).substring(0,2);
-            String mes = dtFmt.format(obj.getData()).substring(6,9);
+            String dia = dtFmt.format(obj.getData_Evento()).substring(0,2);
+            String mes = dtFmt.format(obj.getData_Evento()).substring(6,9);
             String diaMes = dia + " " + mes;
             Bitmap bitmap = Utilitarios.circularBitmapAndText(
                     Color.parseColor("#ef8219"), 150, 150,diaMes,45 );
@@ -124,7 +126,9 @@ public class AgendaAdpter extends RecyclerView.Adapter{
         @Override
         public void onClick(View v) {
             //Pega o id do evento clincado do cardView
-            onItemClick.onClick(eventoId);
+            Intent intent = new Intent(v.getContext(),EventoActivity.class );
+            intent.putExtra("EventoId", eventoId);
+            v.getContext().startActivity(intent);
         }
 
 

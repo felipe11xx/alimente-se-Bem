@@ -46,7 +46,7 @@ public class TabNoticia extends android.support.v4.app.Fragment {
             @Override
             public void onResponse(Call<List<NoticiaBean>> call, Response<List<NoticiaBean>> response) {
                 if (response.isSuccessful()) {
-                    Log.d("passei", "passei");
+
                     noticias = response.body();
                     if (noticias != null) {
                         recyclerView.setAdapter(new NoticiaAdpter(noticias, getContext()));

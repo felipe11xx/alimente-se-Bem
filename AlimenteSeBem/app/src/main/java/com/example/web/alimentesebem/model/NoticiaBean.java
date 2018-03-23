@@ -16,6 +16,34 @@ public class NoticiaBean {
     private CategoriaNoticiaBean categoria;
     private byte[] capa;
 
+
+    public NoticiaBean(long id) {
+        this.id = id;
+    }
+
+    public NoticiaBean(Long id, String titulo, Date data_Criacao) {
+        this.id = id;
+        this.titulo = titulo;
+        this.data_Criacao = data_Criacao;
+
+    }
+
+    public Long getId() {
+        return id;
+    }
+
+    public void setId(Long id) {
+        this.id = id;
+    }
+
+    public String getTitulo() {
+        return titulo;
+    }
+
+    public void setTitulo(String titulo) {
+        this.titulo = titulo;
+    }
+
     public String getHeadline() {
         return headline;
     }
@@ -34,33 +62,6 @@ public class NoticiaBean {
 
     public NoticiaBean(){
 
-    }
-
-    public NoticiaBean(long id) {
-        this.id = id;
-    }
-
-    public NoticiaBean(Long id, String titulo, Date dataPublica) {
-        this.id = id;
-        this.titulo = titulo;
-        this.data_Criacao = dataPublica;
-
-    }
-
-    public Long getId() {
-        return id;
-    }
-
-    public void setId(Long id) {
-        this.id = id;
-    }
-
-    public String getTitulo() {
-        return titulo;
-    }
-
-    public void setTitulo(String titulo) {
-        this.titulo = titulo;
     }
 
     public Date getDataPublica() {

@@ -12,34 +12,41 @@ import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.CardView;
 import android.support.v7.widget.RecyclerView;
 import android.support.v7.widget.StaggeredGridLayoutManager;
+import android.util.Log;
 import android.view.MenuItem;
 import android.view.View;
 import android.widget.ImageButton;
 import android.widget.ImageView;
 import android.widget.TextView;
+
 import com.example.web.alimentesebem.R;
 import com.example.web.alimentesebem.dao.AgendaDaoOld;
 import com.example.web.alimentesebem.model.AgendaBean;
+import com.example.web.alimentesebem.rest.config.RetrofitConfig;
 import com.example.web.alimentesebem.utils.Utilitarios;
 import com.example.web.alimentesebem.view.adapter.TagEventoAdapter;
+
 import java.text.DateFormat;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Locale;
 
+import retrofit2.Call;
+import retrofit2.Callback;
+import retrofit2.Response;
+import retrofit2.Retrofit;
+
 /**
  * Created by WEB on 07/03/2018.
  */
 
-public class EventoActivity extends AppCompatActivity{
+public class EventoActivity extends AppCompatActivity {
 
-    private ImageView imgCapaEvento,imgData;
-    private ImageButton btnShare,btnVoltar;
-    private TextView tvLocalHorario,tvDecricao,tvtitulo,lblPreco,tvPreco,tvToolbar;
-    private AgendaBean obj;
-    private AgendaDaoOld daoOld = AgendaDaoOld.instance;
+    private ImageView imgCapaEvento, imgData;
+    private ImageButton btnShare, btnVoltar;
+    private TextView tvLocalHorario, tvDecricao, tvtitulo, lblPreco, tvPreco, tvToolbar;
+    //  private AgendaDaoOld daoOld = AgendaDaoOld.instance;
     private Long id;
-    private Intent intent;
     private DateFormat dtFmt = DateFormat.getDateInstance(DateFormat.LONG, new Locale("pt", "BR"));
     private List<String> tags;
     private RecyclerView recyclerView;
@@ -67,15 +74,13 @@ public class EventoActivity extends AppCompatActivity{
         tvtitulo.setTypeface(typeFont);
         lblPreco.setTypeface(typeFont);
 
-        typeFont = Typeface.createFromAsset(getAssets(),"fonts/Gotham_Light.otf");
+        typeFont = Typeface.createFromAsset(getAssets(), "fonts/Gotham_Light.otf");
         tvDecricao.setTypeface(typeFont);
         tvLocalHorario.setTypeface(typeFont);
         tvPreco.setTypeface(typeFont);
 
-        typeFont = Typeface.createFromAsset(getAssets(),"fonts/tahu.ttf");
+        typeFont = Typeface.createFromAsset(getAssets(), "fonts/tahu.ttf");
         tvToolbar.setTypeface(typeFont);
-
-        obj = new AgendaBean();
 
         tags = new ArrayList<>();
         tags.add("bacon1");
@@ -92,43 +97,58 @@ public class EventoActivity extends AppCompatActivity{
         tags.add("fit3");
 
         recyclerView = findViewById(R.id.rv_tag);
-        recyclerView.setAdapter(new TagEventoAdapter(tags,this));
+        recyclerView.setAdapter(new TagEventoAdapter(tags, this));
         recyclerView.setLayoutManager(new StaggeredGridLayoutManager(3, StaggeredGridLayoutManager.HORIZONTAL));
 
-        intent  = getIntent();
         //usa o ID no Bundle para atribuir valor aos elementos da tela
-        if(intent != null) {
-            Bundle bundle = getIntent().getExtras();
-            if(bundle != null) {
-                id = bundle.getLong("EventoId");
-                obj = daoOld.getEvento(id);
-                if(obj !=null) {
-                    tvtitulo.setText(obj.getTitulo());
-                    tvDecricao.setText(obj.getDescricao());
-                    tvLocalHorario.setText(obj.getLocal() + "  " +
-                            obj.getHorario());
 
-                    if(obj.getPreco() == 0){
-                        tvPreco.setText("Gratuito");
-                    }else{
-                        tvPreco.setText("R$: " + String.valueOf(String.format("%.2f", obj.getPreco())));
-                    }
+        final Bundle bundle = getIntent().getExtras();
+        final Long EventoId = (bundle != null) ? bundle.getLong("EventoId") : null;
 
-                    if (obj.getCapa() != null) {
-                        imgCapaEvento.setImageBitmap(Utilitarios.bitmapFromBase64(obj.getCapa()));
+        if (EventoId != 0) {
+            id = EventoId;
+
+            Call<AgendaBean> call = new RetrofitConfig().getRestInterface().getEvento(id);
+            call.enqueue(new Callback<AgendaBean>() {
+                @Override
+                public void onResponse(Call<AgendaBean> call, Response<AgendaBean> response) {
+                    if (response.isSuccessful()) {
+                        AgendaBean obj = response.body();
+                        tvtitulo.setText(obj.getTitulo());
+                        tvDecricao.setText(obj.getDescricao());
+                        tvLocalHorario.setText(obj.getUnidades_Sesi().getLocal() + "  " +
+                                obj.getHorario());
+
+                        if (obj.getPreco() == 0) {
+                            tvPreco.setText("Gratuito");
+                        } else {
+                            tvPreco.setText("R$: " + String.valueOf(String.format("%.2f", obj.getPreco())));
+                        }
+
+                        if (obj.getCapa() != null) {
+                            imgCapaEvento.setImageBitmap(Utilitarios.bitmapFromBase64(obj.getCapa()));
+                        }
+                        // Obtem a 1ª letra do nome da pessoa e converte para Maiuscula
+                        String dia = dtFmt.format(obj.getData_Evento()).substring(0, 2);
+                        String mes = dtFmt.format(obj.getData_Evento()).substring(6, 9);
+                        String diaMes = dia + " " + mes;
+                        // Cria um bitmap contendo Dia e mês
+                        // Bitmap bitmap = Utilitarios.quadradoBitmapAndText(
+                        Bitmap bitmap = Utilitarios.circularBitmapAndText(
+                                Color.parseColor("#ef8219"), 150, 150, diaMes, 45);
+                        imgData.setImageBitmap(bitmap);
                     }
-                    // Obtem a 1ª letra do nome da pessoa e converte para Maiuscula
-                    String dia = dtFmt.format(obj.getData()).substring(0,2);
-                    String mes = dtFmt.format(obj.getData()).substring(6,9);
-                    String diaMes = dia + " " + mes;
-                    // Cria um bitmap contendo Dia e mês
-                    // Bitmap bitmap = Utilitarios.quadradoBitmapAndText(
-                    Bitmap bitmap = Utilitarios.circularBitmapAndText(
-                            Color.parseColor("#ef8219"), 150, 150,diaMes, 45 );
-                    imgData.setImageBitmap(bitmap);
                 }
-            }
+
+                @Override
+                public void onFailure(Call<AgendaBean> call, Throwable t) {
+                    Log.d("EventoActivity: ", t.getMessage().toString());
+                }
+            });
+
+
         }
+
 
         btnVoltar.setOnClickListener(new View.OnClickListener() {
             @Override
