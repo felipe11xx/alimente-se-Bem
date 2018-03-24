@@ -1,16 +1,20 @@
 package com.example.web.alimentesebem.model;
 
+import com.google.gson.annotations.SerializedName;
+
 /**
  * Created by WEB on 15/03/2018.
  */
 
 public class UsuarioBean {
-
+    // @SerializedName("id")
     private Long id;
+    @SerializedName("nome")
     private String nome;
+    @SerializedName("email")
     private String email;
+    @SerializedName("senha")
     private String senha;
-    private boolean ativo;
 
     public UsuarioBean (){}
 
@@ -23,12 +27,11 @@ public class UsuarioBean {
         this.nome = nome;
     }
 
-    public UsuarioBean(Long id, String nome, String email, String senha, boolean ativo) {
-        this.id = id;
+
+    public UsuarioBean(String nome, String email, String senha) {
         this.nome = nome;
         this.email = email;
         this.senha = senha;
-        this.ativo = ativo;
     }
 
     public Long getId() {
@@ -63,11 +66,4 @@ public class UsuarioBean {
         this.senha = senha;
     }
 
-    public boolean isAtivo() {
-        return ativo;
-    }
-
-    public void setAtivo(boolean ativo) {
-        this.ativo = ativo;
-    }
 }

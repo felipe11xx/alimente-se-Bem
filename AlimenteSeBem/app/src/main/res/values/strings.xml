@@ -25,6 +25,13 @@
     <string name="enviar">Enviar</string>
     <string name="entre_com_sua_mensagem">Entre com sua mensagem</string>
 
+    <!-- Strings relacionads as API de JSON -->
+    <string name="falha_de_acesso">Falha ao acessar servidor </string>
+    <string name="noticias_null">Não há notícias a serem mostradas !</string>
+    <string name="videos_null">Não há videos a serem mostrados !</string>
+    <string name="foruns_null">Não há fóruns a serem mostrados !</string>
+    <string name="agenda_null">Não há agenda a serem mostrados !</string>
+
     <!-- Strings related to login -->
     <string name="prompt_email">Email</string>
     <string name="prompt_password">Senha</string>

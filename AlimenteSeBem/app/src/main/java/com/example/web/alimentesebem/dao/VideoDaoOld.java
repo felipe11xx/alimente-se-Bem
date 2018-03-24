@@ -1,10 +1,7 @@
 package com.example.web.alimentesebem.dao;
 
-import android.provider.MediaStore;
-
 import com.example.web.alimentesebem.model.VideoBean;
 
-import java.text.DateFormat;
 import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.Collections;

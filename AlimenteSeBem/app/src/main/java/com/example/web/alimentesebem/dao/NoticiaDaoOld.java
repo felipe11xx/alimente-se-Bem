@@ -1,13 +1,9 @@
 package com.example.web.alimentesebem.dao;
 
-import android.util.Log;
-
 import com.example.web.alimentesebem.model.NoticiaBean;
 
 import java.util.ArrayList;
-import java.util.Calendar;
 import java.util.Collections;
-import java.util.GregorianCalendar;
 import java.util.List;
 
 /**

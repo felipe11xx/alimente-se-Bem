@@ -1,7 +1,5 @@
 package com.example.web.alimentesebem.view;
 
-import android.animation.Animator;
-import android.animation.AnimatorListenerAdapter;
 import android.annotation.TargetApi;
 import android.content.Intent;
 import android.content.pm.PackageManager;
@@ -29,6 +27,7 @@ import android.widget.ArrayAdapter;
 import android.widget.AutoCompleteTextView;
 import android.widget.Button;
 import android.widget.EditText;
+import android.widget.ProgressBar;
 import android.widget.TextView;
 
 import java.util.ArrayList;
@@ -63,9 +62,10 @@ public class LoginActivity extends AppCompatActivity implements LoaderCallbacks<
     // UI references.
     private AutoCompleteTextView mEmailView;
     private EditText mPasswordView;
-    private View mProgressView;
+    private ProgressBar mProgressView;
     private Intent intent;
     private TextView tvLogo;
+    private BarraProgresso barraProgresso = BarraProgresso.instance;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -208,7 +208,7 @@ public class LoginActivity extends AppCompatActivity implements LoaderCallbacks<
         } else {
             // Show a progress spinner, and kick off a background task to
             // perform the user login attempt.
-            showProgress(true);
+            barraProgresso.showProgress(true,mProgressView);
             mAuthTask = new UserLoginTask(email, password);
             // mAuthTask.execute((Void) null);
             intent = new Intent(LoginActivity.this, MainActivity.class);
@@ -230,7 +230,7 @@ public class LoginActivity extends AppCompatActivity implements LoaderCallbacks<
     /**
      * Shows the progress UI and hides the login form.
      */
-    @TargetApi(Build.VERSION_CODES.HONEYCOMB_MR2)
+ /*   @TargetApi(Build.VERSION_CODES.HONEYCOMB_MR2)
     private void showProgress(final boolean show) {
         // On Honeycomb MR2 we have the ViewPropertyAnimator APIs, which allow
         // for very easy animations. If available, use these APIs to fade-in
@@ -253,7 +253,7 @@ public class LoginActivity extends AppCompatActivity implements LoaderCallbacks<
             mProgressView.setVisibility(show ? View.VISIBLE : View.GONE);
 
         }
-    }
+    }*/
 
     @Override
     public Loader<Cursor> onCreateLoader(int i, Bundle bundle) {
@@ -349,7 +349,7 @@ public class LoginActivity extends AppCompatActivity implements LoaderCallbacks<
         @Override
         protected void onPostExecute(final Boolean success) {
             mAuthTask = null;
-            showProgress(false);
+            barraProgresso.showProgress(false,mProgressView);
 
             if (success) {
                 finish();
@@ -362,7 +362,7 @@ public class LoginActivity extends AppCompatActivity implements LoaderCallbacks<
         @Override
         protected void onCancelled() {
             mAuthTask = null;
-            showProgress(false);
+            barraProgresso.showProgress(false,mProgressView);
         }
     }
 }

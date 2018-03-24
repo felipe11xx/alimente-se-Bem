@@ -1,26 +1,23 @@
 package com.example.web.alimentesebem.view;
 
 import android.annotation.SuppressLint;
-import android.content.Intent;
 import android.graphics.Bitmap;
 import android.graphics.Color;
 import android.graphics.Typeface;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
-import android.support.v4.content.ContextCompat;
 import android.support.v7.app.AppCompatActivity;
-import android.support.v7.widget.CardView;
 import android.support.v7.widget.RecyclerView;
 import android.support.v7.widget.StaggeredGridLayoutManager;
-import android.util.Log;
-import android.view.MenuItem;
 import android.view.View;
 import android.widget.ImageButton;
 import android.widget.ImageView;
+import android.widget.ProgressBar;
 import android.widget.TextView;
+import android.widget.Toast;
 
+import com.example.web.alimentesebem.Main;
 import com.example.web.alimentesebem.R;
-import com.example.web.alimentesebem.dao.AgendaDaoOld;
 import com.example.web.alimentesebem.model.AgendaBean;
 import com.example.web.alimentesebem.rest.config.RetrofitConfig;
 import com.example.web.alimentesebem.utils.Utilitarios;
@@ -34,7 +31,6 @@ import java.util.Locale;
 import retrofit2.Call;
 import retrofit2.Callback;
 import retrofit2.Response;
-import retrofit2.Retrofit;
 
 /**
  * Created by WEB on 07/03/2018.
@@ -45,11 +41,12 @@ public class EventoActivity extends AppCompatActivity {
     private ImageView imgCapaEvento, imgData;
     private ImageButton btnShare, btnVoltar;
     private TextView tvLocalHorario, tvDecricao, tvtitulo, lblPreco, tvPreco, tvToolbar;
-    //  private AgendaDaoOld daoOld = AgendaDaoOld.instance;
     private Long id;
     private DateFormat dtFmt = DateFormat.getDateInstance(DateFormat.LONG, new Locale("pt", "BR"));
     private List<String> tags;
     private RecyclerView recyclerView;
+    private BarraProgresso barraProgresso = BarraProgresso.instance;
+    private ProgressBar progressBar;
 
     @SuppressLint("SetTextI18n")
     @Override
@@ -68,6 +65,7 @@ public class EventoActivity extends AppCompatActivity {
         tvPreco = findViewById(R.id.tv_preco);
         tvToolbar = findViewById(R.id.toolbar_evento_text);
         btnVoltar = findViewById(R.id.btn_voltar_evento);
+        progressBar = findViewById(R.id.prg_evento);
 
         //Muda a fonte de alguns textView
         Typeface typeFont = Typeface.createFromAsset(getAssets(), "fonts/Gotham_Condensed_Bold.otf");
@@ -112,8 +110,11 @@ public class EventoActivity extends AppCompatActivity {
             call.enqueue(new Callback<AgendaBean>() {
                 @Override
                 public void onResponse(Call<AgendaBean> call, Response<AgendaBean> response) {
+
+                   barraProgresso.showProgress(true,progressBar);
                     if (response.isSuccessful()) {
                         AgendaBean obj = response.body();
+                        barraProgresso.showProgress(false,progressBar);
                         tvtitulo.setText(obj.getTitulo());
                         tvDecricao.setText(obj.getDescricao());
                         tvLocalHorario.setText(obj.getUnidades_Sesi().getLocal() + "  " +
@@ -142,7 +143,8 @@ public class EventoActivity extends AppCompatActivity {
 
                 @Override
                 public void onFailure(Call<AgendaBean> call, Throwable t) {
-                    Log.d("EventoActivity: ", t.getMessage().toString());
+                     Toast.makeText(Main.getContext(),R.string.falha_de_acesso,Toast.LENGTH_LONG).show();
+                     barraProgresso.showProgress(false,progressBar);
                 }
             });
 

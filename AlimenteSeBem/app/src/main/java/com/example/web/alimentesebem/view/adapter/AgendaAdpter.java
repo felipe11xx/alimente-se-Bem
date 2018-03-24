@@ -131,6 +131,5 @@ public class AgendaAdpter extends RecyclerView.Adapter{
             v.getContext().startActivity(intent);
         }
 
-
     }
 }
