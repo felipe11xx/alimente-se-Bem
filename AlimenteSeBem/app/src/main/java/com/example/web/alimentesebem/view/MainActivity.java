@@ -1,6 +1,7 @@
 package com.example.web.alimentesebem.view;
 
 import android.content.DialogInterface;
+import android.content.Intent;
 import android.graphics.Typeface;
 import android.support.design.widget.TabLayout;
 import android.support.design.widget.FloatingActionButton;
@@ -88,7 +89,9 @@ public class MainActivity extends AppCompatActivity {
             builder.setPositiveButton("Sim", new DialogInterface.OnClickListener() {
                 public void onClick(DialogInterface dialog, int id) {
 
+                    Intent intent = new Intent(getApplicationContext(), LoginActivity.class);
                     finish();
+                    startActivity(intent);
 
                 }
             });

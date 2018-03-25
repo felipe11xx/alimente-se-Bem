@@ -199,7 +199,7 @@
             android:layout_weight="1"
             android:fadeScrollbars="false"
             android:hint="@string/entre_com_sua_mensagem"
-            android:inputType="textMultiLine"
+            android:inputType="textCapSentences|textMultiLine|textShortMessage"
             android:maxLines="4"
             android:minLines="1"
             android:scrollbars="vertical" />

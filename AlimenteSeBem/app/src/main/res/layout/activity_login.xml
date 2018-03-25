@@ -21,6 +21,7 @@
         android:layout_marginEnd="8dp"
         android:layout_marginStart="8dp"
         android:layout_marginTop="32dp"
+        style="@style/EditTextHint"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.0"
         app:layout_constraintStart_toStartOf="parent"
@@ -33,7 +34,10 @@
             android:hint="@string/email"
             android:inputType="textEmailAddress"
             android:maxLines="1"
-            android:singleLine="true"/>
+            android:singleLine="true"
+            android:textColor="@android:color/white"
+            android:textColorHint="@android:color/white"
+            style="@style/EditTextHint"/>
     </android.support.design.widget.TextInputLayout>
 
     <android.support.design.widget.TextInputLayout
@@ -43,6 +47,7 @@
         android:layout_marginEnd="8dp"
         android:layout_marginStart="8dp"
         android:layout_marginTop="8dp"
+        style="@style/EditTextHint"
         app:layout_constraintLeft_toLeftOf="parent"
         app:layout_constraintRight_toRightOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/layoutLogin">
@@ -51,37 +56,41 @@
             android:id="@+id/ed_senha"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:imeActionId="6"
             android:hint="@string/senha"
+            android:imeActionId="6"
             android:imeActionLabel="@string/senha"
             android:imeOptions="actionUnspecified"
             android:inputType="textPassword"
             android:maxLines="1"
-            android:singleLine="true" />
+            android:singleLine="true"
+            android:textColor="@android:color/white"
+            style="@style/EditTextHint"/>
     </android.support.design.widget.TextInputLayout>
 
 
     <Button
         android:id="@+id/btn_logar"
+        style="@style/ButtonLilas"
         android:layout_width="0dp"
         android:layout_height="54dp"
         android:layout_marginStart="64dp"
         android:layout_marginTop="24dp"
-        style="@style/ButtonLilas"
         android:elevation="10dp"
         android:text="@string/logar"
+        android:textColor="@android:color/white"
         app:layout_constraintStart_toStartOf="@+id/layoutEmail"
         app:layout_constraintTop_toBottomOf="@+id/layoutEmail" />
 
     <Button
         android:id="@+id/btn_cadastrar"
+        style="@style/ButtonLilas"
         android:layout_width="wrap_content"
         android:layout_height="0dp"
         android:layout_marginEnd="64dp"
         android:layout_marginTop="24dp"
-        style="@style/ButtonLilas"
         android:elevation="10dp"
         android:text="@string/cadastrar"
+        android:textColor="@android:color/white"
         app:layout_constraintBottom_toBottomOf="@+id/btn_logar"
         app:layout_constraintEnd_toEndOf="@+id/layoutEmail"
         app:layout_constraintStart_toEndOf="@+id/btn_logar"

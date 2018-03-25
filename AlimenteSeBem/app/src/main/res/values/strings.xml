@@ -3,8 +3,6 @@
     <string name="noticias">Notícias</string>
     <string name="agenda">Agenda</string>
     <string name="forum">Fórum</string>
-    <string name="login">Login</string>
-    <string name="senha">Senha</string>
     <string name="config">configurações</string>
     <string name="logar">Logar</string>
     <string name="cadastrar">Cadastra-se</string>
@@ -32,15 +30,19 @@
     <string name="foruns_null">Não há fóruns a serem mostrados !</string>
     <string name="agenda_null">Não há agenda a serem mostrados !</string>
 
-    <!-- Strings related to login -->
-    <string name="prompt_email">Email</string>
-    <string name="prompt_password">Senha</string>
-    <string name="action_sign_in">Logar ou cadastrar</string>
-    <string name="action_sign_in_short">logar</string>
-    <string name="error_invalid_email">Email inválido</string>
-    <string name="error_incorrect_password">Senha incorreta</string>
-    <string name="error_password_required">Preencha sua senha</string>
-    <string name="error_email_required">Preencha seu email</string>
+
+
+    <!-- Strings relacionadas a login e cadastro -->
+    <string name="login">Login</string>
+    <string name="senha">Senha</string>
+    <string name="erro_email_invalido">Email inválido</string>
+    <string name="erro_senha_incorreta">Senha incorreta</string>
+    <string name="erro_senha_n_preechida">Preencha sua senha</string>
+    <string name="erro_confirma_n_preechida">Preencha sua confirmação de senha</string>
+    <string name="erro_email_n_preechida">Preencha com o seu seu email</string>
+    <string name="erro_nome_n_preechida">Preencha com o seu Nome</string>
+    <string name="erro_cofirma_igual_senha">Senha deve ser igual a confirmação</string>
+    <string name="erro_senha_deve_conter">Senha deve conter no minimo 8 caracteres</string>
     <string name="permission_rationale">"Contacts permissions are needed for providing email
         completions."
     </string>
