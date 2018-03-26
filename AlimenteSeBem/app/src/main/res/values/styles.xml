@@ -23,7 +23,6 @@
     </style>
     <style name="ButtonAbacate" parent="Base.TextAppearance.AppCompat.Button" >
         <item name="backgroundTint">@color/colorAccent</item>
-        <item name="android:textColorHint">#ffff</item>
     </style>
     <style name="ButtonFace" parent="Base.TextAppearance.AppCompat.Button" >
         <item name="backgroundTint">@color/azulFacebook</item>

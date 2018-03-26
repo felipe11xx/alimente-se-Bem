@@ -10,6 +10,7 @@ import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.RecyclerView;
 import android.support.v7.widget.StaggeredGridLayoutManager;
 import android.view.View;
+import android.widget.Button;
 import android.widget.ImageButton;
 import android.widget.ImageView;
 import android.widget.ProgressBar;
@@ -47,6 +48,7 @@ public class EventoActivity extends AppCompatActivity {
     private RecyclerView recyclerView;
     private BarraProgresso barraProgresso = BarraProgresso.instance;
     private ProgressBar progressBar;
+    private Button btnRecarregar;
 
     @SuppressLint("SetTextI18n")
     @Override
@@ -66,6 +68,8 @@ public class EventoActivity extends AppCompatActivity {
         tvToolbar = findViewById(R.id.toolbar_evento_text);
         btnVoltar = findViewById(R.id.btn_voltar_evento);
         progressBar = findViewById(R.id.prg_evento);
+        btnRecarregar = findViewById(R.id.btn_recarregar_evento);
+        btnRecarregar.setVisibility(View.INVISIBLE);
 
         //Muda a fonte de alguns textView
         Typeface typeFont = Typeface.createFromAsset(getAssets(), "fonts/Gotham_Condensed_Bold.otf");
@@ -102,55 +106,11 @@ public class EventoActivity extends AppCompatActivity {
 
         final Bundle bundle = getIntent().getExtras();
         final Long EventoId = (bundle != null) ? bundle.getLong("EventoId") : null;
-
+        mostraViews(false);
         if (EventoId != 0) {
             id = EventoId;
-
-            Call<AgendaBean> call = new RetrofitConfig().getRestInterface().getEvento(id);
-            call.enqueue(new Callback<AgendaBean>() {
-                @Override
-                public void onResponse(Call<AgendaBean> call, Response<AgendaBean> response) {
-
-                   barraProgresso.showProgress(true,progressBar);
-                    if (response.isSuccessful()) {
-                        AgendaBean obj = response.body();
-                        barraProgresso.showProgress(false,progressBar);
-                        tvtitulo.setText(obj.getTitulo());
-                        tvDecricao.setText(obj.getDescricao());
-                        tvLocalHorario.setText(obj.getUnidades_Sesi().getLocal() + "  " +
-                                obj.getHorario());
-
-                        if (obj.getPreco() == 0) {
-                            tvPreco.setText("Gratuito");
-                        } else {
-                            tvPreco.setText("R$: " + String.valueOf(String.format("%.2f", obj.getPreco())));
-                        }
-
-                        if (obj.getCapa() != null) {
-                            imgCapaEvento.setImageBitmap(Utilitarios.bitmapFromBase64(obj.getCapa()));
-                        }
-                        // Obtem a 1ª letra do nome da pessoa e converte para Maiuscula
-                        String dia = dtFmt.format(obj.getData_Evento()).substring(0, 2);
-                        String mes = dtFmt.format(obj.getData_Evento()).substring(6, 9);
-                        String diaMes = dia + " " + mes;
-                        // Cria um bitmap contendo Dia e mês
-                        // Bitmap bitmap = Utilitarios.quadradoBitmapAndText(
-                        Bitmap bitmap = Utilitarios.circularBitmapAndText(
-                                Color.parseColor("#ef8219"), 150, 150, diaMes, 45);
-                        imgData.setImageBitmap(bitmap);
-                    }
-                }
-
-                @Override
-                public void onFailure(Call<AgendaBean> call, Throwable t) {
-                     Toast.makeText(Main.getContext(),R.string.falha_de_acesso,Toast.LENGTH_LONG).show();
-                     barraProgresso.showProgress(false,progressBar);
-                }
-            });
-
-
+            acessaServidor();
         }
-
 
         btnVoltar.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -160,5 +120,93 @@ public class EventoActivity extends AppCompatActivity {
         });
     }
 
+    private void acessaServidor(){
+        Call<AgendaBean> call = new RetrofitConfig().getRestInterface().getEvento(id);
+        call.enqueue(new Callback<AgendaBean>() {
+            @Override
+            public void onResponse(Call<AgendaBean> call, Response<AgendaBean> response) {
+
+                barraProgresso.showProgress(true,progressBar);
+                if (response.isSuccessful()) {
+                    //mostra as views que componhe a activity
+                    mostraViews(true);
+                    btnRecarregar.setVisibility(View.INVISIBLE);
+                    AgendaBean obj = response.body();
+                    barraProgresso.showProgress(false,progressBar);
+                    tvtitulo.setText(obj.getTitulo());
+                    tvDecricao.setText(obj.getDescricao());
+                    tvLocalHorario.setText(obj.getUnidades_Sesi().getLocal() + "  " +
+                            obj.getHorario());
+
+                    if (obj.getPreco() == 0) {
+                        tvPreco.setText("Gratuito");
+                    } else {
+                        tvPreco.setText("R$: " + String.valueOf(String.format("%.2f", obj.getPreco())));
+                    }
+
+                    if (obj.getCapa() != null) {
+                        imgCapaEvento.setImageBitmap(Utilitarios.bitmapFromBase64(obj.getCapa()));
+                    }
+                    // Obtem a 1ª letra do nome da pessoa e converte para Maiuscula
+                    String dia = dtFmt.format(obj.getData_Evento()).substring(0, 2);
+                    String mes = dtFmt.format(obj.getData_Evento()).substring(6, 9);
+                    String diaMes = dia + " " + mes;
+                    // Cria um bitmap contendo Dia e mês
+                    // Bitmap bitmap = Utilitarios.quadradoBitmapAndText(
+                    Bitmap bitmap = Utilitarios.circularBitmapAndText(
+                            Color.parseColor("#ef8219"), 150, 150, diaMes, 45);
+                    imgData.setImageBitmap(bitmap);
+                }
+            }
+
+            @Override
+            public void onFailure(Call<AgendaBean> call, Throwable t) {
+                //Em caso de erro oculta as views e mostras só o botão de recarregar
+                mostraViews(false);
+
+                btnRecarregar.setVisibility(View.VISIBLE);
+
+                Toast.makeText(Main.getContext(),R.string.falha_de_acesso,Toast.LENGTH_SHORT).show();
+                barraProgresso.showProgress(false,progressBar);
+
+                //acessa o servidor novamente em caso de falha
+                btnRecarregar.setOnClickListener(new View.OnClickListener() {
+                    @Override
+                    public void onClick(View v) {
+                        barraProgresso.showProgress(true,progressBar);
+                        btnRecarregar.setVisibility(View.INVISIBLE);
+                        acessaServidor();
+                    }
+                });
+            }
+        });
+    }
+
+    private void mostraViews(boolean mostra ){
+       if(mostra){
+           imgCapaEvento.setVisibility(View.VISIBLE);
+           imgData.setVisibility(View.VISIBLE);
+           btnShare.setVisibility(View.VISIBLE);
+           tvDecricao.setVisibility(View.VISIBLE);
+           tvLocalHorario.setVisibility(View.VISIBLE);
+           tvtitulo.setVisibility(View.VISIBLE);
+           lblPreco.setVisibility(View.VISIBLE);
+           tvPreco.setVisibility(View.VISIBLE);
+           recyclerView.setVisibility(View.VISIBLE);
+       }else {
+           imgCapaEvento.setVisibility(View.INVISIBLE);
+           imgData.setVisibility(View.INVISIBLE);
+           btnShare.setVisibility(View.INVISIBLE);
+           tvDecricao.setVisibility(View.INVISIBLE);
+           tvLocalHorario.setVisibility(View.INVISIBLE);
+           tvtitulo.setVisibility(View.INVISIBLE);
+           lblPreco.setVisibility(View.INVISIBLE);
+           tvPreco.setVisibility(View.INVISIBLE);
+           recyclerView.setVisibility(View.INVISIBLE);
+       }
+
+
+
+    }
 
 }

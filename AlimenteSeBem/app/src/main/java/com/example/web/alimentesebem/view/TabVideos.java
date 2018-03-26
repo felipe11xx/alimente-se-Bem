@@ -7,6 +7,7 @@ import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.Button;
 import android.widget.ProgressBar;
 import android.widget.Toast;
 
@@ -26,12 +27,12 @@ import retrofit2.Response;
  * Created by WEB on 12/03/2018.
  */
 
-public class TabVideos extends Fragment implements OnItemClick{
+public class TabVideos extends Fragment {
     private RecyclerView recyclerView;
-  //  public VideoDaoOld daoOld = VideoDaoOld.instance;
     private List<VideoBean> videos ;
     private BarraProgresso barraProgresso = BarraProgresso.instance;
     private ProgressBar progressBar;
+    private Button btnRecarregar;
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
@@ -40,6 +41,17 @@ public class TabVideos extends Fragment implements OnItemClick{
 
         recyclerView = rootView.findViewById(R.id.rv_video);
         progressBar = rootView.findViewById(R.id.prg_videos);
+        btnRecarregar = rootView.findViewById(R.id.btn_recarregar_videos);
+        btnRecarregar.setVisibility(View.INVISIBLE);
+
+        //acessa os dados no servidor
+        acessaServidor();
+
+        return rootView;
+    }
+
+
+    private void acessaServidor(){
 
         Call<List<VideoBean>> call = new RetrofitConfig().getRestInterface().listaVideos();
         call.enqueue(new Callback<List<VideoBean>>() {
@@ -49,6 +61,7 @@ public class TabVideos extends Fragment implements OnItemClick{
                 barraProgresso.showProgress(true,progressBar);
                 if (response.isSuccessful()) {
 
+                    btnRecarregar.setVisibility(View.INVISIBLE);
                     videos = response.body();
                     barraProgresso.showProgress(false,progressBar);
 
@@ -59,24 +72,29 @@ public class TabVideos extends Fragment implements OnItemClick{
                                 false));
 
                     }else{
-                        Toast.makeText(getContext(),R.string.videos_null, Toast.LENGTH_LONG).show();
+                        Toast.makeText(getContext(),R.string.videos_null, Toast.LENGTH_SHORT).show();
+                        barraProgresso.showProgress(false, progressBar);
+
                     }
                 }
             }
 
             @Override
             public void onFailure(Call<List<VideoBean>> call, Throwable t) {
-                barraProgresso.showProgress(true, progressBar);
-                Toast.makeText(getContext(),R.string.falha_de_acesso, Toast.LENGTH_LONG).show();
+                Toast.makeText(getContext(),R.string.falha_de_acesso, Toast.LENGTH_SHORT).show();
+                barraProgresso.showProgress(false, progressBar);
+                btnRecarregar.setVisibility(View.VISIBLE);
+
+                //acessa o servidor novamente em caso de falha
+                btnRecarregar.setOnClickListener(new View.OnClickListener() {
+                    @Override
+                    public void onClick(View v) {
+                        barraProgresso.showProgress(true,progressBar);
+                        btnRecarregar.setVisibility(View.INVISIBLE);
+                        acessaServidor();
+                    }
+                });
             }
         });
-
-
-        return rootView;
-    }
-
-    @Override
-    public void onClick(Long id) {
-
     }
 }

@@ -9,6 +9,7 @@ import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.Button;
 import android.widget.ProgressBar;
 import android.widget.Toast;
 
@@ -36,23 +37,32 @@ public class TabAgenda extends Fragment {
     private Intent intent;
     private BarraProgresso barraProgresso = BarraProgresso.instance;
     private ProgressBar progressBar;
+    private Button btnRecarregar;
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
 
         View rootView = inflater.inflate(R.layout.tab_agenda, container, false);
-     //   List<AgendaBean> calendarios = daoOld.getLista();
+        // List<AgendaBean> calendarios = daoOld.getLista();
         recyclerView = rootView.findViewById(R.id.rv_calendario);
         progressBar = rootView.findViewById(R.id.prg_agenda);
+        btnRecarregar = rootView.findViewById(R.id.btn_recarregar_agenda);
+        btnRecarregar.setVisibility(View.INVISIBLE);
+        // Acessa os dados no servidor
+        acessaServidor();
 
+        return rootView;
+    }
+
+    private void acessaServidor(){
         Call<List<AgendaBean>> call = new RetrofitConfig().getRestInterface().listarEventos();
         call.enqueue(new Callback<List<AgendaBean>>() {
             @Override
             public void onResponse(Call<List<AgendaBean>> call, Response<List<AgendaBean>> response) {
                 barraProgresso.showProgress(true,progressBar);
                 if (response.isSuccessful()) {
-
+                    btnRecarregar.setVisibility(View.INVISIBLE);
                     eventos = response.body();
                     barraProgresso.showProgress(false,progressBar);
                     if (eventos != null) {
@@ -62,20 +72,30 @@ public class TabAgenda extends Fragment {
                                 false);
                         recyclerView.setLayoutManager(layout);
                     }else{
-                        Toast.makeText(getContext(),R.string.agenda_null, Toast.LENGTH_LONG).show();
+                        Toast.makeText(getContext(),R.string.agenda_null, Toast.LENGTH_SHORT).show();
+                        barraProgresso.showProgress(false,progressBar);
+                        btnRecarregar.setVisibility(View.VISIBLE);
                     }
                 }
             }
             @Override
             public void onFailure(Call<List<AgendaBean>> call, Throwable t) {
-                Toast.makeText(getContext(),R.string.falha_de_acesso, Toast.LENGTH_LONG).show();
+                Toast.makeText(getContext(),R.string.falha_de_acesso, Toast.LENGTH_SHORT).show();
+                barraProgresso.showProgress(false,progressBar);
+                btnRecarregar.setVisibility(View.VISIBLE);
+                // Acessa o servidor novamente em caso de falha
+                btnRecarregar.setOnClickListener(new View.OnClickListener() {
+                    @Override
+                    public void onClick(View v) {
+                        barraProgresso.showProgress(true,progressBar);
+                        btnRecarregar.setVisibility(View.INVISIBLE);
+                        acessaServidor();
+                    }
+                });
 
             }
         });
-
-        return rootView;
     }
-
 
 
 }

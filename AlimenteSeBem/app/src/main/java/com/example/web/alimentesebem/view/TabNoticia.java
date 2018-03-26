@@ -1,11 +1,13 @@
 package com.example.web.alimentesebem.view;
 
+import android.os.Build;
 import android.os.Bundle;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.Button;
 import android.widget.ProgressBar;
 import android.widget.Toast;
 
@@ -30,8 +32,7 @@ public class TabNoticia extends android.support.v4.app.Fragment {
     private List<NoticiaBean> noticias;
     private ProgressBar prgNoticias;
     private BarraProgresso barraProgresso = BarraProgresso.instance;
-/*    private Handler handler = new Handler();
-    private int progressStatus = 0;*/
+    private Button btnRecarregar;
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
@@ -42,6 +43,15 @@ public class TabNoticia extends android.support.v4.app.Fragment {
 
         recyclerView = rootView.findViewById(R.id.rv_noticias);
         prgNoticias = rootView.findViewById(R.id.prg_noticias2);
+        btnRecarregar = rootView.findViewById(R.id.btn_recarregar_noticias);
+        btnRecarregar.setVisibility(View.INVISIBLE);
+        //acessa os dados no servidor
+        acessaServidor();
+
+        return rootView;
+    }
+
+    private void acessaServidor(){
         Call<List<NoticiaBean>> call = new RetrofitConfig().getRestInterface().listarNoticias();
         call.enqueue(new Callback<List<NoticiaBean>>() {
             @Override
@@ -50,6 +60,7 @@ public class TabNoticia extends android.support.v4.app.Fragment {
                 if (response.isSuccessful()) {
 
                     noticias = response.body();
+                    btnRecarregar.setVisibility(View.INVISIBLE);
                     if (noticias != null) {
                         barraProgresso.showProgress(false,prgNoticias);
                         //  showProgress(false);
@@ -59,24 +70,29 @@ public class TabNoticia extends android.support.v4.app.Fragment {
                                 false);
                         recyclerView.setLayoutManager(layout);
                     }else{
-                        Toast.makeText(getContext(), R.string.noticias_null, Toast.LENGTH_LONG).show();
+                        Toast.makeText(getContext(), R.string.noticias_null, Toast.LENGTH_SHORT).show();
                     }
                 }
             }
 
             @Override
             public void onFailure(Call<List<NoticiaBean>> call, Throwable t) {
+                Toast.makeText(getContext(), R.string.falha_de_acesso, Toast.LENGTH_SHORT).show();
                 barraProgresso.showProgress(false,prgNoticias);
-                Toast.makeText(getContext(), R.string.falha_de_acesso, Toast.LENGTH_LONG).show();
+                btnRecarregar.setVisibility(View.VISIBLE);
+                //acessa o servidor novamente em caso de falha
+                btnRecarregar.setOnClickListener(new View.OnClickListener() {
+                    @Override
+                    public void onClick(View v) {
+                        barraProgresso.showProgress(true,prgNoticias);
+                        btnRecarregar.setVisibility(View.INVISIBLE);
+                        acessaServidor();
+                    }
+                });
 
             }
         });
-
-
-        return rootView;
     }
-
-
 
 }
 
