@@ -31,7 +31,7 @@ public class TabNoticia extends android.support.v4.app.Fragment {
     private RecyclerView recyclerView;
     private List<NoticiaBean> noticias;
     private ProgressBar prgNoticias;
-    private BarraProgresso barraProgresso = BarraProgresso.instance;
+    private BarraProgresso barraProgresso = BarraProgresso.getInstance();
     private Button btnRecarregar;
 
     @Override

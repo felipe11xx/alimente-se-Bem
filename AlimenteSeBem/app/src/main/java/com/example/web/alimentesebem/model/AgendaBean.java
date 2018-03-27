@@ -1,5 +1,6 @@
 package com.example.web.alimentesebem.model;
 
+import java.util.Comparator;
 import java.util.Date;
 
 /**
@@ -115,4 +116,5 @@ public class AgendaBean {
     public void setCategoria(CategoriaAgendaBean categoria) {
         this.categoria = categoria;
     }
+
 }

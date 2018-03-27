@@ -29,7 +29,6 @@ public class AgendaAdpter extends RecyclerView.Adapter{
     private List<AgendaBean> lista;
     private Context context;
 
-
     public AgendaAdpter(List<AgendaBean> lista, Context context) {
         this.lista = lista;
         this.context = context;
@@ -115,10 +114,10 @@ public class AgendaAdpter extends RecyclerView.Adapter{
             }*/
             // Cria um bitmap contendo o dia e Mês
             String dia = dtFmt.format(obj.getData_Evento()).substring(0,2);
-            String mes = dtFmt.format(obj.getData_Evento()).substring(6,9);
+            String mes = dtFmt.format(obj.getData_Evento()).substring(6,9).toUpperCase();
             String diaMes = dia + " " + mes;
             Bitmap bitmap = Utilitarios.circularBitmapAndText(
-                    Color.parseColor("#ef8219"), 150, 150,diaMes,45 );
+                    Color.parseColor("#ef8219"), 150, 150,diaMes,40 );
             imgData.setImageBitmap(bitmap);
 
         }

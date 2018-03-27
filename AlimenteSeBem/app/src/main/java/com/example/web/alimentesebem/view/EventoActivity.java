@@ -41,12 +41,12 @@ public class EventoActivity extends AppCompatActivity {
 
     private ImageView imgCapaEvento, imgData;
     private ImageButton btnShare, btnVoltar;
-    private TextView tvLocalHorario, tvDecricao, tvtitulo, lblPreco, tvPreco, tvToolbar;
+    private TextView tvLocalHorario, tvDecricao, tvtitulo, lblPreco, tvPreco, tvToolbar, tvUnidade;
     private Long id;
     private DateFormat dtFmt = DateFormat.getDateInstance(DateFormat.LONG, new Locale("pt", "BR"));
     private List<String> tags;
     private RecyclerView recyclerView;
-    private BarraProgresso barraProgresso = BarraProgresso.instance;
+    private BarraProgresso barraProgresso = BarraProgresso.getInstance();
     private ProgressBar progressBar;
     private Button btnRecarregar;
 
@@ -65,6 +65,7 @@ public class EventoActivity extends AppCompatActivity {
         tvtitulo = findViewById(R.id.tv_evento_titulo);
         lblPreco = findViewById(R.id.lbl_preco);
         tvPreco = findViewById(R.id.tv_preco);
+        tvUnidade = findViewById(R.id.tv_unidade);
         tvToolbar = findViewById(R.id.toolbar_evento_text);
         btnVoltar = findViewById(R.id.btn_voltar_evento);
         progressBar = findViewById(R.id.prg_evento);
@@ -80,6 +81,7 @@ public class EventoActivity extends AppCompatActivity {
         tvDecricao.setTypeface(typeFont);
         tvLocalHorario.setTypeface(typeFont);
         tvPreco.setTypeface(typeFont);
+        tvUnidade.setTypeface(typeFont);
 
         typeFont = Typeface.createFromAsset(getAssets(), "fonts/tahu.ttf");
         tvToolbar.setTypeface(typeFont);
@@ -135,8 +137,10 @@ public class EventoActivity extends AppCompatActivity {
                     barraProgresso.showProgress(false,progressBar);
                     tvtitulo.setText(obj.getTitulo());
                     tvDecricao.setText(obj.getDescricao());
-                    tvLocalHorario.setText(obj.getUnidades_Sesi().getLocal() + "  " +
-                            obj.getHorario());
+                    String horario = String.valueOf(obj.getData_Evento());
+                    tvLocalHorario.setText(obj.getUnidades_Sesi().getLocal() + " horário "  + horario.substring(11,16));
+
+                    tvUnidade.setText(obj.getUnidades_Sesi().getNome());
 
                     if (obj.getPreco() == 0) {
                         tvPreco.setText("Gratuito");
@@ -149,12 +153,12 @@ public class EventoActivity extends AppCompatActivity {
                     }
                     // Obtem a 1ª letra do nome da pessoa e converte para Maiuscula
                     String dia = dtFmt.format(obj.getData_Evento()).substring(0, 2);
-                    String mes = dtFmt.format(obj.getData_Evento()).substring(6, 9);
+                    String mes = dtFmt.format(obj.getData_Evento()).substring(6, 9).toUpperCase();
                     String diaMes = dia + " " + mes;
                     // Cria um bitmap contendo Dia e mês
                     // Bitmap bitmap = Utilitarios.quadradoBitmapAndText(
                     Bitmap bitmap = Utilitarios.circularBitmapAndText(
-                            Color.parseColor("#ef8219"), 150, 150, diaMes, 45);
+                            Color.parseColor("#ef8219"), 150, 150, diaMes, 40);
                     imgData.setImageBitmap(bitmap);
                 }
             }
@@ -193,6 +197,7 @@ public class EventoActivity extends AppCompatActivity {
            lblPreco.setVisibility(View.VISIBLE);
            tvPreco.setVisibility(View.VISIBLE);
            recyclerView.setVisibility(View.VISIBLE);
+           tvUnidade.setVisibility(View.VISIBLE);
        }else {
            imgCapaEvento.setVisibility(View.INVISIBLE);
            imgData.setVisibility(View.INVISIBLE);
@@ -203,9 +208,8 @@ public class EventoActivity extends AppCompatActivity {
            lblPreco.setVisibility(View.INVISIBLE);
            tvPreco.setVisibility(View.INVISIBLE);
            recyclerView.setVisibility(View.INVISIBLE);
+           tvUnidade.setVisibility(View.INVISIBLE);
        }
-
-
 
     }
 

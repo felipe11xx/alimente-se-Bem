@@ -14,7 +14,11 @@ import com.example.web.alimentesebem.Main;
 
 public class BarraProgresso {
 
-    public static BarraProgresso instance = new BarraProgresso();
+    private static BarraProgresso INSTANCE = new BarraProgresso();
+
+    public static BarraProgresso getInstance(){
+        return  INSTANCE;
+    }
 
     void showProgress(final boolean show, final ProgressBar mProgressView) {
         // On Honeycomb MR2 we have the ViewPropertyAnimator APIs, which allow

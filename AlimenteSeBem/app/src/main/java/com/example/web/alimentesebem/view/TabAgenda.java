@@ -19,6 +19,8 @@ import com.example.web.alimentesebem.rest.config.RetrofitConfig;
 import com.example.web.alimentesebem.view.adapter.AgendaAdpter;
 
 
+import java.util.Collections;
+import java.util.Comparator;
 import java.util.List;
 
 import retrofit2.Call;
@@ -35,7 +37,7 @@ public class TabAgenda extends Fragment {
    // private AgendaDaoOld daoOld = AgendaDaoOld.instance;
     private List<AgendaBean> eventos;
     private Intent intent;
-    private BarraProgresso barraProgresso = BarraProgresso.instance;
+    private BarraProgresso barraProgresso = BarraProgresso.getInstance();
     private ProgressBar progressBar;
     private Button btnRecarregar;
 
@@ -64,6 +66,7 @@ public class TabAgenda extends Fragment {
                 if (response.isSuccessful()) {
                     btnRecarregar.setVisibility(View.INVISIBLE);
                     eventos = response.body();
+
                     barraProgresso.showProgress(false,progressBar);
                     if (eventos != null) {
                         recyclerView.setAdapter(new AgendaAdpter(eventos, getContext()));
@@ -97,5 +100,23 @@ public class TabAgenda extends Fragment {
         });
     }
 
+    private void ordena(String ordem){
+        if(ordem.equals("Titulo")){
+            Collections.sort(eventos, new Comparator<AgendaBean>() {
+                @Override
+                public int compare(AgendaBean obj1, AgendaBean obj2) {
+                    return obj1.getTitulo().compareToIgnoreCase(obj2.getTitulo());
+                }
+            });
+        }else{
+            Collections.sort(eventos, new Comparator<AgendaBean>() {
+                @Override
+                public int compare(AgendaBean obj1, AgendaBean obj2) {
+                    return obj1.getData_Evento().compareTo(obj2.getData_Evento());
+                }
+            });
+        }
+
+    }
 
 }

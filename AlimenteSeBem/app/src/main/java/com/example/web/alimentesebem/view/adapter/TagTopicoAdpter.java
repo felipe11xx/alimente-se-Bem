@@ -71,17 +71,25 @@ public class TagTopicoAdpter extends RecyclerView.Adapter {
             tagId = tag.getId();
             tvTag.setText(tag.getTag());
 
+            mudaCor();
+
+        }
+
+        private void mudaCor(){
             //pega primeira letra da tag
             String primeiraLetra = tvTag.getText().toString().substring(0,1).toLowerCase();
             //muda cores da tag de acordo com a letra
-            if(primeiraLetra.equals("b") ) {
+
+            if(primeiraLetra.matches("a|f|k|p|u|w")  ) {
                 card.setCardBackgroundColor(ContextCompat.getColor(context, R.color.laranjaPadrao));
-            }else if (primeiraLetra.equals("k")){
+            }else if (primeiraLetra.matches("b|g|l|q|v")){
                 card.setCardBackgroundColor(ContextCompat.getColor(context, R.color.colorAccent));
-            }else if (primeiraLetra.equals("v")){
+            }else if (primeiraLetra.matches("c|h|m|r|x")){
                 card.setCardBackgroundColor(ContextCompat.getColor(context, R.color.lilasPadrão));
-            }else{
+            }else if (primeiraLetra.matches("d|i|n|s|y")){
                 card.setCardBackgroundColor(ContextCompat.getColor(context, R.color.azulPadrão));
+            }else {
+                card.setCardBackgroundColor(ContextCompat.getColor(context, R.color.cianoPadrao));
             }
         }
     }

@@ -30,7 +30,7 @@ import retrofit2.Response;
 public class TabVideos extends Fragment {
     private RecyclerView recyclerView;
     private List<VideoBean> videos ;
-    private BarraProgresso barraProgresso = BarraProgresso.instance;
+    private BarraProgresso barraProgresso = BarraProgresso.getInstance();
     private ProgressBar progressBar;
     private Button btnRecarregar;
 
@@ -49,7 +49,6 @@ public class TabVideos extends Fragment {
 
         return rootView;
     }
-
 
     private void acessaServidor(){
 

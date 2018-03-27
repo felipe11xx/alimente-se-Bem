@@ -11,7 +11,11 @@ import android.widget.TextView;
 
 import com.example.web.alimentesebem.R;
 
+import java.util.ArrayList;
+import java.util.Arrays;
+import java.util.HashSet;
 import java.util.List;
+import java.util.Set;
 
 /**
  * Created by WEB on 14/03/2018.
@@ -40,6 +44,7 @@ public class TagEventoAdapter extends RecyclerView.Adapter {
     public void onBindViewHolder(RecyclerView.ViewHolder holder, int position) {
         TagEventoViewHolder TagHolder = (TagEventoViewHolder) holder;
         String tag = tags.get(position);
+
         ((TagEventoViewHolder) holder).preencher(tag);
     }
 
@@ -65,16 +70,26 @@ public class TagEventoAdapter extends RecyclerView.Adapter {
         public void preencher(String tag){
             tvTag.setText(tag);
 
+            mudaCor();
+
+        }
+        private void mudaCor(){
             //pega primeira letra da tag
             String primeiraLetra = tvTag.getText().toString().substring(0,1).toLowerCase();
             //muda cores da tag de acordo com a letra
-            if(primeiraLetra.equals("b") ) {
+
+            if(primeiraLetra.matches("a|f|k|p|u|w")  ) {
                 card.setCardBackgroundColor(ContextCompat.getColor(context, R.color.laranjaPadrao));
-            }else if (primeiraLetra.equals("c")){
+            }else if (primeiraLetra.matches("b|g|l|q|v")){
                 card.setCardBackgroundColor(ContextCompat.getColor(context, R.color.colorAccent));
-            }else{
+            }else if (primeiraLetra.matches("c|h|m|r|x")){
                 card.setCardBackgroundColor(ContextCompat.getColor(context, R.color.lilasPadrão));
+            }else if (primeiraLetra.matches("d|i|n|s|y")){
+                card.setCardBackgroundColor(ContextCompat.getColor(context, R.color.azulPadrão));
+            }else {
+                card.setCardBackgroundColor(ContextCompat.getColor(context, R.color.cianoPadrao));
             }
         }
+
     }
 }

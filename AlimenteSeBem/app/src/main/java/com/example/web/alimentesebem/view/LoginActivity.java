@@ -65,7 +65,7 @@ public class LoginActivity extends AppCompatActivity implements LoaderCallbacks<
     private ProgressBar mProgressView;
     private Intent intent;
     private TextView tvLogo;
-    private BarraProgresso barraProgresso = BarraProgresso.instance;
+    private BarraProgresso barraProgresso = BarraProgresso.getInstance();
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {

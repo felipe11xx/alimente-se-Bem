@@ -31,8 +31,6 @@
     <string name="agenda_null">Não há agenda a serem mostrados !</string>
     <string name="regarregar">Recarregar</string>
 
-
-
     <!-- Strings relacionadas a login e cadastro -->
     <string name="login">Login</string>
     <string name="senha">Senha</string>
@@ -48,4 +46,15 @@
         completions."
     </string>
 
+    <!-- Strings relacionadas as ordenações-->
+    <string name="ordem_default">Data</string>
+    <string name="ordem_titulo">Ordem de exibição</string>
+    <string name="ordem_key">ORDEM_DA_LISTA</string>
+    <string name="ordem_sumario">Define a ordem de listagem</string>
+
+    <string-array name="ordem_itens">
+        <item>Categoria</item>
+        <item>Titulo</item>
+        <item>Data</item>
+    </string-array>
 </resources>

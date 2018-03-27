@@ -26,7 +26,7 @@ public class NoticiaActivity extends AppCompatActivity {
     private ImageButton btnVoltar;
     private Intent i;
     private Long id;
-    private BarraProgresso barraProgresso = BarraProgresso.instance;
+    private BarraProgresso barraProgresso = BarraProgresso.getInstance();
     private ProgressBar progressBar;
     private Button btnRecarregar;
 
