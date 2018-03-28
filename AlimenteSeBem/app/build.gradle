@@ -28,6 +28,9 @@ dependencies {
     androidTestImplementation 'com.android.support.test.espresso:espresso-core:3.0.1'
     implementation 'com.android.support:cardview-v7:26.+'
 
+    // facebook
+    implementation 'com.facebook.android:facebook-android-sdk:[4,5)'
+
     // retrofit library
     compile 'com.google.code.gson:gson:2.8.2'
     compile 'com.squareup.retrofit2:retrofit:2.3.0'

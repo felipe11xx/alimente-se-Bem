@@ -34,6 +34,15 @@ import java.util.ArrayList;
 import java.util.List;
 
 import com.example.web.alimentesebem.R;
+import com.facebook.AccessToken;
+import com.facebook.CallbackManager;
+import com.facebook.FacebookCallback;
+import com.facebook.FacebookException;
+import com.facebook.FacebookSdk;
+import com.facebook.appevents.AppEventsLogger;
+import com.facebook.login.LoginManager;
+import com.facebook.login.LoginResult;
+import com.facebook.login.widget.LoginButton;
 
 import static android.Manifest.permission.READ_CONTACTS;
 
@@ -66,6 +75,8 @@ public class LoginActivity extends AppCompatActivity implements LoaderCallbacks<
     private Intent intent;
     private TextView tvLogo;
     private BarraProgresso barraProgresso = BarraProgresso.getInstance();
+    private LoginButton loginButton;
+    private CallbackManager callbackManager  = CallbackManager.Factory.create();
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -73,9 +84,8 @@ public class LoginActivity extends AppCompatActivity implements LoaderCallbacks<
         setContentView(R.layout.activity_login);
         // Set up the login form.
         mEmailView = (AutoCompleteTextView) findViewById(R.id.ed_email);
+        loginButton = findViewById(R.id.btn_logar_face);
         populateAutoComplete();
-
-
 
         mPasswordView = (EditText) findViewById(R.id.ed_senha);
         mPasswordView.setOnEditorActionListener(new TextView.OnEditorActionListener() {
@@ -92,16 +102,66 @@ public class LoginActivity extends AppCompatActivity implements LoaderCallbacks<
         mEmailView.setText("email@email.com");
         mPasswordView.setText("12345678");
 
+        boolean loggedIn = AccessToken.getCurrentAccessToken() == null;
+
+        if(loggedIn){
+            Intent intent = new Intent(this, MainActivity.class);
+            finish();
+            startActivity(intent);
+        }
+
+        loginButton.setReadPermissions("email");
+
+        FacebookSdk.sdkInitialize(getApplicationContext());
+        AppEventsLogger.activateApp(this);
+
+        // Callback registration
+        loginButton.registerCallback(callbackManager, new FacebookCallback<LoginResult>() {
+            @Override
+            public void onSuccess(LoginResult loginResult) {
+                // App code
+            }
+
+            @Override
+            public void onCancel() {
+                // App code
+            }
+
+            @Override
+            public void onError(FacebookException exception) {
+                // App code
+            }
+        });
+
+        LoginManager.getInstance().registerCallback(callbackManager,
+                new FacebookCallback<LoginResult>() {
+                    @Override
+                    public void onSuccess(LoginResult loginResult) {
+                        // App code
+                    }
+
+                    @Override
+                    public void onCancel() {
+                        // App code
+                    }
+
+                    @Override
+                    public void onError(FacebookException exception) {
+                        // App code
+                    }
+                });
+
+
         Button mEmailSignInButton = (Button) findViewById(R.id.btn_logar);
         mEmailSignInButton.setOnClickListener(new OnClickListener() {
-            @Override
+
             public void onClick(View view) {
                 attemptLogin();
             }
         });
         Button btnCadastrar = findViewById(R.id.btn_cadastrar);
         btnCadastrar.setOnClickListener(new OnClickListener() {
-            @Override
+
             public void onClick(View v) {
                 intent = new Intent(getApplicationContext(), CadastroActivity.class);
                 startActivity(intent);
@@ -227,34 +287,6 @@ public class LoginActivity extends AppCompatActivity implements LoaderCallbacks<
         return password.length() >= 8;
     }
 
-    /**
-     * Shows the progress UI and hides the login form.
-     */
- /*   @TargetApi(Build.VERSION_CODES.HONEYCOMB_MR2)
-    private void showProgress(final boolean show) {
-        // On Honeycomb MR2 we have the ViewPropertyAnimator APIs, which allow
-        // for very easy animations. If available, use these APIs to fade-in
-        // the progress spinner.
-        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.HONEYCOMB_MR2) {
-            int shortAnimTime = getResources().getInteger(android.R.integer.config_shortAnimTime);
-
-
-            mProgressView.setVisibility(show ? View.VISIBLE : View.GONE);
-            mProgressView.animate().setDuration(shortAnimTime).alpha(
-                    show ? 1 : 0).setListener(new AnimatorListenerAdapter() {
-                @Override
-                public void onAnimationEnd(Animator animation) {
-                    mProgressView.setVisibility(show ? View.VISIBLE : View.GONE);
-                }
-            });
-        } else {
-            // The ViewPropertyAnimator APIs are not available, so simply show
-            // and hide the relevant UI components.
-            mProgressView.setVisibility(show ? View.VISIBLE : View.GONE);
-
-        }
-    }*/
-
     @Override
     public Loader<Cursor> onCreateLoader(int i, Bundle bundle) {
         return new CursorLoader(this,
@@ -364,6 +396,12 @@ public class LoginActivity extends AppCompatActivity implements LoaderCallbacks<
             mAuthTask = null;
             barraProgresso.showProgress(false,mProgressView);
         }
+    }
+
+    @Override
+    protected void onActivityResult(int requestCode, int resultCode, Intent data) {
+        callbackManager.onActivityResult(requestCode, resultCode, data);
+        super.onActivityResult(requestCode, resultCode, data);
     }
 }
 
