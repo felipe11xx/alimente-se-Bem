@@ -19,6 +19,7 @@ import android.os.Build;
 import android.os.Bundle;
 import android.provider.ContactsContract;
 import android.text.TextUtils;
+import android.util.Log;
 import android.view.KeyEvent;
 import android.view.View;
 import android.view.View.OnClickListener;
@@ -29,6 +30,7 @@ import android.widget.Button;
 import android.widget.EditText;
 import android.widget.ProgressBar;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -76,7 +78,7 @@ public class LoginActivity extends AppCompatActivity implements LoaderCallbacks<
     private TextView tvLogo;
     private BarraProgresso barraProgresso = BarraProgresso.getInstance();
     private LoginButton loginButton;
-    private CallbackManager callbackManager  = CallbackManager.Factory.create();
+    private CallbackManager callbackManager;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -102,55 +104,7 @@ public class LoginActivity extends AppCompatActivity implements LoaderCallbacks<
         mEmailView.setText("email@email.com");
         mPasswordView.setText("12345678");
 
-        boolean loggedIn = AccessToken.getCurrentAccessToken() == null;
-
-        if(loggedIn){
-            Intent intent = new Intent(this, MainActivity.class);
-            finish();
-            startActivity(intent);
-        }
-
-        loginButton.setReadPermissions("email");
-
-        FacebookSdk.sdkInitialize(getApplicationContext());
-        AppEventsLogger.activateApp(this);
-
-        // Callback registration
-        loginButton.registerCallback(callbackManager, new FacebookCallback<LoginResult>() {
-            @Override
-            public void onSuccess(LoginResult loginResult) {
-                // App code
-            }
-
-            @Override
-            public void onCancel() {
-                // App code
-            }
-
-            @Override
-            public void onError(FacebookException exception) {
-                // App code
-            }
-        });
-
-        LoginManager.getInstance().registerCallback(callbackManager,
-                new FacebookCallback<LoginResult>() {
-                    @Override
-                    public void onSuccess(LoginResult loginResult) {
-                        // App code
-                    }
-
-                    @Override
-                    public void onCancel() {
-                        // App code
-                    }
-
-                    @Override
-                    public void onError(FacebookException exception) {
-                        // App code
-                    }
-                });
-
+        logarFacebook();
 
         Button mEmailSignInButton = (Button) findViewById(R.id.btn_logar);
         mEmailSignInButton.setOnClickListener(new OnClickListener() {
@@ -398,9 +352,50 @@ public class LoginActivity extends AppCompatActivity implements LoaderCallbacks<
         }
     }
 
+    private void logarFacebook(){
+
+        boolean loggedIn = AccessToken.getCurrentAccessToken() == null;
+        intent = new Intent(this, MainActivity.class);
+/*        if(loggedIn){
+
+            finish();
+            startActivity(intent);
+        }*/
+
+        loginButton.setReadPermissions("email", "public_profile");
+
+        FacebookSdk.sdkInitialize(getApplicationContext());
+        // AppEventsLogger.activateApp(this);
+        callbackManager  = CallbackManager.Factory.create();
+        // Callback registration
+        loginButton.registerCallback(callbackManager, new FacebookCallback<LoginResult>() {
+            @Override
+            public void onSuccess(LoginResult loginResult) {
+                finish();
+                startActivity(intent);
+            }
+
+            @Override
+            public void onCancel() {
+
+                // App code
+            }
+
+            @Override
+            public void onError(FacebookException exception) {
+                // App code
+                Toast.makeText(LoginActivity.this, exception.getMessage(), Toast.LENGTH_SHORT).show();
+                Log.d("LoginActivity", exception.getMessage());
+            }
+        });
+
+
+    }
+
     @Override
     protected void onActivityResult(int requestCode, int resultCode, Intent data) {
         callbackManager.onActivityResult(requestCode, resultCode, data);
+
         super.onActivityResult(requestCode, resultCode, data);
     }
 }

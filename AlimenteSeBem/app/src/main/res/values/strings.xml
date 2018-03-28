@@ -50,15 +50,17 @@
     <string name="ordem_titulo">Ordem de exibição</string>
     <string name="ordem_key">ORDEM_DA_LISTA</string>
     <string name="ordem_sumario">Define a ordem de listagem</string>
-
-    <!-- facebook -->
-    <string name="facebook_app_id">2522544584637700</string>
-    <string name="fb_login_protocol_scheme">fb2522544584637700</string>
-    <string name="facebook">Continuar com Facebook</string>
-
     <string-array name="ordem_itens">
         <item>Categoria</item>
         <item>Titulo</item>
         <item>Data</item>
     </string-array>
+
+    <!-- facebook -->
+    <string name="facebook_app_id">395228594279087</string>
+    <string name="fb_login_protocol_scheme">fb395228594279087</string>
+
+    <string name="facebook">Continuar com Facebook</string>
+
+
 </resources>

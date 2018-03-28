@@ -24,6 +24,11 @@ import android.widget.Toast;
 
 
 import com.example.web.alimentesebem.R;
+import com.facebook.AccessToken;
+import com.facebook.GraphRequest;
+import com.facebook.GraphResponse;
+import com.facebook.HttpMethod;
+import com.facebook.login.LoginManager;
 
 public class MainActivity extends AppCompatActivity {
 
@@ -88,11 +93,11 @@ public class MainActivity extends AppCompatActivity {
             // Cria botões ok e cancelar
             builder.setPositiveButton("Sim", new DialogInterface.OnClickListener() {
                 public void onClick(DialogInterface dialog, int id) {
-
+                   // disconnectFromFacebook();
+                    LoginManager.getInstance().logOut();
                     Intent intent = new Intent(getApplicationContext(), LoginActivity.class);
                     finish();
                     startActivity(intent);
-
                 }
             });
             builder.setNegativeButton("Não", new DialogInterface.OnClickListener() {
@@ -106,8 +111,26 @@ public class MainActivity extends AppCompatActivity {
 
          }
 
-
         return true;
+    }
+
+    public void disconnectFromFacebook() {
+
+        if (AccessToken.getCurrentAccessToken() == null) {
+            Intent intent = new Intent(getApplicationContext(), LoginActivity.class);
+            finish();
+            startActivity(intent);
+        }
+
+        new GraphRequest(AccessToken.getCurrentAccessToken(), "/me/permissions/", null, HttpMethod.DELETE, new GraphRequest
+                .Callback() {
+            @Override
+            public void onCompleted(GraphResponse graphResponse) {
+
+                LoginManager.getInstance().logOut();
+
+            }
+        }).executeAsync();
     }
 
     /**
