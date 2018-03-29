@@ -2,6 +2,7 @@ package com.example.web.alimentesebem.model;
 
 import java.util.Comparator;
 import java.util.Date;
+import java.util.List;
 
 /**
  * Created by WEB on 06/03/2018.
@@ -16,7 +17,7 @@ public class AgendaBean {
     private Date data_Evento;
     private String horario;
     private byte[] capa;
-    private String[] tags;
+    private String tag;
     private CategoriaAgendaBean categoria;
     private double preco;
 
@@ -93,12 +94,12 @@ public class AgendaBean {
         this.capa = capa;
     }
 
-    public String[] getTags() {
-        return tags;
+    public String getTags() {
+        return tag;
     }
 
-    public void setTags(String[] tags) {
-        this.tags = tags;
+    public void setTags(String tags) {
+        this.tag = tags;
     }
 
     public double getPreco() {

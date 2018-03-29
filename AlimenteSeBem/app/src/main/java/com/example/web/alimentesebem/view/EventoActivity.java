@@ -44,7 +44,7 @@ public class EventoActivity extends AppCompatActivity {
     private TextView tvLocalHorario, tvDecricao, tvtitulo, lblPreco, tvPreco, tvToolbar, tvUnidade;
     private Long id;
     private DateFormat dtFmt = DateFormat.getDateInstance(DateFormat.LONG, new Locale("pt", "BR"));
-    private List<String> tags;
+   // private List<String> tags;
     private RecyclerView recyclerView;
     private BarraProgresso barraProgresso = BarraProgresso.getInstance();
     private ProgressBar progressBar;
@@ -70,6 +70,7 @@ public class EventoActivity extends AppCompatActivity {
         btnVoltar = findViewById(R.id.btn_voltar_evento);
         progressBar = findViewById(R.id.prg_evento);
         btnRecarregar = findViewById(R.id.btn_recarregar_evento);
+        recyclerView = findViewById(R.id.rv_tag);
         btnRecarregar.setVisibility(View.INVISIBLE);
 
         //Muda a fonte de alguns textView
@@ -86,24 +87,6 @@ public class EventoActivity extends AppCompatActivity {
         typeFont = Typeface.createFromAsset(getAssets(), "fonts/tahu.ttf");
         tvToolbar.setTypeface(typeFont);
 
-        tags = new ArrayList<>();
-        tags.add("bacon1");
-        tags.add("Churrasco1");
-        tags.add("frango1");
-        tags.add("fit1");
-        tags.add("bacon2");
-        tags.add("Churrasco2");
-        tags.add("frango2");
-        tags.add("fit2");
-        tags.add("bacon3");
-        tags.add("Churrasco3");
-        tags.add("frango3");
-        tags.add("fit3");
-
-        recyclerView = findViewById(R.id.rv_tag);
-        recyclerView.setAdapter(new TagEventoAdapter(tags, this));
-        recyclerView.setLayoutManager(new StaggeredGridLayoutManager(3, StaggeredGridLayoutManager.HORIZONTAL));
-
         //usa o ID no Bundle para atribuir valor aos elementos da tela
 
         final Bundle bundle = getIntent().getExtras();
@@ -112,6 +95,8 @@ public class EventoActivity extends AppCompatActivity {
         if (EventoId != 0) {
             id = EventoId;
             acessaServidor();
+
+
         }
 
         btnVoltar.setOnClickListener(new View.OnClickListener() {
@@ -160,6 +145,15 @@ public class EventoActivity extends AppCompatActivity {
                     Bitmap bitmap = Utilitarios.circularBitmapAndText(
                             Color.parseColor("#ef8219"), 150, 150, diaMes, 40);
                     imgData.setImageBitmap(bitmap);
+                    
+                    List<String> tags = new ArrayList<>();
+
+                    for (String tag:obj.getTags().split(",")) {
+                            tags.add(tag);
+                        }
+
+                    recyclerView.setAdapter(new TagEventoAdapter(tags, getApplicationContext()));
+                    recyclerView.setLayoutManager(new StaggeredGridLayoutManager(1, StaggeredGridLayoutManager.HORIZONTAL));
                 }
             }
 

@@ -41,6 +41,7 @@ import com.facebook.CallbackManager;
 import com.facebook.FacebookCallback;
 import com.facebook.FacebookException;
 import com.facebook.FacebookSdk;
+import com.facebook.Profile;
 import com.facebook.appevents.AppEventsLogger;
 import com.facebook.login.LoginManager;
 import com.facebook.login.LoginResult;
@@ -353,14 +354,19 @@ public class LoginActivity extends AppCompatActivity implements LoaderCallbacks<
     }
 
     private void logarFacebook(){
+        boolean loggedIn;
+        if (Profile.getCurrentProfile() != null) {
+            loggedIn= true;
+        }else{
+            loggedIn = false;
+        }
 
-        boolean loggedIn = AccessToken.getCurrentAccessToken() == null;
         intent = new Intent(this, MainActivity.class);
-/*        if(loggedIn){
+        if(loggedIn){
 
             finish();
             startActivity(intent);
-        }*/
+        }
 
         loginButton.setReadPermissions("email", "public_profile");
 
@@ -371,6 +377,7 @@ public class LoginActivity extends AppCompatActivity implements LoaderCallbacks<
         loginButton.registerCallback(callbackManager, new FacebookCallback<LoginResult>() {
             @Override
             public void onSuccess(LoginResult loginResult) {
+                Toast.makeText(LoginActivity.this,  Profile.getCurrentProfile().getFirstName(), Toast.LENGTH_SHORT).show();
                 finish();
                 startActivity(intent);
             }

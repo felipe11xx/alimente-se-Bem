@@ -1,5 +1,7 @@
 package com.example.web.alimentesebem.view;
+import android.app.Activity;
 import android.content.Intent;
+import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
 import android.support.v7.widget.LinearLayoutManager;
@@ -22,6 +24,7 @@ import com.example.web.alimentesebem.view.adapter.AgendaAdpter;
 import java.util.Collections;
 import java.util.Comparator;
 import java.util.List;
+import java.util.prefs.Preferences;
 
 import retrofit2.Call;
 import retrofit2.Callback;
@@ -40,6 +43,7 @@ public class TabAgenda extends Fragment {
     private BarraProgresso barraProgresso = BarraProgresso.getInstance();
     private ProgressBar progressBar;
     private Button btnRecarregar;
+
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
@@ -84,6 +88,7 @@ public class TabAgenda extends Fragment {
             @Override
             public void onFailure(Call<List<AgendaBean>> call, Throwable t) {
                 Toast.makeText(getContext(),R.string.falha_de_acesso, Toast.LENGTH_SHORT).show();
+                Log.d("TabAgenda",t.getMessage());
                 barraProgresso.showProgress(false,progressBar);
                 btnRecarregar.setVisibility(View.VISIBLE);
                 // Acessa o servidor novamente em caso de falha
@@ -100,23 +105,6 @@ public class TabAgenda extends Fragment {
         });
     }
 
-    private void ordena(String ordem){
-        if(ordem.equals("Titulo")){
-            Collections.sort(eventos, new Comparator<AgendaBean>() {
-                @Override
-                public int compare(AgendaBean obj1, AgendaBean obj2) {
-                    return obj1.getTitulo().compareToIgnoreCase(obj2.getTitulo());
-                }
-            });
-        }else{
-            Collections.sort(eventos, new Comparator<AgendaBean>() {
-                @Override
-                public int compare(AgendaBean obj1, AgendaBean obj2) {
-                    return obj1.getData_Evento().compareTo(obj2.getData_Evento());
-                }
-            });
-        }
 
-    }
 
 }
