@@ -42,6 +42,7 @@ import com.facebook.FacebookCallback;
 import com.facebook.FacebookException;
 import com.facebook.FacebookSdk;
 import com.facebook.Profile;
+import com.facebook.ProfileManager;
 import com.facebook.appevents.AppEventsLogger;
 import com.facebook.login.LoginManager;
 import com.facebook.login.LoginResult;
@@ -355,6 +356,7 @@ public class LoginActivity extends AppCompatActivity implements LoaderCallbacks<
 
     private void logarFacebook(){
         boolean loggedIn;
+        AccessToken.getCurrentAccessToken();
         if (Profile.getCurrentProfile() != null) {
             loggedIn= true;
         }else{
@@ -377,7 +379,10 @@ public class LoginActivity extends AppCompatActivity implements LoaderCallbacks<
         loginButton.registerCallback(callbackManager, new FacebookCallback<LoginResult>() {
             @Override
             public void onSuccess(LoginResult loginResult) {
-                Toast.makeText(LoginActivity.this,  Profile.getCurrentProfile().getFirstName(), Toast.LENGTH_SHORT).show();
+                if(Profile.getCurrentProfile() != null){
+                    Toast.makeText(LoginActivity.this,  Profile.getCurrentProfile().getFirstName(), Toast.LENGTH_SHORT).show();
+                }
+
                 finish();
                 startActivity(intent);
             }
