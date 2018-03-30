@@ -16,6 +16,7 @@ import com.example.web.alimentesebem.model.NoticiaBean;
 import com.example.web.alimentesebem.view.NoticiaActivity;
 
 import java.text.DateFormat;
+import java.util.ArrayList;
 import java.util.List;
 import java.util.Locale;
 
@@ -23,14 +24,17 @@ import java.util.Locale;
  * Created by Felipe on 04/03/2018.
  */
 
-public class NoticiaAdpter extends RecyclerView.Adapter {
+public class NoticiaAdpter extends RecyclerView.Adapter implements AdapterInterface{
 
-   private List<NoticiaBean> noticias;
+   private ArrayList<NoticiaBean> lista;
    private Context context;
+   private List<NoticiaBean> listaNoticias;
 
-   public NoticiaAdpter(List<NoticiaBean> noticias, Context context) {
-       this.noticias = noticias;
+   public NoticiaAdpter(List<NoticiaBean> listaNoticias, Context context) {
+       this.listaNoticias = listaNoticias;
        this.context = context;
+       this.lista = new ArrayList<>();
+       this.lista.addAll(listaNoticias);
    }
 
     @Override
@@ -47,14 +51,30 @@ public class NoticiaAdpter extends RecyclerView.Adapter {
     public void onBindViewHolder(RecyclerView.ViewHolder holder, int position) {
         NoticiaViewHolder viewHolder = (NoticiaViewHolder) holder;
 
-        NoticiaBean noticiaBean = noticias.get(position);
+        NoticiaBean noticiaBean = listaNoticias.get(position);
 
         ((NoticiaViewHolder)holder).preencher(noticiaBean);
     }
 
     @Override
     public int getItemCount() {
-        return noticias.size();
+        return listaNoticias.size();
+    }
+
+    @Override
+    public void filtrarPorTitulo(String charText) {
+        charText = charText.toLowerCase(Locale.getDefault());
+        listaNoticias.clear();
+        if (charText.length() == 0) {
+            listaNoticias.addAll(lista);
+        } else {
+            for (NoticiaBean l : lista) {
+                if (l.getTitulo().toLowerCase(Locale.getDefault()).contains(charText)) {
+                    listaNoticias.add(l);
+                }
+            }
+        }
+
     }
 
     public class NoticiaViewHolder extends RecyclerView.ViewHolder implements View.OnClickListener {

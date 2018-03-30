@@ -9,6 +9,7 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.ProgressBar;
+import android.widget.SearchView;
 import android.widget.Toast;
 
 import com.example.web.alimentesebem.R;
@@ -32,6 +33,8 @@ public class TabVideos extends Fragment {
     private BarraProgresso barraProgresso = BarraProgresso.getInstance();
     private ProgressBar progressBar;
     private Button btnRecarregar;
+    private SearchView searchView;
+    private VideoAdpter adapter;
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
@@ -40,6 +43,7 @@ public class TabVideos extends Fragment {
 
         recyclerView = rootView.findViewById(R.id.rv_video);
         progressBar = rootView.findViewById(R.id.prg_videos);
+        searchView = rootView.findViewById(R.id.sc_videos);
         btnRecarregar = rootView.findViewById(R.id.btn_recarregar_videos);
         btnRecarregar.setVisibility(View.INVISIBLE);
 
@@ -64,7 +68,10 @@ public class TabVideos extends Fragment {
                     barraProgresso.showProgress(false,progressBar);
 
                     if(videos != null) {
-                        recyclerView.setAdapter(new VideoAdpter(getContext(), videos));
+                        adapter = new VideoAdpter(getContext(), videos);
+                        recyclerView.setAdapter(adapter);
+                        //Chama metodo para filtrar por titulo
+                        buscaPorTitulo(adapter);
                         //Cria a tela com a lista dos Foruns
                         recyclerView.setLayoutManager(new LinearLayoutManager(getContext(), LinearLayoutManager.VERTICAL,
                                 false));
@@ -92,6 +99,27 @@ public class TabVideos extends Fragment {
                         acessaServidor();
                     }
                 });
+            }
+        });
+    }
+
+    //Metodo para filtrar por titulo no SearchView
+    private void buscaPorTitulo(final VideoAdpter adapter){
+        searchView.setOnQueryTextListener(new SearchView.OnQueryTextListener() {
+            @Override
+            public boolean onQueryTextSubmit(String s) {
+                return false;
+            }
+
+            @Override
+            public boolean onQueryTextChange(String s) {
+
+                // recebo a String que quero buscar
+                String tituloBuscado = s;
+                // coloco um filtro no próprio adapter
+                adapter.filtrarPorTitulo(tituloBuscado);
+                adapter.notifyDataSetChanged();
+                return false;
             }
         });
     }

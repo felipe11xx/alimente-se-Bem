@@ -13,6 +13,7 @@ import com.example.web.alimentesebem.R;
 import com.example.web.alimentesebem.model.ForumBean;
 
 import java.text.DateFormat;
+import java.util.ArrayList;
 import java.util.List;
 import java.util.Locale;
 
@@ -20,15 +21,18 @@ import java.util.Locale;
  * Created by WEB on 15/03/2018.
  */
 
-public class ForumAdapter extends RecyclerView.Adapter{
+public class ForumAdapter extends RecyclerView.Adapter implements AdapterInterface{
 
     private Context context;
-    private List<ForumBean> lista;
+    private ArrayList<ForumBean> lista;
     private OnItemClick onItemClick;
+    private List<ForumBean> forumsLista;
 
-    public ForumAdapter(Context context, List<ForumBean> lista, OnItemClick onItemClick) {
+    public ForumAdapter(Context context, List<ForumBean> forumsLista, OnItemClick onItemClick) {
+        this.forumsLista = forumsLista;
         this.context = context;
-        this.lista = lista;
+        this.lista = new ArrayList<>();
+        this.lista.addAll(forumsLista);
         this.onItemClick = onItemClick;
     }
 
@@ -46,14 +50,29 @@ public class ForumAdapter extends RecyclerView.Adapter{
     public void onBindViewHolder(RecyclerView.ViewHolder holder, int position) {
         ForumViewHolder forumViewHolder = (ForumViewHolder) holder;
 
-        ForumBean forum = lista.get(position);
+        ForumBean forum = forumsLista.get(position);
 
         ((ForumViewHolder) holder).preencher(forum);
     }
 
     @Override
     public int getItemCount() {
-        return lista.size();
+        return forumsLista.size();
+    }
+
+    @Override
+    public void filtrarPorTitulo(String charText) {
+        charText = charText.toLowerCase(Locale.getDefault());
+        forumsLista.clear();
+        if (charText.length() == 0) {
+            forumsLista.addAll(lista);
+        } else {
+            for (ForumBean l : lista) {
+                if (l.getTitulo().toLowerCase(Locale.getDefault()).contains(charText)) {
+                    forumsLista.add(l);
+                }
+            }
+        }
     }
 
     public class ForumViewHolder extends RecyclerView.ViewHolder implements View.OnClickListener{

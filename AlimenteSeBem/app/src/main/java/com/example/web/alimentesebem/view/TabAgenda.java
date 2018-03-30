@@ -9,6 +9,7 @@ import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+
 import android.widget.Button;
 import android.widget.ProgressBar;
 import android.widget.SearchView;
@@ -18,8 +19,6 @@ import com.example.web.alimentesebem.R;
 import com.example.web.alimentesebem.model.AgendaBean;
 import com.example.web.alimentesebem.rest.config.RetrofitConfig;
 import com.example.web.alimentesebem.view.adapter.AgendaAdpter;
-import com.example.web.alimentesebem.view.adapter.VideoAdpter;
-
 
 import java.util.List;
 
@@ -41,7 +40,7 @@ public class TabAgenda extends Fragment {
     private ProgressBar progressBar;
     private Button btnRecarregar;
     private SearchView searchView;
-    private VideoAdpter adpeter;
+    private AgendaAdpter adapter;
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
@@ -74,7 +73,11 @@ public class TabAgenda extends Fragment {
 
                     barraProgresso.showProgress(false,progressBar);
                     if (eventos != null) {
-                        recyclerView.setAdapter(new AgendaAdpter(eventos, getContext()));
+
+                        adapter = new AgendaAdpter(eventos, getContext());
+                        recyclerView.setAdapter(adapter);
+                        //Chama metodo para filtrar por titulo
+                        buscaPorTitulo(adapter);
                         //Cria a tela com a lista das noticias recentes
                         RecyclerView.LayoutManager layout = new LinearLayoutManager(getContext(), LinearLayoutManager.VERTICAL,
                                 false);
@@ -105,7 +108,8 @@ public class TabAgenda extends Fragment {
         });
     }
 
-    private void buscaPorTitulo(final VideoAdpter adapter){
+    //Metodo para filtrar por titulo no SearchView
+    private void buscaPorTitulo(final AgendaAdpter adapter){
         searchView.setOnQueryTextListener(new SearchView.OnQueryTextListener() {
             @Override
             public boolean onQueryTextSubmit(String s) {
@@ -119,6 +123,7 @@ public class TabAgenda extends Fragment {
                 String tituloBuscado = s;
                 // coloco um filtro no próprio adapter
                 adapter.filtrarPorTitulo(tituloBuscado);
+                adapter.notifyDataSetChanged();
                 return false;
             }
         });

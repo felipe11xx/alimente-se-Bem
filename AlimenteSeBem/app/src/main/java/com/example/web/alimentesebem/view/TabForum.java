@@ -5,6 +5,7 @@ import android.support.v4.app.Fragment;
 import android.os.Bundle;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
+import android.widget.SearchView;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -27,16 +28,21 @@ public class TabForum extends Fragment implements OnItemClick {
     private ForumDaoOld daoOld = ForumDaoOld.instance;
     private ForumBean obj;
     private Intent intent;
+    private SearchView searchView;
+    private ForumAdapter adapter;
 
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
         View rootView = inflater.inflate(R.layout.tab_forum, container, false);
+        searchView = rootView.findViewById(R.id.sc_forum);
         List<ForumBean> foruns = daoOld.getLista();
+        adapter = new ForumAdapter(this.getContext(),foruns,this);
         recyclerView = rootView.findViewById(R.id.rv_forum);
-        recyclerView.setAdapter(new ForumAdapter(this.getContext(),foruns,this));
-
+        recyclerView.setAdapter(adapter);
+        //Chama metodo para filtrar por titulo
+        buscaPorTitulo(adapter);
         //Cria a tela com a lista dos Foruns
         RecyclerView.LayoutManager layout = new LinearLayoutManager(this.getContext(), LinearLayoutManager.VERTICAL,
                 false);
@@ -53,5 +59,26 @@ public class TabForum extends Fragment implements OnItemClick {
         intent.putExtra("TopicoId", id);
         startActivity(intent);
 
+    }
+
+    //Metodo para filtrar por titulo no SearchView
+    private void buscaPorTitulo(final ForumAdapter adapter){
+        searchView.setOnQueryTextListener(new android.widget.SearchView.OnQueryTextListener() {
+            @Override
+            public boolean onQueryTextSubmit(String s) {
+                return false;
+            }
+
+            @Override
+            public boolean onQueryTextChange(String s) {
+
+                // recebo a String que quero buscar
+                String tituloBuscado = s;
+                // coloco um filtro no próprio adapter
+                adapter.filtrarPorTitulo(tituloBuscado);
+                adapter.notifyDataSetChanged();
+                return false;
+            }
+        });
     }
 }

@@ -9,8 +9,11 @@ import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.view.WindowManager;
+import android.view.inputmethod.InputMethodManager;
 import android.widget.Button;
 import android.widget.ProgressBar;
+import android.widget.SearchView;
 import android.widget.Toast;
 
 import com.example.web.alimentesebem.R;
@@ -36,6 +39,8 @@ public class TabNoticia extends android.support.v4.app.Fragment implements Seria
     private ProgressBar prgNoticias;
     private BarraProgresso barraProgresso = BarraProgresso.getInstance();
     private Button btnRecarregar;
+    private SearchView searchView;
+    private NoticiaAdpter adapter;
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
@@ -46,6 +51,7 @@ public class TabNoticia extends android.support.v4.app.Fragment implements Seria
 
         recyclerView = rootView.findViewById(R.id.rv_noticias);
         prgNoticias = rootView.findViewById(R.id.prg_noticias2);
+        searchView = rootView.findViewById(R.id.sc_noticia);
         btnRecarregar = rootView.findViewById(R.id.btn_recarregar_noticias);
         btnRecarregar.setVisibility(View.INVISIBLE);
         //acessa os dados no servidor
@@ -66,8 +72,10 @@ public class TabNoticia extends android.support.v4.app.Fragment implements Seria
                     btnRecarregar.setVisibility(View.INVISIBLE);
                     if (noticias != null) {
                         barraProgresso.showProgress(false,prgNoticias);
-                        //  showProgress(false);
-                        recyclerView.setAdapter(new NoticiaAdpter(noticias, getContext()));
+                        adapter = new NoticiaAdpter(noticias, getContext());
+                        recyclerView.setAdapter(adapter);
+                        //Chama metodo para filtrar por titulo
+                        buscaPorTitulo(adapter);
                         //Cria a tela com a lista das noticias recentes
                         RecyclerView.LayoutManager layout = new LinearLayoutManager(getContext(), LinearLayoutManager.VERTICAL,
                                 false);
@@ -97,6 +105,27 @@ public class TabNoticia extends android.support.v4.app.Fragment implements Seria
         });
     }
 
+
+    //Metodo para filtrar por titulo no SearchView
+    private void buscaPorTitulo(final NoticiaAdpter adapter) {
+        searchView.setOnQueryTextListener(new SearchView.OnQueryTextListener() {
+            @Override
+            public boolean onQueryTextSubmit(String s) {
+                return false;
+            }
+
+            @Override
+            public boolean onQueryTextChange(String s) {
+
+                // recebo a String que quero buscar
+                String tituloBuscado = s;
+                // coloco um filtro no próprio adapter
+                adapter.filtrarPorTitulo(tituloBuscado);
+                adapter.notifyDataSetChanged();
+                return false;
+            }
+        });
+    }
 }
 
 

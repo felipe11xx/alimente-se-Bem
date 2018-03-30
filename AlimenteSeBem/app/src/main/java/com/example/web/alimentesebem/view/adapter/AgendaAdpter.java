@@ -1,13 +1,11 @@
 package com.example.web.alimentesebem.view.adapter;
 
-import android.app.Activity;
+
 import android.content.Context;
 import android.content.Intent;
-import android.content.SharedPreferences;
 import android.graphics.Bitmap;
 import android.graphics.Color;
 import android.graphics.Typeface;
-import android.preference.PreferenceManager;
 import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -21,6 +19,7 @@ import com.example.web.alimentesebem.utils.Utilitarios;
 import com.example.web.alimentesebem.view.EventoActivity;
 
 import java.text.DateFormat;
+import java.util.ArrayList;
 import java.util.Collections;
 import java.util.Comparator;
 import java.util.List;
@@ -30,15 +29,16 @@ import java.util.Locale;
  * Created by Felipe on 07/03/2018.
  */
 
-public class AgendaAdpter extends RecyclerView.Adapter{
-    private List<AgendaBean> lista;
+public class AgendaAdpter extends RecyclerView.Adapter implements AdapterInterface{
+    private ArrayList<AgendaBean> lista;
     private Context context;
-    private List<AgendaAdpter> agendaAdpter;
+    private final List<AgendaBean> agendaLista;
 
-
-    public AgendaAdpter(List<AgendaBean> lista, Context context) {
-        this.lista = lista;
+    public AgendaAdpter(List<AgendaBean>agendaLista, Context context) {
+        this.agendaLista = agendaLista;
         this.context = context;
+        this.lista = new ArrayList<>();
+        this.lista.addAll(agendaLista);
 
     }
 
@@ -65,11 +65,11 @@ public class AgendaAdpter extends RecyclerView.Adapter{
         // Localiza a configuração selecionada para Ordenação de Albuns
         String ordem = preferences.getString(ordemPreference, ordemDefault);*/
 
-        ordena("Titulo",lista);
+        ordena("Titulo",agendaLista);
 
-        AgendaBean eventos = lista.get(position);
+        AgendaBean evento = agendaLista.get(position);
 
-        ((EventoViewHolder) holder).preencher(eventos);
+        ((EventoViewHolder) holder).preencher(evento);
 
     }
 
@@ -95,8 +95,25 @@ public class AgendaAdpter extends RecyclerView.Adapter{
 
     @Override
     public int getItemCount() {
-        return lista.size();
+        return agendaLista.size();
     }
+
+    @Override
+    public void filtrarPorTitulo(String charText) {
+        charText = charText.toLowerCase(Locale.getDefault());
+        agendaLista.clear();
+        if (charText.length() == 0) {
+            agendaLista.addAll(lista);
+        } else {
+            for (AgendaBean l : lista) {
+                if (l.getTitulo().toLowerCase(Locale.getDefault()).contains(charText)) {
+                    agendaLista.add(l);
+                }
+            }
+        }
+
+    }
+
 
     public class EventoViewHolder extends RecyclerView.ViewHolder implements  View.OnClickListener {
 
@@ -108,7 +125,6 @@ public class AgendaAdpter extends RecyclerView.Adapter{
         public final AgendaAdpter adpter;
         private Long eventoId;
         public DateFormat dtFmt =  DateFormat.getDateInstance(DateFormat.LONG, new Locale("pt","BR"));
-
 
         public EventoViewHolder(final View view, final AgendaAdpter adpter) {
             super(view);
@@ -131,7 +147,6 @@ public class AgendaAdpter extends RecyclerView.Adapter{
             tvTituloEvento.setTypeface(typeFont);
 
         }
-
 
         public void preencher(AgendaBean obj){
             eventoId = obj.getId();

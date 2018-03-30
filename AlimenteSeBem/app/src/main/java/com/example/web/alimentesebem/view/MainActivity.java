@@ -20,6 +20,8 @@ import android.os.Bundle;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
+import android.view.WindowManager;
+import android.view.inputmethod.InputMethodManager;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -71,6 +73,9 @@ public class MainActivity extends AppCompatActivity {
 
         mViewPager.addOnPageChangeListener(new TabLayout.TabLayoutOnPageChangeListener(tabLayout));
         tabLayout.addOnTabSelectedListener(new TabLayout.ViewPagerOnTabSelectedListener(mViewPager));
+
+        //Ações ao mudar de pagina na TabView
+        mViewPager.addOnPageChangeListener(myOnPageChangeListener);
 
     }
 
@@ -198,5 +203,44 @@ public class MainActivity extends AppCompatActivity {
 
             return null;
         }
+    }
+
+    ViewPager.OnPageChangeListener myOnPageChangeListener =
+            new ViewPager.OnPageChangeListener() {
+
+                @Override
+                public void onPageScrollStateChanged(int state) {
+                    //Called when the scroll state changes.
+
+                }
+
+                @Override
+                public void onPageScrolled(int position,
+                                           float positionOffset, int positionOffsetPixels) {
+                    //This method will be invoked when the current page is scrolled,
+                    //either as part of a programmatically initiated smooth scroll
+                    //or a user initiated touch scroll.
+
+                    //esconde o teclado
+                    hideKeyboard();
+                }
+
+                @Override
+                public void onPageSelected(int position) {
+                    //This method will be invoked when a new page becomes selected.
+                    //esconde o teclado
+                    hideKeyboard();
+                }
+            };
+
+    public  void hideKeyboard() {
+        InputMethodManager inputManager = (InputMethodManager)getApplicationContext().getSystemService(this.INPUT_METHOD_SERVICE);
+
+        // check if no view has focus:
+        View v = getCurrentFocus();
+        if (v == null)
+            return;
+
+        inputManager.hideSoftInputFromWindow(v.getWindowToken(), 0);
     }
 }

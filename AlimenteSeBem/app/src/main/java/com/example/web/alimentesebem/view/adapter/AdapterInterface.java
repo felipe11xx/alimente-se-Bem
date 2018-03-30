@@ -5,6 +5,5 @@ package com.example.web.alimentesebem.view.adapter;
  */
 
 public interface AdapterInterface {
-    void setEditar(boolean value);
-    void notificaAtualizacao();
+    void filtrarPorTitulo(String charText);
 }

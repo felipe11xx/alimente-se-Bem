@@ -13,6 +13,7 @@ import com.example.web.alimentesebem.R;
 import com.example.web.alimentesebem.model.VideoBean;
 
 import java.text.DateFormat;
+import java.util.ArrayList;
 import java.util.List;
 import java.util.Locale;
 
@@ -20,15 +21,17 @@ import java.util.Locale;
  * Created by Felipe on 18/03/2018.
  */
 
-public class VideoAdpter extends RecyclerView.Adapter {
+public class VideoAdpter extends RecyclerView.Adapter implements AdapterInterface {
 
     private Context context;
-    private List<VideoBean> lista;
-    private List<VideoBean> videosAdpter;
+    private ArrayList<VideoBean> lista;
+    private final List<VideoBean> videosLista;
 
-    public VideoAdpter(Context context, List<VideoBean> lista) {
+    public VideoAdpter(Context context, List<VideoBean> videosLista) {
+        this.videosLista = videosLista;
         this.context = context;
-        this.lista = lista;
+        this.lista = new ArrayList<>();
+        this.lista.addAll(videosLista);
 
     }
 
@@ -45,7 +48,8 @@ public class VideoAdpter extends RecyclerView.Adapter {
     @Override
     public void onBindViewHolder(RecyclerView.ViewHolder holder, int position) {
         VideoViewHolder viewHolder = (VideoViewHolder) holder;
-        VideoBean video = lista.get(position);
+
+        VideoBean video = videosLista.get(position);
 
         ((VideoViewHolder)holder).preencher(video);
 
@@ -53,23 +57,23 @@ public class VideoAdpter extends RecyclerView.Adapter {
 
     @Override
     public int getItemCount() {
-        return lista.size();
+        return videosLista.size();
     }
 
     // filtrando por nome
+    @Override
     public void filtrarPorTitulo(String charText) {
         charText = charText.toLowerCase(Locale.getDefault());
-        videosAdpter.clear();
+        videosLista.clear();
         if (charText.length() == 0) {
-            videosAdpter.addAll(lista);
+            videosLista.addAll(lista);
         } else {
             for (VideoBean l : lista) {
                 if (l.getTitulo().toLowerCase(Locale.getDefault()).contains(charText)) {
-                    videosAdpter.add(l);
+                    videosLista.add(l);
                 }
             }
         }
-        notifyDataSetChanged();
     }
 
     public class VideoViewHolder extends RecyclerView.ViewHolder implements View.OnClickListener{
