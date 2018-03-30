@@ -7,7 +7,6 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.webkit.WebSettings;
 import android.webkit.WebView;
-import android.webkit.WebViewClient;
 import android.widget.TextView;
 
 import com.example.web.alimentesebem.R;
@@ -21,13 +20,13 @@ import java.util.Locale;
  * Created by Felipe on 18/03/2018.
  */
 
-public class VideoAdpeter extends RecyclerView.Adapter {
+public class VideoAdpter extends RecyclerView.Adapter {
 
     private Context context;
     private List<VideoBean> lista;
+    private List<VideoBean> videosAdpter;
 
-
-    public VideoAdpeter(Context context, List<VideoBean> lista) {
+    public VideoAdpter(Context context, List<VideoBean> lista) {
         this.context = context;
         this.lista = lista;
 
@@ -57,15 +56,30 @@ public class VideoAdpeter extends RecyclerView.Adapter {
         return lista.size();
     }
 
+    // filtrando por nome
+    public void filtrarPorTitulo(String charText) {
+        charText = charText.toLowerCase(Locale.getDefault());
+        videosAdpter.clear();
+        if (charText.length() == 0) {
+            videosAdpter.addAll(lista);
+        } else {
+            for (VideoBean l : lista) {
+                if (l.getTitulo().toLowerCase(Locale.getDefault()).contains(charText)) {
+                    videosAdpter.add(l);
+                }
+            }
+        }
+        notifyDataSetChanged();
+    }
+
     public class VideoViewHolder extends RecyclerView.ViewHolder implements View.OnClickListener{
         public final TextView tvTitulo,tvDesc,tvData;
         public final WebView webVideo;
         private Long videoId;
-        public VideoAdpeter adpeter;
+        public VideoAdpter adpeter;
         public DateFormat dtFmt =  DateFormat.getDateInstance(DateFormat.LONG,new Locale("pt","BR"));
 
-
-        public VideoViewHolder(View itemView,VideoAdpeter adpeter) {
+        public VideoViewHolder(View itemView,VideoAdpter adpeter) {
             super(itemView);
             this.adpeter = adpeter;
             itemView.setOnClickListener(this);
@@ -82,6 +96,7 @@ public class VideoAdpeter extends RecyclerView.Adapter {
             videoId = video.getId();
             tvDesc.setText(video.getDescricao());
             tvTitulo.setText(video.getTitulo());
+            tvData.setText(dtFmt.format(video.getData()));
 //            tvData.setText(dtFmt.format(video.getData()));
             String url = video.getUrl().substring(video.getUrl().lastIndexOf("v=")+2);
             String frameVideo = "<html><body><iframe width=\"100% !important\" height=\"100% !important\" src=\"" +

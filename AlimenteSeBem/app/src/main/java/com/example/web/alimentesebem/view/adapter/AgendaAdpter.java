@@ -33,7 +33,7 @@ import java.util.Locale;
 public class AgendaAdpter extends RecyclerView.Adapter{
     private List<AgendaBean> lista;
     private Context context;
-    private Activity activity;
+    private List<AgendaAdpter> agendaAdpter;
 
 
     public AgendaAdpter(List<AgendaBean> lista, Context context) {

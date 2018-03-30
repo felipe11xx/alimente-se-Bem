@@ -3,6 +3,7 @@ package com.example.web.alimentesebem.view;
 import android.content.DialogInterface;
 import android.content.Intent;
 import android.graphics.Typeface;
+import android.os.Parcelable;
 import android.support.design.widget.TabLayout;
 import android.support.design.widget.FloatingActionButton;
 import android.support.design.widget.Snackbar;
@@ -24,6 +25,7 @@ import android.widget.Toast;
 
 
 import com.example.web.alimentesebem.R;
+import com.example.web.alimentesebem.model.TagForumBean;
 import com.facebook.AccessToken;
 import com.facebook.GraphRequest;
 import com.facebook.GraphResponse;
@@ -152,6 +154,10 @@ public class MainActivity extends AppCompatActivity {
             switch (position){
                 case 0:
                     TabNoticia tabNoticia = new TabNoticia();
+             /*       Bundle extra = new Bundle();
+
+                    extra.putParcelable("botao",); // TODO: passar a referência do FloatActionButton
+                    tabNoticia.setArguments(extra);*/
                     return tabNoticia;
                 case 1:
                     TabAgenda tabAgenda = new TabAgenda();

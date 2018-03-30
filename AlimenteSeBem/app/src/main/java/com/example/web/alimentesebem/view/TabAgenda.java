@@ -1,7 +1,5 @@
 package com.example.web.alimentesebem.view;
-import android.app.Activity;
 import android.content.Intent;
-import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
 import android.support.v7.widget.LinearLayoutManager;
@@ -13,18 +11,17 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.ProgressBar;
+import android.widget.SearchView;
 import android.widget.Toast;
 
 import com.example.web.alimentesebem.R;
 import com.example.web.alimentesebem.model.AgendaBean;
 import com.example.web.alimentesebem.rest.config.RetrofitConfig;
 import com.example.web.alimentesebem.view.adapter.AgendaAdpter;
+import com.example.web.alimentesebem.view.adapter.VideoAdpter;
 
 
-import java.util.Collections;
-import java.util.Comparator;
 import java.util.List;
-import java.util.prefs.Preferences;
 
 import retrofit2.Call;
 import retrofit2.Callback;
@@ -43,7 +40,8 @@ public class TabAgenda extends Fragment {
     private BarraProgresso barraProgresso = BarraProgresso.getInstance();
     private ProgressBar progressBar;
     private Button btnRecarregar;
-
+    private SearchView searchView;
+    private VideoAdpter adpeter;
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
@@ -54,7 +52,10 @@ public class TabAgenda extends Fragment {
         recyclerView = rootView.findViewById(R.id.rv_calendario);
         progressBar = rootView.findViewById(R.id.prg_agenda);
         btnRecarregar = rootView.findViewById(R.id.btn_recarregar_agenda);
+        searchView = rootView.findViewById(R.id.sc_agenda);
+        CharSequence query = searchView.getQuery();
         btnRecarregar.setVisibility(View.INVISIBLE);
+
         // Acessa os dados no servidor
         acessaServidor();
 
@@ -100,11 +101,26 @@ public class TabAgenda extends Fragment {
                         acessaServidor();
                     }
                 });
-
             }
         });
     }
 
+    private void buscaPorTitulo(final VideoAdpter adapter){
+        searchView.setOnQueryTextListener(new SearchView.OnQueryTextListener() {
+            @Override
+            public boolean onQueryTextSubmit(String s) {
+                return false;
+            }
 
+            @Override
+            public boolean onQueryTextChange(String s) {
 
+                // recebo a String que quero buscar
+                String tituloBuscado = s;
+                // coloco um filtro no próprio adapter
+                adapter.filtrarPorTitulo(tituloBuscado);
+                return false;
+            }
+        });
+    }
 }

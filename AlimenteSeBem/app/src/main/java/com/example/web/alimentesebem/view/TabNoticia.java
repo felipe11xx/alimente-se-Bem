@@ -2,6 +2,8 @@ package com.example.web.alimentesebem.view;
 
 import android.os.Build;
 import android.os.Bundle;
+import android.support.design.widget.FloatingActionButton;
+import android.support.v4.content.ContextCompat;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
@@ -16,6 +18,7 @@ import com.example.web.alimentesebem.model.NoticiaBean;
 import com.example.web.alimentesebem.rest.config.RetrofitConfig;
 import com.example.web.alimentesebem.view.adapter.NoticiaAdpter;
 
+import java.io.Serializable;
 import java.util.List;
 
 import retrofit2.Call;
@@ -26,7 +29,7 @@ import retrofit2.Response;
  * Created by WEB on 02/03/2018.
  */
 
-public class TabNoticia extends android.support.v4.app.Fragment {
+public class TabNoticia extends android.support.v4.app.Fragment implements Serializable {
 
     private RecyclerView recyclerView;
     private List<NoticiaBean> noticias;

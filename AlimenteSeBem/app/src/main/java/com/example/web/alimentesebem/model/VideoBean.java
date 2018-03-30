@@ -10,7 +10,7 @@ public class VideoBean {
     private Long id;
     private String titulo;
     private String descricao;
-    private Date data;
+    private Date data_Publicacao;
     private UsuarioBean usuario;
     private String url;
 
@@ -24,7 +24,7 @@ public class VideoBean {
         this.id = id;
         this.titulo = titulo;
         this.descricao = descricao;
-        this.data = data;
+        this.data_Publicacao = data;
         this.url = url;
     }
 
@@ -53,11 +53,11 @@ public class VideoBean {
     }
 
     public Date getData() {
-        return data;
+        return data_Publicacao;
     }
 
     public void setData(Date data) {
-        this.data = data;
+        this.data_Publicacao = data;
     }
 
     public UsuarioBean getUsuario() {

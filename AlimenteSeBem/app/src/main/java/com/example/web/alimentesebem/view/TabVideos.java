@@ -14,8 +14,7 @@ import android.widget.Toast;
 import com.example.web.alimentesebem.R;
 import com.example.web.alimentesebem.model.VideoBean;
 import com.example.web.alimentesebem.rest.config.RetrofitConfig;
-import com.example.web.alimentesebem.view.adapter.OnItemClick;
-import com.example.web.alimentesebem.view.adapter.VideoAdpeter;
+import com.example.web.alimentesebem.view.adapter.VideoAdpter;
 
 import java.util.List;
 
@@ -65,7 +64,7 @@ public class TabVideos extends Fragment {
                     barraProgresso.showProgress(false,progressBar);
 
                     if(videos != null) {
-                        recyclerView.setAdapter(new VideoAdpeter(getContext(), videos));
+                        recyclerView.setAdapter(new VideoAdpter(getContext(), videos));
                         //Cria a tela com a lista dos Foruns
                         recyclerView.setLayoutManager(new LinearLayoutManager(getContext(), LinearLayoutManager.VERTICAL,
                                 false));
