@@ -55,7 +55,9 @@
         <item>Titulo</item>
         <item>Data</item>
     </string-array>
-
+    <string name="categoria">Categoria</string>
+    <string name="titulo">Titulo</string>
+   ]
     <!-- facebook -->
 
     <string name="facebook_app_id">395228594279087</string>
