@@ -1,11 +1,14 @@
 package com.example.web.alimentesebem.view.adapter;
 
 
+import android.app.Activity;
 import android.content.Context;
 import android.content.Intent;
+import android.content.SharedPreferences;
 import android.graphics.Bitmap;
 import android.graphics.Color;
 import android.graphics.Typeface;
+import android.preference.PreferenceManager;
 import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -33,12 +36,15 @@ public class AgendaAdpter extends RecyclerView.Adapter implements AdapterInterfa
     private ArrayList<AgendaBean> lista;
     private Context context;
     private final List<AgendaBean> agendaLista;
+    private Activity activity;
 
-    public AgendaAdpter(List<AgendaBean>agendaLista, Context context) {
+    public AgendaAdpter(List<AgendaBean>agendaLista, Context context,Activity activity) {
         this.agendaLista = agendaLista;
         this.context = context;
+        this.activity = activity;
         this.lista = new ArrayList<>();
         this.lista.addAll(agendaLista);
+
 
     }
 
@@ -56,16 +62,16 @@ public class AgendaAdpter extends RecyclerView.Adapter implements AdapterInterfa
     public void onBindViewHolder(RecyclerView.ViewHolder holder, int position) {
         EventoViewHolder viewHolder = (EventoViewHolder) holder;
 
-/*        // Obtém a identificação da preferência para Ordenação
+        // Obtém a identificação da preferência para Ordenação
         String ordemPreference = activity.getResources().getString(R.string.ordem_key);
         // Obtém o valor padrão para a Ordenação
         String ordemDefault = activity.getResources().getString(R.string.ordem_default);
         // Obtém o recurso de leitura de preferências
         SharedPreferences preferences = PreferenceManager.getDefaultSharedPreferences(activity);
         // Localiza a configuração selecionada para Ordenação de Albuns
-        String ordem = preferences.getString(ordemPreference, ordemDefault);*/
+        String ordem = preferences.getString(ordemPreference, ordemDefault);
 
-        ordena("Titulo",agendaLista);
+        ordena(ordem,agendaLista);
 
         AgendaBean evento = agendaLista.get(position);
 

@@ -2,7 +2,9 @@ package com.example.web.alimentesebem.view;
 
 import android.content.DialogInterface;
 import android.content.Intent;
+import android.content.SharedPreferences;
 import android.graphics.Typeface;
+import android.preference.PreferenceManager;
 import android.support.design.widget.TabLayout;
 import android.support.design.widget.FloatingActionButton;
 import android.support.v7.app.AlertDialog;
@@ -45,8 +47,7 @@ public class MainActivity extends AppCompatActivity {
      * The {@link ViewPager} that will host the section contents.
      */
     private ViewPager mViewPager;
-    private FloatingActionButton floatButton;
-    private String msg;
+    private FloatingActionButton floatNoticia,floatAgenda,floatForum,floatVideo;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -55,9 +56,9 @@ public class MainActivity extends AppCompatActivity {
         toolbarTittle = findViewById(R.id.toolbar_title);
         Typeface typeFont = Typeface.createFromAsset(getAssets(),"fonts/tahu.ttf");
         toolbarTittle.setTypeface(typeFont);
-        Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
+        Toolbar toolbar = findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
-        floatButton = findViewById(R.id.btn_ordena);
+
         // Create the adapter that will return a fragment for each of the three
         // primary sections of the activity.
         mSectionsPagerAdapter = new SectionsPagerAdapter(getSupportFragmentManager());
@@ -74,42 +75,14 @@ public class MainActivity extends AppCompatActivity {
         //Ações ao mudar de pagina na TabView
         mViewPager.addOnPageChangeListener(myOnPageChangeListener);
 
-        floatButton.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                //Toast.makeText(getApplicationContext(),msg,Toast.LENGTH_SHORT).show();
-                PopupMenu popupMenu = new PopupMenu(v.getContext(), v);
-                popupMenu.getMenuInflater().inflate(R.menu.filtro_menu, popupMenu.getMenu());
+        //Botões flutuantes de listagem
+        floatNoticia = findViewById(R.id.btn_ordena_noticia);
+        floatAgenda = findViewById(R.id.btn_ordena_agenda);
+        floatForum = findViewById(R.id.btn_ordena_forum);
+        floatVideo = findViewById(R.id.btn_ordena_video);
 
-               // final Activity context = (Activity)view.getContext();
-
-                popupMenu.setOnMenuItemClickListener(new PopupMenu.OnMenuItemClickListener() {
-                    public boolean onMenuItemClick(MenuItem item) {
-
-                        switch (item.getItemId()) {
-
-                            case R.id.item_categoria:
-                                Toast.makeText(getApplicationContext(),"Categoria",Toast.LENGTH_SHORT).show();
-                                break;
-
-                            case R.id.item_titulo:
-                                Toast.makeText(getApplicationContext(),"Titulo",Toast.LENGTH_SHORT).show();
-                                break;
-
-                            case R.id.item_data:
-                                Toast.makeText(getApplicationContext(),"Data",Toast.LENGTH_SHORT).show();
-                                break;
-
-                        }
-
-                        return true;
-                    }
-                });
-
-                popupMenu.show();
-            }
-        });
     }
+
 
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
@@ -259,16 +232,29 @@ public class MainActivity extends AppCompatActivity {
 
                     switch (position){
                         case 0:
-                            msg ="Noticia";
+                            floatNoticia.setVisibility(View.VISIBLE);
+                            floatAgenda.setVisibility(View.INVISIBLE);
+                            floatForum.setVisibility(View.INVISIBLE);
+                            floatVideo.setVisibility(View.INVISIBLE);
+
                             break;
                         case 1:
-                            msg ="Agenda";
+                            floatNoticia.setVisibility(View.INVISIBLE);
+                            floatAgenda.setVisibility(View.VISIBLE);
+                            floatForum.setVisibility(View.INVISIBLE);
+                            floatVideo.setVisibility(View.INVISIBLE);
                             break;
                         case 2:
-                            msg ="Forum";
+                            floatNoticia.setVisibility(View.INVISIBLE);
+                            floatAgenda.setVisibility(View.INVISIBLE);
+                            floatForum.setVisibility(View.VISIBLE);
+                            floatVideo.setVisibility(View.INVISIBLE);
                             break;
                         case 3:
-                            msg ="Videos";
+                            floatNoticia.setVisibility(View.INVISIBLE);
+                            floatAgenda.setVisibility(View.INVISIBLE);
+                            floatForum.setVisibility(View.INVISIBLE);
+                            floatVideo.setVisibility(View.VISIBLE);
                             break;
                     }
 
@@ -276,8 +262,6 @@ public class MainActivity extends AppCompatActivity {
                     hideKeyboard();
                 }
             };
-
-
 
     public  void hideKeyboard() {
         InputMethodManager inputManager = (InputMethodManager)getApplicationContext().getSystemService(this.INPUT_METHOD_SERVICE);

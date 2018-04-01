@@ -1,16 +1,22 @@
 package com.example.web.alimentesebem.view;
 import android.content.Intent;
+import android.content.SharedPreferences;
 import android.os.Bundle;
+import android.preference.PreferenceManager;
+import android.support.annotation.Nullable;
+import android.support.design.widget.FloatingActionButton;
 import android.support.v4.app.Fragment;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 
 import android.util.Log;
 import android.view.LayoutInflater;
+import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
 
 import android.widget.Button;
+import android.widget.PopupMenu;
 import android.widget.ProgressBar;
 import android.widget.SearchView;
 import android.widget.Toast;
@@ -41,9 +47,15 @@ public class TabAgenda extends Fragment {
     private Button btnRecarregar;
     private SearchView searchView;
     private AgendaAdpter adapter;
+    private FloatingActionButton floatAgenda;
+/*
+    private MyPreference myPreference = MyPreference.getInstance(getContext());
+    private String ordemPreference;
+    private String ordemDefault;
+*/
 
     @Override
-    public View onCreateView(LayoutInflater inflater, ViewGroup container,
+    public View onCreateView(final LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
 
         View rootView = inflater.inflate(R.layout.tab_agenda, container, false);
@@ -54,11 +66,27 @@ public class TabAgenda extends Fragment {
         searchView = rootView.findViewById(R.id.sc_agenda);
         CharSequence query = searchView.getQuery();
         btnRecarregar.setVisibility(View.INVISIBLE);
+        floatAgenda = getActivity().findViewById(R.id.btn_ordena_agenda);
 
         // Acessa os dados no servidor
         acessaServidor();
 
+        floatAgenda.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                intent = new Intent(getContext(),PreferenciasActivity.class);
+                getActivity().startActivity(intent);
+            }
+        });
+
         return rootView;
+    }
+
+    @Override
+    public void onStart() {
+        super.onStart();
+        if(adapter != null)
+        adapter.notifyDataSetChanged();
     }
 
     private void acessaServidor(){
@@ -74,7 +102,7 @@ public class TabAgenda extends Fragment {
                     barraProgresso.showProgress(false,progressBar);
                     if (eventos != null) {
 
-                        adapter = new AgendaAdpter(eventos, getContext());
+                        adapter = new AgendaAdpter(eventos, getContext(),getActivity());
                         recyclerView.setAdapter(adapter);
                         //Chama metodo para filtrar por titulo
                         buscaPorTitulo(adapter);
@@ -82,6 +110,7 @@ public class TabAgenda extends Fragment {
                         RecyclerView.LayoutManager layout = new LinearLayoutManager(getContext(), LinearLayoutManager.VERTICAL,
                                 false);
                         recyclerView.setLayoutManager(layout);
+
                     }else{
                         Toast.makeText(getContext(),R.string.agenda_null, Toast.LENGTH_SHORT).show();
                         barraProgresso.showProgress(false,progressBar);

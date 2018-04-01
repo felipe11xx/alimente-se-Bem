@@ -48,16 +48,19 @@
     <!-- Strings relacionadas as ordenações-->
     <string name="ordem_default">Data</string>
     <string name="ordem_titulo">Ordem de exibição</string>
-    <string name="ordem_key">ORDEM_DA_LISTA</string>
+    <string name="ordem_key">ORDEM_DA_LISTA_AGENDA</string>
     <string name="ordem_sumario">Define a ordem de listagem</string>
+
+    <string name="filtro_titulo">Filtros</string>
+    <string name="filtro_key">FILTRO_HABILITADO</string>
+
     <string-array name="ordem_itens">
-        <item>Categoria</item>
         <item>Titulo</item>
         <item>Data</item>
     </string-array>
     <string name="categoria">Categoria</string>
     <string name="titulo">Titulo</string>
-   ]
+
     <!-- facebook -->
 
     <string name="facebook_app_id">395228594279087</string>
