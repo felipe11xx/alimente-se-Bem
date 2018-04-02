@@ -51,8 +51,13 @@ public class ForumAdapter extends RecyclerView.Adapter implements AdapterInterfa
         ForumViewHolder forumViewHolder = (ForumViewHolder) holder;
 
         ForumBean forum = forumsLista.get(position);
+        try{
+            ((ForumViewHolder) holder).preencher(forum);
+        }catch (Exception e){
+            Toast.makeText(context, context.getResources().getString(R.string.falha_de_acesso), Toast.LENGTH_LONG).show();
+        }
 
-        ((ForumViewHolder) holder).preencher(forum);
+
     }
 
     @Override
@@ -103,7 +108,7 @@ public class ForumAdapter extends RecyclerView.Adapter implements AdapterInterfa
 
         }
 
-        public void preencher(ForumBean obj){
+        public void preencher(ForumBean obj) throws Exception{
             forumId = obj.getId();
             tvTitulo.setText(obj.getTitulo());
             tvLblAutor.setText("Aberto por: ");

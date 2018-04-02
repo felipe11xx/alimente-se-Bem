@@ -94,7 +94,11 @@ public class EventoActivity extends AppCompatActivity {
         mostraViews(false);
         if (EventoId != 0) {
             id = EventoId;
-            acessaServidor();
+            try {
+                acessaServidor();
+            } catch (Exception e) {
+                Toast.makeText(getApplicationContext(),getResources().getString(R.string.falha_de_acesso), Toast.LENGTH_LONG).show();
+            }
 
 
         }
@@ -107,7 +111,7 @@ public class EventoActivity extends AppCompatActivity {
         });
     }
 
-    private void acessaServidor(){
+    private void acessaServidor() throws Exception{
         Call<AgendaBean> call = new RetrofitConfig().getRestInterface().getEvento(id);
         call.enqueue(new Callback<AgendaBean>() {
             @Override
@@ -173,7 +177,11 @@ public class EventoActivity extends AppCompatActivity {
                     public void onClick(View v) {
                         barraProgresso.showProgress(true,progressBar);
                         btnRecarregar.setVisibility(View.INVISIBLE);
-                        acessaServidor();
+                        try {
+                            acessaServidor();
+                        } catch (Exception e) {
+                            Toast.makeText(getApplicationContext(),R.string.falha_de_acesso,Toast.LENGTH_LONG).show();
+                        }
                     }
                 });
             }

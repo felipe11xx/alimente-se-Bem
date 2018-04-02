@@ -10,6 +10,7 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ImageView;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import com.example.web.alimentesebem.R;
 import com.example.web.alimentesebem.model.NoticiaBean;
@@ -52,8 +53,13 @@ public class NoticiaAdpter extends RecyclerView.Adapter implements AdapterInterf
         NoticiaViewHolder viewHolder = (NoticiaViewHolder) holder;
 
         NoticiaBean noticiaBean = listaNoticias.get(position);
+        try{
+            ((NoticiaViewHolder)holder).preencher(noticiaBean);
+        }catch (Exception e){
+            Toast.makeText(context, context.getResources().getString(R.string.falha_de_acesso), Toast.LENGTH_LONG).show();
+        }
 
-        ((NoticiaViewHolder)holder).preencher(noticiaBean);
+
     }
 
     @Override
@@ -106,7 +112,7 @@ public class NoticiaAdpter extends RecyclerView.Adapter implements AdapterInterf
 
         }
 
-        public void preencher(NoticiaBean noticiaBean){
+        public void preencher(NoticiaBean noticiaBean) throws Exception{
 
             noticiaId = noticiaBean.getId();
             tvTitulo.setText(noticiaBean.getTitulo());

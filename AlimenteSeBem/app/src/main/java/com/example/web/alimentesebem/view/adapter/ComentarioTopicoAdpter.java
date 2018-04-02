@@ -7,6 +7,7 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import com.example.web.alimentesebem.R;
 import com.example.web.alimentesebem.model.ComentarioForumBean;
@@ -42,7 +43,11 @@ public class ComentarioTopicoAdpter extends RecyclerView.Adapter {
         ComentarioTopicoViewHolder comentarioTopicoViewHolder =  (ComentarioTopicoViewHolder) holder;
         ComentarioForumBean comentarioForumBean = comentarios.get(position);
 
-        ((ComentarioTopicoViewHolder)holder).preencher(comentarioForumBean);
+        try {
+            ((ComentarioTopicoViewHolder)holder).preencher(comentarioForumBean);
+        } catch (Exception e) {
+            Toast.makeText(context,context.getResources().getString(R.string.falha_de_acesso), Toast.LENGTH_LONG).show();
+        }
 
     }
 
@@ -75,7 +80,7 @@ public class ComentarioTopicoAdpter extends RecyclerView.Adapter {
         }
 
 
-        public void preencher(ComentarioForumBean comentario){
+        public void preencher(ComentarioForumBean comentario) throws Exception{
             comentarioId = comentario.getId();
 
             tvAutor.setText(comentario.getUsuario().getNome());

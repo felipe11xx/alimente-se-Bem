@@ -15,6 +15,7 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ImageView;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import com.example.web.alimentesebem.R;
 import com.example.web.alimentesebem.model.AgendaBean;
@@ -75,7 +76,12 @@ public class AgendaAdpter extends RecyclerView.Adapter implements AdapterInterfa
 
         AgendaBean evento = agendaLista.get(position);
 
-        ((EventoViewHolder) holder).preencher(evento);
+        //caso tenha erro ao tentar acessar o servidor
+        try {
+            ((EventoViewHolder) holder).preencher(evento);
+        } catch (Exception e) {
+            Toast.makeText(context,context.getResources().getString(R.string.falha_de_acesso),Toast.LENGTH_SHORT).show();
+        }
 
     }
 
@@ -154,7 +160,7 @@ public class AgendaAdpter extends RecyclerView.Adapter implements AdapterInterfa
 
         }
 
-        public void preencher(AgendaBean obj){
+        public void preencher(AgendaBean obj) throws Exception{
             eventoId = obj.getId();
             tvTituloEvento.setText(obj.getTitulo());
             tvLocal.setText(obj.getUnidades_Sesi().getNome() );

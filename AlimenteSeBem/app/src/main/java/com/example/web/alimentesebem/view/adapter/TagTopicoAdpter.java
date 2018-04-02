@@ -8,6 +8,7 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import com.example.web.alimentesebem.R;
 import com.example.web.alimentesebem.model.TagForumBean;
@@ -43,7 +44,12 @@ public class TagTopicoAdpter extends RecyclerView.Adapter {
         TagTopicoViewHolder tagTopicoViewHolder = (TagTopicoViewHolder) holder;
         TagForumBean tag = tags.get(position);
 
-        ((TagTopicoViewHolder) holder).preencher(tag);
+        try{
+            ((TagTopicoViewHolder) holder).preencher(tag);
+        }catch (Exception e){
+            Toast.makeText(context, context.getResources().getString(R.string.falha_de_acesso), Toast.LENGTH_LONG).show();
+        }
+
 
     }
 
@@ -67,7 +73,7 @@ public class TagTopicoAdpter extends RecyclerView.Adapter {
             card = itemView.findViewById(R.id.cv_tag_topico);
         }
 
-        public void preencher (TagForumBean tag){
+        public void preencher (TagForumBean tag) throws Exception{
             tagId = tag.getId();
             tvTag.setText(tag.getTag());
 
@@ -80,13 +86,13 @@ public class TagTopicoAdpter extends RecyclerView.Adapter {
             String primeiraLetra = tvTag.getText().toString().substring(0,1).toLowerCase();
             //muda cores da tag de acordo com a letra
 
-            if(primeiraLetra.matches("a|f|k|p|u|w")  ) {
+            if(primeiraLetra.matches("a|f|k|p|u|z")  ) {
                 card.setCardBackgroundColor(ContextCompat.getColor(context, R.color.laranjaPadrao));
             }else if (primeiraLetra.matches("b|g|l|q|v")){
                 card.setCardBackgroundColor(ContextCompat.getColor(context, R.color.colorAccent));
             }else if (primeiraLetra.matches("c|h|m|r|x")){
                 card.setCardBackgroundColor(ContextCompat.getColor(context, R.color.lilasPadrão));
-            }else if (primeiraLetra.matches("d|i|n|s|y")){
+            }else if (primeiraLetra.matches("d|i|n|s|w")){
                 card.setCardBackgroundColor(ContextCompat.getColor(context, R.color.azulPadrão));
             }else {
                 card.setCardBackgroundColor(ContextCompat.getColor(context, R.color.cianoPadrao));

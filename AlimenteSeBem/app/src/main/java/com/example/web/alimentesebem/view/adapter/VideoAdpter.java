@@ -8,6 +8,7 @@ import android.view.ViewGroup;
 import android.webkit.WebSettings;
 import android.webkit.WebView;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import com.example.web.alimentesebem.R;
 import com.example.web.alimentesebem.model.VideoBean;
@@ -51,7 +52,12 @@ public class VideoAdpter extends RecyclerView.Adapter implements AdapterInterfac
 
         VideoBean video = videosLista.get(position);
 
-        ((VideoViewHolder)holder).preencher(video);
+        try {
+            ((VideoViewHolder)holder).preencher(video);
+        }catch (Exception e){
+            Toast.makeText(context, context.getResources().getString(R.string.falha_de_acesso),Toast.LENGTH_LONG).show();
+        }
+
 
     }
 
@@ -95,7 +101,7 @@ public class VideoAdpter extends RecyclerView.Adapter implements AdapterInterfac
 
         }
 
-        public void preencher (VideoBean video){
+        public void preencher (VideoBean video) throws Exception{
 
             videoId = video.getId();
             tvDesc.setText(video.getDescricao());

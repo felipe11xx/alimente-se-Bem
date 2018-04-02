@@ -8,6 +8,7 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import com.example.web.alimentesebem.R;
 
@@ -45,7 +46,12 @@ public class TagEventoAdapter extends RecyclerView.Adapter {
         TagEventoViewHolder TagHolder = (TagEventoViewHolder) holder;
         String tag = tags.get(position);
 
-        ((TagEventoViewHolder) holder).preencher(tag);
+        try{
+            ((TagEventoViewHolder) holder).preencher(tag);
+        }catch (Exception e){
+            Toast.makeText(context, context.getResources().getString(R.string.falha_de_acesso), Toast.LENGTH_LONG).show();
+        }
+
     }
 
     @Override
@@ -67,7 +73,7 @@ public class TagEventoAdapter extends RecyclerView.Adapter {
             // tvTag.setBackgroundColor(Color.WHITE);
         }
 
-        public void preencher(String tag){
+        public void preencher(String tag) throws  Exception{
             tvTag.setText(tag);
 
             mudaCor();
