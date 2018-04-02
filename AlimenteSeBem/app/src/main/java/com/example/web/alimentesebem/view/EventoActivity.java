@@ -94,12 +94,7 @@ public class EventoActivity extends AppCompatActivity {
         mostraViews(false);
         if (EventoId != 0) {
             id = EventoId;
-            try {
                 acessaServidor();
-            } catch (Exception e) {
-                Toast.makeText(getApplicationContext(),getResources().getString(R.string.falha_de_acesso), Toast.LENGTH_LONG).show();
-            }
-
 
         }
 
@@ -111,7 +106,7 @@ public class EventoActivity extends AppCompatActivity {
         });
     }
 
-    private void acessaServidor() throws Exception{
+    private void acessaServidor(){
         Call<AgendaBean> call = new RetrofitConfig().getRestInterface().getEvento(id);
         call.enqueue(new Callback<AgendaBean>() {
             @Override
@@ -123,41 +118,11 @@ public class EventoActivity extends AppCompatActivity {
                     mostraViews(true);
                     btnRecarregar.setVisibility(View.INVISIBLE);
                     AgendaBean obj = response.body();
-                    barraProgresso.showProgress(false,progressBar);
-                    tvtitulo.setText(obj.getTitulo());
-                    tvDecricao.setText(obj.getDescricao());
-                    String horario = String.valueOf(obj.getData_Evento());
-                    tvLocalHorario.setText(obj.getUnidades_Sesi().getLocal() + " horário "  + horario.substring(11,16));
-
-                    tvUnidade.setText(obj.getUnidades_Sesi().getNome());
-
-                    if (obj.getPreco() == 0) {
-                        tvPreco.setText("Gratuito");
-                    } else {
-                        tvPreco.setText("R$: " + String.valueOf(String.format("%.2f", obj.getPreco())));
+                    try {
+                        inicializa(obj);
+                    } catch (Exception e) {
+                        Toast.makeText(getApplicationContext(),getResources().getString(R.string.falha_de_acesso),Toast.LENGTH_LONG).show();
                     }
-
-                    if (obj.getCapa() != null) {
-                        imgCapaEvento.setImageBitmap(Utilitarios.bitmapFromBase64(obj.getCapa()));
-                    }
-                    // Obtem a 1ª letra do nome da pessoa e converte para Maiuscula
-                    String dia = dtFmt.format(obj.getData_Evento()).substring(0, 2);
-                    String mes = dtFmt.format(obj.getData_Evento()).substring(6, 9).toUpperCase();
-                    String diaMes = dia + " " + mes;
-                    // Cria um bitmap contendo Dia e mês
-                    // Bitmap bitmap = Utilitarios.quadradoBitmapAndText(
-                    Bitmap bitmap = Utilitarios.circularBitmapAndText(
-                            Color.parseColor("#ef8219"), 150, 150, diaMes, 40);
-                    imgData.setImageBitmap(bitmap);
-                    
-                    List<String> tags = new ArrayList<>();
-
-                    for (String tag:obj.getTags().split(",")) {
-                            tags.add(tag);
-                        }
-
-                    recyclerView.setAdapter(new TagEventoAdapter(tags, getApplicationContext()));
-                    recyclerView.setLayoutManager(new StaggeredGridLayoutManager(1, StaggeredGridLayoutManager.HORIZONTAL));
                 }
             }
 
@@ -186,6 +151,45 @@ public class EventoActivity extends AppCompatActivity {
                 });
             }
         });
+    }
+
+    private void inicializa(AgendaBean obj) throws Exception{
+
+        barraProgresso.showProgress(false,progressBar);
+        tvtitulo.setText(obj.getTitulo());
+        tvDecricao.setText(obj.getDescricao());
+        String horario = String.valueOf(obj.getData_Evento());
+        tvLocalHorario.setText(obj.getUnidades_Sesi().getLocal() + " horário "  + horario.substring(11,16));
+
+        tvUnidade.setText(obj.getUnidades_Sesi().getNome());
+
+        if (obj.getPreco() == 0) {
+            tvPreco.setText("Gratuito");
+        } else {
+            tvPreco.setText("R$: " + String.valueOf(String.format("%.2f", obj.getPreco())));
+        }
+
+        if (obj.getCapa() != null) {
+            imgCapaEvento.setImageBitmap(Utilitarios.bitmapFromBase64(obj.getCapa()));
+        }
+        // Obtem a 1ª letra do nome da pessoa e converte para Maiuscula
+        String dia = dtFmt.format(obj.getData_Evento()).substring(0, 2);
+        String mes = dtFmt.format(obj.getData_Evento()).substring(6, 9).toUpperCase();
+        String diaMes = dia + " " + mes;
+        // Cria um bitmap contendo Dia e mês
+        // Bitmap bitmap = Utilitarios.quadradoBitmapAndText(
+        Bitmap bitmap = Utilitarios.circularBitmapAndText(
+                Color.parseColor("#ef8219"), 150, 150, diaMes, 40);
+        imgData.setImageBitmap(bitmap);
+
+        List<String> tags = new ArrayList<>();
+
+        for (String tag:obj.getTags().split(",")) {
+            tags.add(tag);
+        }
+
+        recyclerView.setAdapter(new TagEventoAdapter(tags, getApplicationContext()));
+        recyclerView.setLayoutManager(new StaggeredGridLayoutManager(1, StaggeredGridLayoutManager.HORIZONTAL));
     }
 
     private void mostraViews(boolean mostra ){
