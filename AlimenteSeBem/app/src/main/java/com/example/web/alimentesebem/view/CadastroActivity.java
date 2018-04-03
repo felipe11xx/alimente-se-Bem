@@ -142,7 +142,7 @@ public class CadastroActivity extends AppCompatActivity {
                     //Se cadastrar com sucesso abre tela de login
                     if (response.isSuccessful()) {
                         Intent intent = new Intent(getApplicationContext(), LoginActivity.class);
-                        Toast.makeText(getApplicationContext(), "Cadastro realizado com sucesso ", Toast.LENGTH_LONG).show();
+                        Toast.makeText(getApplicationContext(), getResources().getString(R.string.sucesso_cadastro), Toast.LENGTH_LONG).show();
                         finish();
                         startActivity(intent);
                     }

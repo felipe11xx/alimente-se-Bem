@@ -77,7 +77,7 @@ public class LoginActivity extends AppCompatActivity implements LoaderCallbacks<
     private EditText mPasswordView;
     private ProgressBar mProgressView;
     private Intent intent;
-    private TextView tvLogo;
+    private TextView tvLogo,tvRealiza;
     private BarraProgresso barraProgresso = BarraProgresso.getInstance();
     private LoginButton loginButton;
     private CallbackManager callbackManager;
@@ -87,11 +87,11 @@ public class LoginActivity extends AppCompatActivity implements LoaderCallbacks<
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_login);
         // Set up the login form.
-        mEmailView = (AutoCompleteTextView) findViewById(R.id.ed_email);
+        mEmailView =  findViewById(R.id.ed_email);
         loginButton = findViewById(R.id.btn_logar_face);
         populateAutoComplete();
 
-        mPasswordView = (EditText) findViewById(R.id.ed_senha);
+        mPasswordView = findViewById(R.id.ed_senha);
         mPasswordView.setOnEditorActionListener(new TextView.OnEditorActionListener() {
             @Override
             public boolean onEditorAction(TextView textView, int id, KeyEvent keyEvent) {
@@ -125,9 +125,12 @@ public class LoginActivity extends AppCompatActivity implements LoaderCallbacks<
         });
         mProgressView = findViewById(R.id.login_progress);
 
-        Typeface typeFont = Typeface.createFromAsset(getAssets(),"fonts/tahu.ttf");
         tvLogo = findViewById(R.id.tv_logo_alimente_se);
+        tvRealiza = findViewById(R.id.tv_realiza_2);
+        Typeface typeFont = Typeface.createFromAsset(getAssets(),"fonts/tahu.ttf");
         tvLogo.setTypeface(typeFont);
+        typeFont = Typeface.createFromAsset(getAssets(),"fonts/Gotham_Condensed_Bold.otf");
+        tvRealiza.setTypeface(typeFont);
 
     }
 
@@ -368,11 +371,11 @@ public class LoginActivity extends AppCompatActivity implements LoaderCallbacks<
 
             finish();
             startActivity(intent);
+            Toast.makeText(LoginActivity.this, "Olá ".concat(Profile.getCurrentProfile().getFirstName()) , Toast.LENGTH_SHORT).show();
         }
 
         loginButton.setReadPermissions("email", "public_profile");
 
-        FacebookSdk.sdkInitialize(getApplicationContext());
         // AppEventsLogger.activateApp(this);
         callbackManager  = CallbackManager.Factory.create();
         // Callback registration
@@ -380,7 +383,7 @@ public class LoginActivity extends AppCompatActivity implements LoaderCallbacks<
             @Override
             public void onSuccess(LoginResult loginResult) {
                 if(Profile.getCurrentProfile() != null){
-                    Toast.makeText(LoginActivity.this,  Profile.getCurrentProfile().getFirstName(), Toast.LENGTH_SHORT).show();
+                    Toast.makeText(LoginActivity.this, "Olá ".concat(Profile.getCurrentProfile().getFirstName()) , Toast.LENGTH_SHORT).show();
                 }
 
                 finish();

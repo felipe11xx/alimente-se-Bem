@@ -1,4 +1,6 @@
 <resources>
+
+    <!-- Strings para constução das telas-->
     <string name="app_name">Alimente-Se Bem</string>
     <string name="noticias">Notícias</string>
     <string name="agenda">Agenda</string>
@@ -21,6 +23,7 @@
     <string name="preco">Preço</string>
     <string name="enviar">Enviar</string>
     <string name="entre_com_sua_mensagem">Entre com sua mensagem</string>
+    <string name="realizacao">Realização</string>
 
     <!-- Strings relacionads as API de JSON -->
     <string name="falha_de_acesso">Falha ao acessar servidor </string>
@@ -29,6 +32,7 @@
     <string name="foruns_null">Não há fóruns a serem mostrados !</string>
     <string name="agenda_null">Não há agenda a serem mostrados !</string>
     <string name="regarregar">Recarregar</string>
+    <string name="sucesso_cadastro">Cadastro realizado com sucesso</string>
 
     <!-- Strings relacionadas a login e cadastro -->
     <string name="login">Login</string>
@@ -62,11 +66,8 @@
     <string name="titulo">Titulo</string>
 
     <!-- facebook -->
-
     <string name="facebook_app_id">395228594279087</string>
     <string name="fb_login_protocol_scheme">fb395228594279087</string>
-
-
     <string name="facebook">Continuar com Facebook</string>
 
 

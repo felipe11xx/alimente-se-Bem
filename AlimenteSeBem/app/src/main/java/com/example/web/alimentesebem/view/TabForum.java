@@ -33,7 +33,6 @@ public class TabForum extends Fragment implements OnItemClick {
     private Intent intent;
     private SearchView searchView;
     private ForumAdapter adapter;
-    private FloatingActionButton floatForum;
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
@@ -52,41 +51,6 @@ public class TabForum extends Fragment implements OnItemClick {
 
         recyclerView.setLayoutManager(layout);
 
-
-        floatForum = getActivity().findViewById(R.id.btn_ordena_forum);
-
-
-        floatForum.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                //Toast.makeText(getApplicationContext(),msg,Toast.LENGTH_SHORT).show();
-                PopupMenu popupMenu = new PopupMenu(v.getContext(), v);
-                popupMenu.getMenuInflater().inflate(R.menu.filtro_menu, popupMenu.getMenu());
-
-                // final Activity context = (Activity)view.getContext();
-
-                popupMenu.setOnMenuItemClickListener(new PopupMenu.OnMenuItemClickListener() {
-                    public boolean onMenuItemClick(MenuItem item) {
-
-                        switch (item.getItemId()) {
-
-                            case R.id.item_titulo:
-                                Toast.makeText(getContext(),"Titulo",Toast.LENGTH_SHORT).show();
-                                break;
-
-                            case R.id.item_data:
-                                Toast.makeText(getContext(),"Data",Toast.LENGTH_SHORT).show();
-                                break;
-
-                        }
-
-                        return true;
-                    }
-                });
-
-                popupMenu.show();
-            }
-        });
         return rootView;
     }
 

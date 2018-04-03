@@ -41,7 +41,7 @@ public class RetrofitConfig {
                 // caso seja necessário colocar um interceptor
                 .client(client)
                 // precisamos transformar a nossa resposta que vem em JSON para String
-                .addConverterFactory(GsonConverterFactory.create())
+                .addConverterFactory(GsonConverterFactory.create(gson))
                 // precisamos de fato criá-lo
                 .build();
     }

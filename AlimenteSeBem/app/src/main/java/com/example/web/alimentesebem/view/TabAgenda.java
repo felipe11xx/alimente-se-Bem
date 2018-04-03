@@ -47,7 +47,6 @@ public class TabAgenda extends Fragment {
     private Button btnRecarregar;
     private SearchView searchView;
     private AgendaAdpter adapter;
-    private FloatingActionButton floatAgenda;
 /*
     private MyPreference myPreference = MyPreference.getInstance(getContext());
     private String ordemPreference;
@@ -66,18 +65,11 @@ public class TabAgenda extends Fragment {
         searchView = rootView.findViewById(R.id.sc_agenda);
         CharSequence query = searchView.getQuery();
         btnRecarregar.setVisibility(View.INVISIBLE);
-        floatAgenda = getActivity().findViewById(R.id.btn_ordena_agenda);
 
         // Acessa os dados no servidor
         acessaServidor();
 
-        floatAgenda.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                intent = new Intent(getContext(),PreferenciasActivity.class);
-                getActivity().startActivity(intent);
-            }
-        });
+
 
         return rootView;
     }

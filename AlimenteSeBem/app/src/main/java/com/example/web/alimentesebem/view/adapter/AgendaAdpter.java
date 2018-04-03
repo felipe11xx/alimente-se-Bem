@@ -23,9 +23,12 @@ import com.example.web.alimentesebem.utils.Utilitarios;
 import com.example.web.alimentesebem.view.EventoActivity;
 
 import java.text.DateFormat;
+import java.text.SimpleDateFormat;
+import java.time.LocalDateTime;
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.Comparator;
+import java.util.Date;
 import java.util.List;
 import java.util.Locale;
 
@@ -46,7 +49,6 @@ public class AgendaAdpter extends RecyclerView.Adapter implements AdapterInterfa
         this.lista = new ArrayList<>();
         this.lista.addAll(agendaLista);
 
-
     }
 
     @Override
@@ -63,17 +65,6 @@ public class AgendaAdpter extends RecyclerView.Adapter implements AdapterInterfa
     public void onBindViewHolder(RecyclerView.ViewHolder holder, int position) {
         EventoViewHolder viewHolder = (EventoViewHolder) holder;
 
-        // Obtém a identificação da preferência para Ordenação
-        String ordemPreference = activity.getResources().getString(R.string.ordem_key);
-        // Obtém o valor padrão para a Ordenação
-        String ordemDefault = activity.getResources().getString(R.string.ordem_default);
-        // Obtém o recurso de leitura de preferências
-        SharedPreferences preferences = PreferenceManager.getDefaultSharedPreferences(activity);
-        // Localiza a configuração selecionada para Ordenação de Albuns
-        String ordem = preferences.getString(ordemPreference, ordemDefault);
-
-        ordena(ordem,agendaLista);
-
         AgendaBean evento = agendaLista.get(position);
 
         //caso tenha erro ao tentar acessar o servidor
@@ -85,23 +76,29 @@ public class AgendaAdpter extends RecyclerView.Adapter implements AdapterInterfa
 
     }
 
-    private void ordena(String ordem, List<AgendaBean> eventos){
+    private void ordena(List<AgendaBean> eventos){
 
-        if(ordem.equals("Titulo")){
-            Collections.sort(eventos, new Comparator<AgendaBean>() {
-                @Override
-                public int compare(AgendaBean obj1, AgendaBean obj2) {
-                    return obj1.getTitulo().compareToIgnoreCase(obj2.getTitulo());
-                }
-            });
-        }else{
+
+
+
+
+        for (AgendaBean a:eventos) {
+
+            Date date = new Date();
+            date.getTime();
+            if(date.getTime() < a.getData_Evento().getTime()){
+                eventos.remove(a);
+            }
+
+        }
             Collections.sort(eventos, new Comparator<AgendaBean>() {
                 @Override
                 public int compare(AgendaBean obj1, AgendaBean obj2) {
                     return obj1.getData_Evento().compareTo(obj2.getData_Evento());
                 }
             });
-        }
+
+
 
     }
 
@@ -179,7 +176,7 @@ public class AgendaAdpter extends RecyclerView.Adapter implements AdapterInterfa
             }*/
             // Cria um bitmap contendo o dia e Mês
             String dia = dtFmt.format(obj.getData_Evento()).substring(0,2);
-            String mes = dtFmt.format(obj.getData_Evento()).substring(6,9).toUpperCase();
+            String mes = dtFmt.format(obj.getData_Evento()).substring(5,9).toUpperCase();
             String diaMes = dia + " " + mes;
             Bitmap bitmap = Utilitarios.circularBitmapAndText(
                     Color.parseColor("#ef8219"), 150, 150,diaMes,40 );

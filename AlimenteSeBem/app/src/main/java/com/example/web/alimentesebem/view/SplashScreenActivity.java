@@ -18,8 +18,8 @@ import com.example.web.alimentesebem.R;
 
 public class SplashScreenActivity extends AppCompatActivity{
     // Tempo que a nossa SplashScreen ficará visível para o usuário
-    private final int SPLASH_DISPLAY_LENGTH = 0;//3500;
-    private TextView tvLogo;
+    private final int SPLASH_DISPLAY_LENGTH = 2500;
+    private TextView tvLogo,tvRealiza;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -37,14 +37,19 @@ public class SplashScreenActivity extends AppCompatActivity{
         // Buscando o objeto que foi criado no layout (nossa imagem)
         ImageView imageView = findViewById(R.id.img_sesi_splash);
         tvLogo = findViewById(R.id.tv_splash_logo);
+        tvRealiza = findViewById(R.id.tv_realiza);
         Typeface typeface = Typeface.createFromAsset(getAssets(),"fonts/tahu.ttf");
         tvLogo.setTypeface(typeface);
+        typeface = Typeface.createFromAsset(getAssets(),"fonts/Gotham_Condensed_Bold.otf");
+        tvRealiza.setTypeface(typeface);
 
         if (imageView != null && tvLogo != null) {
             imageView.clearAnimation();
             imageView.startAnimation(animation);
             tvLogo.clearAnimation();
             tvLogo.startAnimation(animation);
+            tvRealiza.clearAnimation();
+            tvRealiza.startAnimation(animation);
         }
 
         new Handler().postDelayed(new Runnable() {

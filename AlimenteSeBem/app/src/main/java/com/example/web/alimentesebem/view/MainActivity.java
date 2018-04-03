@@ -47,7 +47,6 @@ public class MainActivity extends AppCompatActivity {
      * The {@link ViewPager} that will host the section contents.
      */
     private ViewPager mViewPager;
-    private FloatingActionButton floatNoticia,floatAgenda,floatForum,floatVideo;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -74,12 +73,6 @@ public class MainActivity extends AppCompatActivity {
 
         //Ações ao mudar de pagina na TabView
         mViewPager.addOnPageChangeListener(myOnPageChangeListener);
-
-        //Botões flutuantes de listagem
-        floatNoticia = findViewById(R.id.btn_ordena_noticia);
-        floatAgenda = findViewById(R.id.btn_ordena_agenda);
-        floatForum = findViewById(R.id.btn_ordena_forum);
-        floatVideo = findViewById(R.id.btn_ordena_video);
 
     }
 
@@ -221,7 +214,6 @@ public class MainActivity extends AppCompatActivity {
                     //This method will be invoked when the current page is scrolled,
                     //either as part of a programmatically initiated smooth scroll
                     //or a user initiated touch scroll.
-
                     //esconde o teclado
                     hideKeyboard();
                 }
@@ -229,34 +221,6 @@ public class MainActivity extends AppCompatActivity {
                 @Override
                 public void onPageSelected(int position) {
                     //This method will be invoked when a new page becomes selected.
-
-                    switch (position){
-                        case 0:
-                            floatNoticia.setVisibility(View.VISIBLE);
-                            floatAgenda.setVisibility(View.INVISIBLE);
-                            floatForum.setVisibility(View.INVISIBLE);
-                            floatVideo.setVisibility(View.INVISIBLE);
-
-                            break;
-                        case 1:
-                            floatNoticia.setVisibility(View.INVISIBLE);
-                            floatAgenda.setVisibility(View.VISIBLE);
-                            floatForum.setVisibility(View.INVISIBLE);
-                            floatVideo.setVisibility(View.INVISIBLE);
-                            break;
-                        case 2:
-                            floatNoticia.setVisibility(View.INVISIBLE);
-                            floatAgenda.setVisibility(View.INVISIBLE);
-                            floatForum.setVisibility(View.VISIBLE);
-                            floatVideo.setVisibility(View.INVISIBLE);
-                            break;
-                        case 3:
-                            floatNoticia.setVisibility(View.INVISIBLE);
-                            floatAgenda.setVisibility(View.INVISIBLE);
-                            floatForum.setVisibility(View.INVISIBLE);
-                            floatVideo.setVisibility(View.VISIBLE);
-                            break;
-                    }
 
                     //esconde o teclado
                     hideKeyboard();

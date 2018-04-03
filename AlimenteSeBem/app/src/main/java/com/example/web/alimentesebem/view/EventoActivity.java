@@ -174,7 +174,8 @@ public class EventoActivity extends AppCompatActivity {
         }
         // Obtem a 1ª letra do nome da pessoa e converte para Maiuscula
         String dia = dtFmt.format(obj.getData_Evento()).substring(0, 2);
-        String mes = dtFmt.format(obj.getData_Evento()).substring(6, 9).toUpperCase();
+        String mes = dtFmt.format(obj.getData_Evento()).substring(5, 9).toUpperCase().trim();
+        Toast.makeText(this,dtFmt.format(obj.getData_Evento()),Toast.LENGTH_LONG).show();
         String diaMes = dia + " " + mes;
         // Cria um bitmap contendo Dia e mês
         // Bitmap bitmap = Utilitarios.quadradoBitmapAndText(
@@ -189,7 +190,7 @@ public class EventoActivity extends AppCompatActivity {
         }
 
         recyclerView.setAdapter(new TagEventoAdapter(tags, getApplicationContext()));
-        recyclerView.setLayoutManager(new StaggeredGridLayoutManager(1, StaggeredGridLayoutManager.HORIZONTAL));
+        recyclerView.setLayoutManager(new StaggeredGridLayoutManager(3, StaggeredGridLayoutManager.HORIZONTAL));
     }
 
     private void mostraViews(boolean mostra ){

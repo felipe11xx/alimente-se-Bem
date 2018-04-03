@@ -2,6 +2,7 @@
 <android.support.constraint.ConstraintLayout
     xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:background="@color/colorPrimary"
@@ -73,12 +74,14 @@
         style="@style/ButtonLilas"
         android:layout_width="0dp"
         android:layout_height="54dp"
-        android:layout_marginStart="64dp"
+        android:layout_marginEnd="8dp"
+        android:layout_marginStart="8dp"
         android:layout_marginTop="24dp"
         android:elevation="10dp"
         android:text="@string/logar"
         android:textColor="@android:color/white"
-        app:layout_constraintStart_toStartOf="@+id/layoutEmail"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/layoutEmail" />
 
     <Button
@@ -91,10 +94,11 @@
         android:elevation="10dp"
         android:text="@string/cadastrar"
         android:textColor="@android:color/white"
-        app:layout_constraintBottom_toBottomOf="@+id/btn_logar"
+        android:visibility="invisible"/>
+<!--        app:layout_constraintBottom_toBottomOf="@+id/btn_logar"
         app:layout_constraintEnd_toEndOf="@+id/layoutEmail"
         app:layout_constraintStart_toEndOf="@+id/btn_logar"
-        app:layout_constraintTop_toBottomOf="@+id/layoutEmail" />
+        app:layout_constraintTop_toBottomOf="@+id/layoutEmail"/>-->
 
     <com.facebook.login.widget.LoginButton
         android:id="@+id/btn_logar_face"
@@ -116,7 +120,7 @@
         android:layout_height="50dp"
         android:layout_marginEnd="8dp"
         android:layout_marginStart="8dp"
-
+        android:visibility="invisible"
         android:layout_marginTop="8dp"
         android:drawableStart="@drawable/ic_google_plus"
         android:text="@string/google"
@@ -130,14 +134,12 @@
         android:id="@+id/img_logo"
         android:layout_width="98dp"
         android:layout_height="31dp"
-        android:layout_marginBottom="4dp"
+        android:layout_marginBottom="40dp"
         android:layout_marginEnd="8dp"
         android:layout_marginStart="8dp"
-        android:layout_marginTop="8dp"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/btn_logar_gmail"
         app:srcCompat="@drawable/sesi_logo2" />
 
     <TextView
@@ -155,5 +157,21 @@
         app:layout_constraintHorizontal_bias="0.501"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent" />
+
+    <TextView
+        android:id="@+id/tv_realiza_2"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginBottom="8dp"
+        android:layout_marginEnd="8dp"
+        android:layout_marginStart="8dp"
+        android:layout_marginTop="8dp"
+        android:text="@string/realizacao"
+        android:textColor="@android:color/white"
+        app:layout_constraintBottom_toTopOf="@+id/img_logo"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/btn_logar_gmail"
+        app:layout_constraintVertical_bias="1.0" />
 
 </android.support.constraint.ConstraintLayout>
