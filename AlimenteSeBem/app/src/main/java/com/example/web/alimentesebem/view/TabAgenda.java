@@ -94,7 +94,7 @@ public class TabAgenda extends Fragment {
                     barraProgresso.showProgress(false,progressBar);
                     if (eventos != null) {
 
-                        adapter = new AgendaAdpter(eventos, getContext(),getActivity());
+                        adapter = new AgendaAdpter(eventos, getContext());
                         recyclerView.setAdapter(adapter);
                         //Chama metodo para filtrar por titulo
                         buscaPorTitulo(adapter);

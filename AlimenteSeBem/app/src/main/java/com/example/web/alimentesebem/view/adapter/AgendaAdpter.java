@@ -1,14 +1,10 @@
 package com.example.web.alimentesebem.view.adapter;
 
-
-import android.app.Activity;
 import android.content.Context;
 import android.content.Intent;
-import android.content.SharedPreferences;
 import android.graphics.Bitmap;
 import android.graphics.Color;
 import android.graphics.Typeface;
-import android.preference.PreferenceManager;
 import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -23,8 +19,6 @@ import com.example.web.alimentesebem.utils.Utilitarios;
 import com.example.web.alimentesebem.view.EventoActivity;
 
 import java.text.DateFormat;
-import java.text.SimpleDateFormat;
-import java.time.LocalDateTime;
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.Comparator;
@@ -40,12 +34,10 @@ public class AgendaAdpter extends RecyclerView.Adapter implements AdapterInterfa
     private ArrayList<AgendaBean> lista;
     private Context context;
     private final List<AgendaBean> agendaLista;
-    private Activity activity;
 
-    public AgendaAdpter(List<AgendaBean>agendaLista, Context context,Activity activity) {
+    public AgendaAdpter(List<AgendaBean>agendaLista, Context context) {
         this.agendaLista = agendaLista;
         this.context = context;
-        this.activity = activity;
         this.lista = new ArrayList<>();
         this.lista.addAll(agendaLista);
 
@@ -56,9 +48,7 @@ public class AgendaAdpter extends RecyclerView.Adapter implements AdapterInterfa
         View view = LayoutInflater.from(context)
                 .inflate(R.layout.detalhe_agenda,parent, false);
 
-        EventoViewHolder holder = new EventoViewHolder(view, this);
-
-        return holder;
+        return  new EventoViewHolder(view, this);
     }
 
     @Override
@@ -78,10 +68,6 @@ public class AgendaAdpter extends RecyclerView.Adapter implements AdapterInterfa
 
     private void ordena(List<AgendaBean> eventos){
 
-
-
-
-
         for (AgendaBean a:eventos) {
 
             Date date = new Date();
@@ -97,8 +83,6 @@ public class AgendaAdpter extends RecyclerView.Adapter implements AdapterInterfa
                     return obj1.getData_Evento().compareTo(obj2.getData_Evento());
                 }
             });
-
-
 
     }
 
@@ -123,15 +107,14 @@ public class AgendaAdpter extends RecyclerView.Adapter implements AdapterInterfa
 
     }
 
-
     public class EventoViewHolder extends RecyclerView.ViewHolder implements  View.OnClickListener {
 
-        public final TextView tvTituloEvento;
-        public final TextView tvLocal;
-        public final TextView tvHorario;
-        public final ImageView imgCapaEvento;
-        public final ImageView imgData;
-        public final AgendaAdpter adpter;
+        private final TextView tvTituloEvento;
+        private final TextView tvLocal;
+        private final TextView tvHorario;
+        private final ImageView imgCapaEvento;
+        private final ImageView imgData;
+        private final AgendaAdpter adpter;
         private Long eventoId;
         public DateFormat dtFmt =  DateFormat.getDateInstance(DateFormat.LONG, new Locale("pt","BR"));
 
@@ -157,7 +140,7 @@ public class AgendaAdpter extends RecyclerView.Adapter implements AdapterInterfa
 
         }
 
-        public void preencher(AgendaBean obj) throws Exception{
+        private void preencher(AgendaBean obj) throws Exception{
             eventoId = obj.getId();
             tvTituloEvento.setText(obj.getTitulo());
             tvLocal.setText(obj.getUnidades_Sesi().getNome() );
