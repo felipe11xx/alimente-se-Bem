@@ -9,25 +9,25 @@ import java.util.List;
 
 public class ForumBean {
 
-    private Long id;
+    private Long id_forum;
     private String titulo;
     private List<ComentarioForumBean> cometarios;
-    private NutricionistaBean autor;
+    private NutricionistaBean nutricionista;
     private CategoriaForumBean categoria;
     private Date dataAbertura;
     private List<TagForumBean> tags;
 
     public ForumBean (){}
 
-    public ForumBean(long id) {
-        this.id = id;
+    public ForumBean(long id_forum) {
+        this.id_forum = id_forum;
     }
 
-    public ForumBean(long id, String titulo, NutricionistaBean autor, CategoriaForumBean categoria,
+    public ForumBean(long id, String titulo, NutricionistaBean nutricionista, CategoriaForumBean categoria,
                      Date dataAbertura,List<TagForumBean> tags,List<ComentarioForumBean> cometarios) {
-        this.id = id;
+        this.id_forum = id;
         this.titulo = titulo;
-        this.autor = autor;
+        this.nutricionista = nutricionista;
         this.categoria = categoria;
         this.dataAbertura = dataAbertura;
         this.tags = tags;
@@ -36,11 +36,11 @@ public class ForumBean {
     }
 
     public Long getId() {
-        return id;
+        return id_forum;
     }
 
-    public void setId(Long id) {
-        this.id = id;
+    public void setId(Long id_forum) {
+        this.id_forum = id_forum;
     }
 
     public String getTitulo() {
@@ -61,12 +61,12 @@ public class ForumBean {
     public void addComentarios(List<ComentarioForumBean> cometarios,ComentarioForumBean comentario){
         cometarios.add(comentario);
     }
-    public NutricionistaBean getAutor() {
-        return autor;
+    public NutricionistaBean getNutricionista() {
+        return nutricionista;
     }
 
-    public void setAutor(NutricionistaBean autor) {
-        this.autor = autor;
+    public void setNutricionista(NutricionistaBean autor) {
+        this.nutricionista = autor;
     }
 
     public CategoriaForumBean getCategoria() {

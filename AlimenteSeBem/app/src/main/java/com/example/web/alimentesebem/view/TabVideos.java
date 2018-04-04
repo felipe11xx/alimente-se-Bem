@@ -67,7 +67,7 @@ public class TabVideos extends Fragment {
                     videos = response.body();
                     barraProgresso.showProgress(false,progressBar);
 
-                    if(videos != null) {
+                    if(videos.size() > 0) {
                         adapter = new VideoAdpter(getContext(), videos);
                         recyclerView.setAdapter(adapter);
                         //Chama metodo para filtrar por titulo

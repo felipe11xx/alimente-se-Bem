@@ -70,7 +70,7 @@ public class TabNoticia extends android.support.v4.app.Fragment implements Seria
 
                     noticias = response.body();
                     btnRecarregar.setVisibility(View.INVISIBLE);
-                    if (noticias != null) {
+                    if (noticias.size() > 0) {
                         barraProgresso.showProgress(false,prgNoticias);
                         adapter = new NoticiaAdpter(noticias, getContext());
                         recyclerView.setAdapter(adapter);
@@ -82,6 +82,8 @@ public class TabNoticia extends android.support.v4.app.Fragment implements Seria
                         recyclerView.setLayoutManager(layout);
                     }else{
                         Toast.makeText(getContext(), R.string.noticias_null, Toast.LENGTH_SHORT).show();
+                        barraProgresso.showProgress(false,prgNoticias);
+                        btnRecarregar.setVisibility(View.VISIBLE);
                     }
                 }
             }

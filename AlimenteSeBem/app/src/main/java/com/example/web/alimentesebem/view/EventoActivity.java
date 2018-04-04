@@ -74,26 +74,15 @@ public class EventoActivity extends AppCompatActivity {
         btnRecarregar.setVisibility(View.INVISIBLE);
 
         //Muda a fonte de alguns textView
-        Typeface typeFont = Typeface.createFromAsset(getAssets(), "fonts/Gotham_Condensed_Bold.otf");
-        tvtitulo.setTypeface(typeFont);
-        lblPreco.setTypeface(typeFont);
-
-        typeFont = Typeface.createFromAsset(getAssets(), "fonts/Gotham_Light.otf");
-        tvDecricao.setTypeface(typeFont);
-        tvLocalHorario.setTypeface(typeFont);
-        tvPreco.setTypeface(typeFont);
-        tvUnidade.setTypeface(typeFont);
-
-        typeFont = Typeface.createFromAsset(getAssets(), "fonts/tahu.ttf");
-        tvToolbar.setTypeface(typeFont);
+        mudaFonts();
 
         //usa o ID no Bundle para atribuir valor aos elementos da tela
 
         final Bundle bundle = getIntent().getExtras();
-        final Long EventoId = (bundle != null) ? bundle.getLong("EventoId") : null;
+        final Long eventoId = (bundle != null) ? bundle.getLong("EventoId") : null;
         mostraViews(false);
-        if (EventoId != 0) {
-            id = EventoId;
+        if (eventoId != 0) {
+            id = eventoId;
                 acessaServidor();
 
         }
@@ -121,7 +110,8 @@ public class EventoActivity extends AppCompatActivity {
                     try {
                         inicializa(obj);
                     } catch (Exception e) {
-                        Toast.makeText(getApplicationContext(),getResources().getString(R.string.falha_de_acesso),Toast.LENGTH_LONG).show();
+                        Toast.makeText(getApplicationContext(),getString(R.string.falha_de_acesso)
+                                            ,Toast.LENGTH_LONG).show();
                     }
                 }
             }
@@ -175,7 +165,6 @@ public class EventoActivity extends AppCompatActivity {
         // Obtem a 1ª letra do nome da pessoa e converte para Maiuscula
         String dia = dtFmt.format(obj.getData_Evento()).substring(0, 2);
         String mes = dtFmt.format(obj.getData_Evento()).substring(5, 9).toUpperCase().trim();
-        Toast.makeText(this,dtFmt.format(obj.getData_Evento()),Toast.LENGTH_LONG).show();
         String diaMes = dia + " " + mes;
         // Cria um bitmap contendo Dia e mês
         // Bitmap bitmap = Utilitarios.quadradoBitmapAndText(
@@ -220,4 +209,18 @@ public class EventoActivity extends AppCompatActivity {
 
     }
 
+    private void mudaFonts(){
+        Typeface typeFont = Typeface.createFromAsset(getAssets(), "fonts/Gotham_Condensed_Bold.otf");
+        tvtitulo.setTypeface(typeFont);
+        lblPreco.setTypeface(typeFont);
+
+        typeFont = Typeface.createFromAsset(getAssets(), "fonts/Gotham_Light.otf");
+        tvDecricao.setTypeface(typeFont);
+        tvLocalHorario.setTypeface(typeFont);
+        tvPreco.setTypeface(typeFont);
+        tvUnidade.setTypeface(typeFont);
+
+        typeFont = Typeface.createFromAsset(getAssets(), "fonts/tahu.ttf");
+        tvToolbar.setTypeface(typeFont);
+    }
 }

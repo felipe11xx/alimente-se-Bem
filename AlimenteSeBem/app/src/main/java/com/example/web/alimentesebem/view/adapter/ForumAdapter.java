@@ -1,6 +1,7 @@
 package com.example.web.alimentesebem.view.adapter;
 
 import android.content.Context;
+import android.content.Intent;
 import android.graphics.Typeface;
 import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
@@ -11,6 +12,8 @@ import android.widget.Toast;
 
 import com.example.web.alimentesebem.R;
 import com.example.web.alimentesebem.model.ForumBean;
+import com.example.web.alimentesebem.view.NoticiaActivity;
+import com.example.web.alimentesebem.view.TopicoActivity;
 
 import java.text.DateFormat;
 import java.util.ArrayList;
@@ -25,15 +28,13 @@ public class ForumAdapter extends RecyclerView.Adapter implements AdapterInterfa
 
     private Context context;
     private ArrayList<ForumBean> lista;
-    private OnItemClick onItemClick;
     private List<ForumBean> forumsLista;
 
-    public ForumAdapter(Context context, List<ForumBean> forumsLista, OnItemClick onItemClick) {
+    public ForumAdapter(Context context, List<ForumBean> forumsLista) {
         this.forumsLista = forumsLista;
         this.context = context;
         this.lista = new ArrayList<>();
         this.lista.addAll(forumsLista);
-        this.onItemClick = onItemClick;
     }
 
     @Override
@@ -112,7 +113,7 @@ public class ForumAdapter extends RecyclerView.Adapter implements AdapterInterfa
             forumId = obj.getId();
             tvTitulo.setText(obj.getTitulo());
             tvLblAutor.setText("Aberto por: ");
-            tvAutor.setText( obj.getAutor().getNome());
+            tvAutor.setText( obj.getNutricionista().getNome());
             tvCategoria.setText(obj.getCategoria().getNome());
             tvDataAbertura.setText(dtFmt.format(obj.getDataAbertura()));
 
@@ -122,7 +123,10 @@ public class ForumAdapter extends RecyclerView.Adapter implements AdapterInterfa
         public void onClick(View v) {
             //Pega o id do topico clincado do cardView
            // Toast.makeText(context,"ID"+forumId, Toast.LENGTH_SHORT).show();
-            onItemClick.onClick(forumId);
+
+            Intent intent = new Intent(v.getContext(),TopicoActivity.class );
+            intent.putExtra("ForumId", forumId);
+            v.getContext().startActivity(intent);
         }
     }
 

@@ -81,11 +81,11 @@ public class ComentarioTopicoAdpter extends RecyclerView.Adapter {
 
 
         public void preencher(ComentarioForumBean comentario) throws Exception{
-            comentarioId = comentario.getId();
+            comentarioId = comentario.getId_Comentario();
 
             tvAutor.setText(comentario.getUsuario().getNome());
             tvComentario.setText(comentario.getComentario());
-            tvData.setText(dtFmt.format(comentario.getData()));
+            tvData.setText(dtFmt.format(comentario.getData_Criacao()));
         }
     }
 }

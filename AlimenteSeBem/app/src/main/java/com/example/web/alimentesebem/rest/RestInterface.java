@@ -1,6 +1,8 @@
 package com.example.web.alimentesebem.rest;
 
 import com.example.web.alimentesebem.model.AgendaBean;
+import com.example.web.alimentesebem.model.ComentarioForumBean;
+import com.example.web.alimentesebem.model.ForumBean;
 import com.example.web.alimentesebem.model.NoticiaBean;
 import com.example.web.alimentesebem.model.UnidadeBean;
 import com.example.web.alimentesebem.model.UsuarioBean;
@@ -29,11 +31,26 @@ public interface RestInterface {
     @GET("Videos")
     Call<List<VideoBean>> listaVideos();
 
+    @GET("Forum")
+    Call<List<ForumBean>> listaForuns();
+
+    @GET("Forum/{id}")
+    Call<ForumBean> getForum(@Path("id") Long id);
+
     @POST("Usuario/Cadastrar")
     Call<ResponseBody> cadastraUsuario(@Body UsuarioBean usuarioBean);
 
     @POST("Usuario/Cadastrar")
     Call<UsuarioBean> cadastrarUsuarioBean(@Body UsuarioBean usuarioBean);
+
+    @POST("Comentario")
+    Call<ResponseBody> cadastracomentario (@Body ComentarioForumBean comentarioForumBean);
+
+    @POST("Comentario")
+    Call<ComentarioForumBean> cadastracomentarioBean (@Body ComentarioForumBean comentarioForumBean);
+
+
+
 
 
 }

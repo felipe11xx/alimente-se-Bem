@@ -39,19 +39,12 @@ import retrofit2.Response;
 public class TabAgenda extends Fragment {
 
     private RecyclerView recyclerView;
-   // private AgendaDaoOld daoOld = AgendaDaoOld.instance;
     private List<AgendaBean> eventos;
-    private Intent intent;
     private BarraProgresso barraProgresso = BarraProgresso.getInstance();
     private ProgressBar progressBar;
     private Button btnRecarregar;
     private SearchView searchView;
     private AgendaAdpter adapter;
-/*
-    private MyPreference myPreference = MyPreference.getInstance(getContext());
-    private String ordemPreference;
-    private String ordemDefault;
-*/
 
     @Override
     public View onCreateView(final LayoutInflater inflater, ViewGroup container,
@@ -69,17 +62,9 @@ public class TabAgenda extends Fragment {
         // Acessa os dados no servidor
         acessaServidor();
 
-
-
         return rootView;
     }
 
-    @Override
-    public void onStart() {
-        super.onStart();
-        if(adapter != null)
-        adapter.notifyDataSetChanged();
-    }
 
     private void acessaServidor(){
         Call<List<AgendaBean>> call = new RetrofitConfig().getRestInterface().listarEventos();
@@ -92,7 +77,7 @@ public class TabAgenda extends Fragment {
                     eventos = response.body();
 
                     barraProgresso.showProgress(false,progressBar);
-                    if (eventos != null) {
+                    if (eventos.size() > 0) {
 
                         adapter = new AgendaAdpter(eventos, getContext());
                         recyclerView.setAdapter(adapter);
