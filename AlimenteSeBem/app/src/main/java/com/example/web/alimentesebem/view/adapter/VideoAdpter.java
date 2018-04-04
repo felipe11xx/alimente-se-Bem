@@ -40,25 +40,14 @@ public class VideoAdpter extends RecyclerView.Adapter implements AdapterInterfac
     public RecyclerView.ViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {
        View view = LayoutInflater.from(context)
                .inflate(R.layout.detalhe_video,parent,false);
-
-       VideoViewHolder holder = new VideoViewHolder(view,this);
-
-        return holder;
+        return new VideoViewHolder(view,this);
     }
 
     @Override
     public void onBindViewHolder(RecyclerView.ViewHolder holder, int position) {
-        VideoViewHolder viewHolder = (VideoViewHolder) holder;
 
         VideoBean video = videosLista.get(position);
-
-        try {
-            ((VideoViewHolder)holder).preencher(video);
-        }catch (Exception e){
-            Toast.makeText(context, context.getResources().getString(R.string.falha_de_acesso),Toast.LENGTH_LONG).show();
-        }
-
-
+        ((VideoViewHolder)holder).preencher(video);
     }
 
     @Override
@@ -101,7 +90,7 @@ public class VideoAdpter extends RecyclerView.Adapter implements AdapterInterfac
 
         }
 
-        public void preencher (VideoBean video) throws Exception{
+        public void preencher (VideoBean video){
 
             videoId = video.getId();
             tvDesc.setText(video.getDescricao());

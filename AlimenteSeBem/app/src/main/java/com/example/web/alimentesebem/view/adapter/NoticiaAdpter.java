@@ -50,13 +50,12 @@ public class NoticiaAdpter extends RecyclerView.Adapter implements AdapterInterf
 
     @Override
     public void onBindViewHolder(RecyclerView.ViewHolder holder, int position) {
-        NoticiaViewHolder viewHolder = (NoticiaViewHolder) holder;
 
         NoticiaBean noticiaBean = listaNoticias.get(position);
         try{
             ((NoticiaViewHolder)holder).preencher(noticiaBean);
         }catch (Exception e){
-            Toast.makeText(context, context.getResources().getString(R.string.falha_de_acesso), Toast.LENGTH_LONG).show();
+            Toast.makeText(context, "Falha ao trazer noticia", Toast.LENGTH_LONG).show();
         }
 
 

@@ -18,7 +18,7 @@ import com.example.web.alimentesebem.R;
 
 public class SplashScreenActivity extends AppCompatActivity{
     // Tempo que a nossa SplashScreen ficará visível para o usuário
-    private final int SPLASH_DISPLAY_LENGTH = 2500;
+    private final int SPLASH_DISPLAY_LENGTH = 0;//2500;
     private TextView tvLogo,tvRealiza;
     @Override
     protected void onCreate(Bundle savedInstanceState) {

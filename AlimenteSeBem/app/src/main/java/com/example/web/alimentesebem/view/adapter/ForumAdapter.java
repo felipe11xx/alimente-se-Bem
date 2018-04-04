@@ -4,6 +4,7 @@ import android.content.Context;
 import android.content.Intent;
 import android.graphics.Typeface;
 import android.support.v7.widget.RecyclerView;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -11,8 +12,10 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 import com.example.web.alimentesebem.R;
+import com.example.web.alimentesebem.model.CategoriaForumBean;
 import com.example.web.alimentesebem.model.ForumBean;
-import com.example.web.alimentesebem.view.NoticiaActivity;
+import com.example.web.alimentesebem.model.NutricionistaBean;
+import com.example.web.alimentesebem.rest.config.RetrofitConfig;
 import com.example.web.alimentesebem.view.TopicoActivity;
 
 import java.text.DateFormat;
@@ -20,8 +23,13 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Locale;
 
+import retrofit2.Call;
+import retrofit2.Callback;
+import retrofit2.Response;
+
 /**
- * Created by WEB on 15/03/2018.
+ * Created by Felipe
+ * on 15/03/2018.
  */
 
 public class ForumAdapter extends RecyclerView.Adapter implements AdapterInterface{
@@ -29,6 +37,9 @@ public class ForumAdapter extends RecyclerView.Adapter implements AdapterInterfa
     private Context context;
     private ArrayList<ForumBean> lista;
     private List<ForumBean> forumsLista;
+    private NutricionistaBean nutricionista;
+    private CategoriaForumBean categoria;
+
 
     public ForumAdapter(Context context, List<ForumBean> forumsLista) {
         this.forumsLista = forumsLista;
@@ -42,22 +53,14 @@ public class ForumAdapter extends RecyclerView.Adapter implements AdapterInterfa
         View view = LayoutInflater.from(context)
                 .inflate(R.layout.detalhe_forum,parent,false);
 
-        ForumViewHolder holder = new ForumViewHolder(view,this);
-
-        return holder;
+        return new ForumViewHolder(view);
     }
 
     @Override
     public void onBindViewHolder(RecyclerView.ViewHolder holder, int position) {
-        ForumViewHolder forumViewHolder = (ForumViewHolder) holder;
-
         ForumBean forum = forumsLista.get(position);
-        try{
-            ((ForumViewHolder) holder).preencher(forum);
-        }catch (Exception e){
-            Toast.makeText(context, context.getResources().getString(R.string.falha_de_acesso), Toast.LENGTH_LONG).show();
-        }
 
+        ((ForumViewHolder) holder).preencher(forum);
 
     }
 
@@ -83,14 +86,12 @@ public class ForumAdapter extends RecyclerView.Adapter implements AdapterInterfa
 
     public class ForumViewHolder extends RecyclerView.ViewHolder implements View.OnClickListener{
 
-        public final TextView tvTitulo, tvAutor,tvCategoria,tvDataAbertura,tvLblAutor;
+        private final TextView tvTitulo, tvAutor,tvCategoria,tvDataAbertura,tvLblAutor;
         private Long forumId;
-        public DateFormat dtFmt =  DateFormat.getDateInstance(DateFormat.LONG, new Locale("pt","BR"));
-        public final ForumAdapter adapter;
+        private DateFormat dtFmt =  DateFormat.getDateInstance(DateFormat.LONG, new Locale("pt","BR"));
 
-        public ForumViewHolder(final View view, final ForumAdapter adapter) {
+        private ForumViewHolder(final View view) {
             super(view);
-            this.adapter = adapter;
 
             view.setOnClickListener(this);
 
@@ -109,13 +110,13 @@ public class ForumAdapter extends RecyclerView.Adapter implements AdapterInterfa
 
         }
 
-        public void preencher(ForumBean obj) throws Exception{
+        private void preencher(ForumBean obj) {
             forumId = obj.getId();
             tvTitulo.setText(obj.getTitulo());
-            tvLblAutor.setText("Aberto por: ");
-            tvAutor.setText( obj.getNutricionista().getNome());
-            tvCategoria.setText(obj.getCategoria().getNome());
-            tvDataAbertura.setText(dtFmt.format(obj.getDataAbertura()));
+            tvLblAutor.setText(context.getString(R.string.label_autor));
+            tvDataAbertura.setText(dtFmt.format(obj.getData_criacao()));
+            getCategoria(obj.getId_Cat_Forum());
+            getNutricionista(obj.getId_Nutricionista());
 
         }
 
@@ -127,6 +128,50 @@ public class ForumAdapter extends RecyclerView.Adapter implements AdapterInterfa
             Intent intent = new Intent(v.getContext(),TopicoActivity.class );
             intent.putExtra("ForumId", forumId);
             v.getContext().startActivity(intent);
+        }
+
+        public void getNutricionista(long idNutricionista){
+            Call<NutricionistaBean> call = new RetrofitConfig().getRestInterface().getNutricionista(idNutricionista);
+            call.enqueue(new Callback<NutricionistaBean>() {
+                @Override
+                public void onResponse(Call<NutricionistaBean> call, Response<NutricionistaBean> response) {
+
+                    if (response.isSuccessful()) {
+
+                        nutricionista = response.body();
+                        if(nutricionista != null)
+                        tvAutor.setText( nutricionista.getNome());
+                    }
+                }
+
+                @Override
+                public void onFailure(Call<NutricionistaBean> call, Throwable t) {
+                    Log.d("ForumAdapter",t.getMessage());
+                }
+            });
+
+        }
+
+        private void getCategoria(long idCategoria){
+
+            Call<CategoriaForumBean> call = new RetrofitConfig().getRestInterface().getCategoriaForum(idCategoria);
+            call.enqueue(new Callback<CategoriaForumBean>() {
+                @Override
+                public void onResponse(Call<CategoriaForumBean> call, Response<CategoriaForumBean> response) {
+
+                    if (response.isSuccessful()) {
+
+                        categoria = response.body();
+                        tvCategoria.setText(categoria.getNome());
+                    }
+                }
+
+                @Override
+                public void onFailure(Call<CategoriaForumBean> call, Throwable t) {
+                    Log.d("ForumAdapter",t.getMessage());
+                }
+            });
+
         }
     }
 

@@ -48,36 +48,32 @@ public class AgendaAdpter extends RecyclerView.Adapter implements AdapterInterfa
         View view = LayoutInflater.from(context)
                 .inflate(R.layout.detalhe_agenda,parent, false);
 
-        return  new EventoViewHolder(view, this);
+        return new EventoViewHolder(view);
     }
 
     @Override
     public void onBindViewHolder(RecyclerView.ViewHolder holder, int position) {
-        EventoViewHolder viewHolder = (EventoViewHolder) holder;
 
         AgendaBean evento = agendaLista.get(position);
 
-        //caso tenha erro ao tentar acessar o servidor
-        try {
-            ((EventoViewHolder) holder).preencher(evento);
-        } catch (Exception e) {
-            Toast.makeText(context,context.getResources().getString(R.string.falha_de_acesso),Toast.LENGTH_SHORT).show();
-        }
+        ((EventoViewHolder) holder).preencher(evento);
 
     }
 
-    private void ordena(List<AgendaBean> eventos){
+    public void ordena(){
 
-        for (AgendaBean a:eventos) {
+        for (AgendaBean a:lista) {
 
             Date date = new Date();
             date.getTime();
-            if(date.getTime() < a.getData_Evento().getTime()){
-                eventos.remove(a);
+            if(date.getTime() > a.getData_Evento().getTime()){
+
+                agendaLista.remove(a);
             }
 
         }
-            Collections.sort(eventos, new Comparator<AgendaBean>() {
+
+        Collections.sort(agendaLista, new Comparator<AgendaBean>() {
                 @Override
                 public int compare(AgendaBean obj1, AgendaBean obj2) {
                     return obj1.getData_Evento().compareTo(obj2.getData_Evento());
@@ -114,14 +110,11 @@ public class AgendaAdpter extends RecyclerView.Adapter implements AdapterInterfa
         private final TextView tvHorario;
         private final ImageView imgCapaEvento;
         private final ImageView imgData;
-        private final AgendaAdpter adpter;
         private Long eventoId;
         public DateFormat dtFmt =  DateFormat.getDateInstance(DateFormat.LONG, new Locale("pt","BR"));
 
-        public EventoViewHolder(final View view, final AgendaAdpter adpter) {
+        public EventoViewHolder(final View view) {
             super(view);
-
-            this.adpter = adpter;
 
             view.setOnClickListener(this);
 
@@ -140,7 +133,7 @@ public class AgendaAdpter extends RecyclerView.Adapter implements AdapterInterfa
 
         }
 
-        private void preencher(AgendaBean obj) throws Exception{
+        private void preencher(AgendaBean obj){
             eventoId = obj.getId();
             tvTituloEvento.setText(obj.getTitulo());
             tvLocal.setText(obj.getUnidades_Sesi().getNome() );
@@ -159,11 +152,12 @@ public class AgendaAdpter extends RecyclerView.Adapter implements AdapterInterfa
             }*/
             // Cria um bitmap contendo o dia e Mês
             String dia = dtFmt.format(obj.getData_Evento()).substring(0,2);
-            String mes = dtFmt.format(obj.getData_Evento()).substring(5,9).toUpperCase();
+            String mes = dtFmt.format(obj.getData_Evento()).substring(5,9).toUpperCase().trim();
             String diaMes = dia + " " + mes;
             Bitmap bitmap = Utilitarios.circularBitmapAndText(
                     Color.parseColor("#ef8219"), 150, 150,diaMes,40 );
             imgData.setImageBitmap(bitmap);
+
 
         }
 

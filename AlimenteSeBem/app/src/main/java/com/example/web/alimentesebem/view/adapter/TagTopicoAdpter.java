@@ -8,10 +8,8 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.TextView;
-import android.widget.Toast;
 
 import com.example.web.alimentesebem.R;
-import com.example.web.alimentesebem.model.TagForumBean;
 
 import java.util.List;
 
@@ -21,10 +19,10 @@ import java.util.List;
 
 public class TagTopicoAdpter extends RecyclerView.Adapter {
 
-    private List<TagForumBean> tags;
+    private List<String> tags;
     private Context context;
 
-    public TagTopicoAdpter(List<TagForumBean> tags, Context context) {
+    public TagTopicoAdpter(List<String> tags, Context context) {
         this.tags = tags;
         this.context = context;
     }
@@ -34,7 +32,7 @@ public class TagTopicoAdpter extends RecyclerView.Adapter {
         View view = LayoutInflater.from(context)
                 .inflate(R.layout.detalhe_tag_topico,parent,false);
 
-        TagTopicoViewHolder holder = new TagTopicoViewHolder(view,this);
+        TagTopicoViewHolder holder = new TagTopicoViewHolder(view);
 
         return holder;
     }
@@ -42,15 +40,8 @@ public class TagTopicoAdpter extends RecyclerView.Adapter {
     @Override
     public void onBindViewHolder(RecyclerView.ViewHolder holder, int position) {
         TagTopicoViewHolder tagTopicoViewHolder = (TagTopicoViewHolder) holder;
-        TagForumBean tag = tags.get(position);
-
-        try{
-            ((TagTopicoViewHolder) holder).preencher(tag);
-        }catch (Exception e){
-            Toast.makeText(context, context.getResources().getString(R.string.falha_de_acesso), Toast.LENGTH_LONG).show();
-        }
-
-
+        String tag = tags.get(position);
+        ((TagTopicoViewHolder) holder).preencher(tag);
     }
 
     @Override
@@ -63,19 +54,18 @@ public class TagTopicoAdpter extends RecyclerView.Adapter {
 
         private final TextView tvTag;
         private final CardView card;
-        private final TagTopicoAdpter adpter;
+
         private long tagId;
 
-        public TagTopicoViewHolder(View itemView,TagTopicoAdpter adpter) {
+        public TagTopicoViewHolder(View itemView) {
             super(itemView);
-            this.adpter = adpter;
             tvTag = itemView.findViewById(R.id.tv_tag_topico);
             card = itemView.findViewById(R.id.cv_tag_topico);
         }
 
-        public void preencher (TagForumBean tag) throws Exception{
-            tagId = tag.getId();
-            tvTag.setText(tag.getTag());
+        public void preencher (String tag){
+
+            tvTag.setText(tag);
 
             mudaCor();
 

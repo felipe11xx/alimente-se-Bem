@@ -6,6 +6,7 @@ import android.support.annotation.Nullable;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
+import android.util.Log;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
@@ -22,6 +23,8 @@ import com.example.web.alimentesebem.view.adapter.ComentarioTopicoAdpter;
 import com.example.web.alimentesebem.view.adapter.TagTopicoAdpter;
 
 import java.text.DateFormat;
+import java.util.ArrayList;
+import java.util.List;
 import java.util.Locale;
 
 import retrofit2.Call;
@@ -87,6 +90,7 @@ public class TopicoActivity extends AppCompatActivity {
 
     private void acessaServidor() {
         Call<ForumBean> call = new RetrofitConfig().getRestInterface().getForum(id);
+
         call.enqueue(new Callback<ForumBean>() {
             @Override
             public void onResponse(Call<ForumBean> call, Response<ForumBean> response) {
@@ -94,7 +98,7 @@ public class TopicoActivity extends AppCompatActivity {
                 barraProgresso.showProgress(true, progressBar);
                 if (response.isSuccessful()) {
                     //mostra as views que componhe a activity
-                    //mostraViews(true);
+                    mostraViews(true);
                     btnRecarregar.setVisibility(View.INVISIBLE);
                     ForumBean obj = response.body();
                     try {
@@ -113,7 +117,7 @@ public class TopicoActivity extends AppCompatActivity {
 
                 btnRecarregar.setVisibility(View.VISIBLE);
 
-                Toast.makeText(Main.getContext(), R.string.falha_de_acesso, Toast.LENGTH_SHORT).show();
+                Toast.makeText(Main.getContext(), t.getMessage(), Toast.LENGTH_SHORT).show();
                 barraProgresso.showProgress(false, progressBar);
 
                 //acessa o servidor novamente em caso de falha
@@ -130,17 +134,24 @@ public class TopicoActivity extends AppCompatActivity {
                         }
                     }
                 });
+
+                Log.d("TopicoActivity",t.getMessage());
             }
         });
     }
 
     private void inicializa(ForumBean obj) throws Exception {
         recyclerTag = findViewById(R.id.rv_topico_tags);
-        recyclerTag.setAdapter(new TagTopicoAdpter(obj.getTags(), this));
+        List<String> tags = new ArrayList<>();
+
+        for (String tag:obj.getTags().split(",")) {
+            tags.add(tag);
+        }
+        recyclerTag.setAdapter(new TagTopicoAdpter(tags, this));
         recyclerTag.setLayoutManager(new LinearLayoutManager(this, LinearLayoutManager.HORIZONTAL, false));
 
         recyclerComentario = findViewById(R.id.rv_comentarios);
-        recyclerComentario.setAdapter(new ComentarioTopicoAdpter(obj.getCometarios(), this));
+        recyclerComentario.setAdapter(new ComentarioTopicoAdpter(obj.getComentarios(), this));
         LinearLayoutManager layoutManager = new LinearLayoutManager(this, LinearLayoutManager.VERTICAL, false);
         //faz a lista começar pelo fim
         recyclerComentario.setLayoutManager(layoutManager);
@@ -151,7 +162,7 @@ public class TopicoActivity extends AppCompatActivity {
         tvCategoria.setText(obj.getCategoria().getNome());
         tvTitulo.setText(obj.getTitulo());
         lblData.setText("Aberto em ");
-        tvData.setText(dtFmt.format(obj.getDataAbertura()));
+        tvData.setText(dtFmt.format(obj.getData_criacao()));
     }
 
     private void mostraViews(boolean mostra) {

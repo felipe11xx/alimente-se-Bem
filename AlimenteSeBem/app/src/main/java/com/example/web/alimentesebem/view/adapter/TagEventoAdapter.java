@@ -46,11 +46,7 @@ public class TagEventoAdapter extends RecyclerView.Adapter {
         TagEventoViewHolder TagHolder = (TagEventoViewHolder) holder;
         String tag = tags.get(position);
 
-        try{
-            ((TagEventoViewHolder) holder).preencher(tag);
-        }catch (Exception e){
-            Toast.makeText(context, context.getResources().getString(R.string.falha_de_acesso), Toast.LENGTH_LONG).show();
-        }
+        ((TagEventoViewHolder) holder).preencher(tag);
 
     }
 
@@ -73,7 +69,7 @@ public class TagEventoAdapter extends RecyclerView.Adapter {
             // tvTag.setBackgroundColor(Color.WHITE);
         }
 
-        public void preencher(String tag) throws  Exception{
+        public void preencher(String tag) {
             tvTag.setText(tag);
 
             mudaCor();

@@ -1,16 +1,10 @@
 package com.example.web.alimentesebem.dao;
 
-import com.example.web.alimentesebem.model.CategoriaForumBean;
 import com.example.web.alimentesebem.model.ComentarioForumBean;
 import com.example.web.alimentesebem.model.ForumBean;
-import com.example.web.alimentesebem.model.NutricionistaBean;
-import com.example.web.alimentesebem.model.TagForumBean;
-import com.example.web.alimentesebem.model.UsuarioBean;
 
 import java.util.ArrayList;
-import java.util.Calendar;
 import java.util.Collections;
-import java.util.GregorianCalendar;
 import java.util.List;
 
 /**
@@ -21,7 +15,7 @@ public class ForumDaoOld {
 
     public static ForumDaoOld instance = new ForumDaoOld();
     private List<ForumBean> lista;
-    private List<TagForumBean> tags;
+
     private List<ComentarioForumBean> comentarios;
     private long id;
     private long idTags;

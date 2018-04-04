@@ -80,6 +80,7 @@ public class TabAgenda extends Fragment {
                     if (eventos.size() > 0) {
 
                         adapter = new AgendaAdpter(eventos, getContext());
+                        adapter.ordena();
                         recyclerView.setAdapter(adapter);
                         //Chama metodo para filtrar por titulo
                         buscaPorTitulo(adapter);

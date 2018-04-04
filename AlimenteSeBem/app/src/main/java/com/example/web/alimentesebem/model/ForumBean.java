@@ -9,38 +9,29 @@ import java.util.List;
 
 public class ForumBean {
 
-    private Long id_forum;
+    private Long id_Forum;
     private String titulo;
-    private List<ComentarioForumBean> cometarios;
+    private List<ComentarioForumBean> comentario;
     private NutricionistaBean nutricionista;
+    private long id_Nutricionista;
     private CategoriaForumBean categoria;
-    private Date dataAbertura;
-    private List<TagForumBean> tags;
+    private long id_Cat_Forum;
+    private Date data_Criacao;
+    private String tags;
 
     public ForumBean (){}
 
-    public ForumBean(long id_forum) {
-        this.id_forum = id_forum;
+    public ForumBean(long id_Forum) {
+        this.id_Forum = id_Forum;
     }
 
-    public ForumBean(long id, String titulo, NutricionistaBean nutricionista, CategoriaForumBean categoria,
-                     Date dataAbertura,List<TagForumBean> tags,List<ComentarioForumBean> cometarios) {
-        this.id_forum = id;
-        this.titulo = titulo;
-        this.nutricionista = nutricionista;
-        this.categoria = categoria;
-        this.dataAbertura = dataAbertura;
-        this.tags = tags;
-        this.cometarios = cometarios;
-
-    }
 
     public Long getId() {
-        return id_forum;
+        return id_Forum;
     }
 
     public void setId(Long id_forum) {
-        this.id_forum = id_forum;
+        this.id_Forum = id_forum;
     }
 
     public String getTitulo() {
@@ -51,12 +42,12 @@ public class ForumBean {
         this.titulo = titulo;
     }
 
-    public List<ComentarioForumBean> getCometarios() {
-        return cometarios;
+    public List<ComentarioForumBean> getComentarios() {
+        return comentario;
     }
 
-    public void setCometarios(List<ComentarioForumBean> cometarios) {
-        this.cometarios = cometarios;
+    public void setComentarios(List<ComentarioForumBean> comentario) {
+        this.comentario = comentario;
     }
     public void addComentarios(List<ComentarioForumBean> cometarios,ComentarioForumBean comentario){
         cometarios.add(comentario);
@@ -77,19 +68,35 @@ public class ForumBean {
         this.categoria = categoria;
     }
 
-    public Date getDataAbertura() {
-        return dataAbertura;
+    public Date getData_criacao() {
+        return data_Criacao;
     }
 
-    public void setDataAbertura(Date dataAbertura) {
-        this.dataAbertura = dataAbertura;
+    public void setData_criacao(Date dataAbertura) {
+        this.data_Criacao = data_Criacao;
     }
 
-    public List<TagForumBean> getTags() {
+    public String getTags() {
         return tags;
     }
 
-    public void setTags(List<TagForumBean> tags) {
+    public void setTags(String tags) {
         this.tags = tags;
+    }
+
+    public long getId_Nutricionista() {
+        return id_Nutricionista;
+    }
+
+    public void setId_Nutricionista(long id_Nutricionista) {
+        this.id_Nutricionista = id_Nutricionista;
+    }
+
+    public long getId_Cat_Forum() {
+        return id_Cat_Forum;
+    }
+
+    public void setId_Cat_Forum(long id_Cat_Forum) {
+        this.id_Cat_Forum = id_Cat_Forum;
     }
 }

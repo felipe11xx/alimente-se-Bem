@@ -44,7 +44,6 @@ public class EventoActivity extends AppCompatActivity {
     private TextView tvLocalHorario, tvDecricao, tvtitulo, lblPreco, tvPreco, tvToolbar, tvUnidade;
     private Long id;
     private DateFormat dtFmt = DateFormat.getDateInstance(DateFormat.LONG, new Locale("pt", "BR"));
-   // private List<String> tags;
     private RecyclerView recyclerView;
     private BarraProgresso barraProgresso = BarraProgresso.getInstance();
     private ProgressBar progressBar;
@@ -180,6 +179,7 @@ public class EventoActivity extends AppCompatActivity {
 
         recyclerView.setAdapter(new TagEventoAdapter(tags, getApplicationContext()));
         recyclerView.setLayoutManager(new StaggeredGridLayoutManager(3, StaggeredGridLayoutManager.HORIZONTAL));
+        Toast.makeText(this,dtFmt.format(obj.getData_Evento()),Toast.LENGTH_LONG).show();
     }
 
     private void mostraViews(boolean mostra ){

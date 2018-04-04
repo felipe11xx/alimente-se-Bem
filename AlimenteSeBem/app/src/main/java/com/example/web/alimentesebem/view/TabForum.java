@@ -19,7 +19,9 @@ import android.widget.Toast;
 
 import com.example.web.alimentesebem.R;
 import com.example.web.alimentesebem.dao.ForumDaoOld;
+import com.example.web.alimentesebem.model.CategoriaForumBean;
 import com.example.web.alimentesebem.model.ForumBean;
+import com.example.web.alimentesebem.model.NutricionistaBean;
 import com.example.web.alimentesebem.rest.config.RetrofitConfig;
 import com.example.web.alimentesebem.view.adapter.ForumAdapter;
 import com.example.web.alimentesebem.view.adapter.OnItemClick;
@@ -44,6 +46,7 @@ public class TabForum extends Fragment  {
     private BarraProgresso barraProgresso = BarraProgresso.getInstance();
     private Button btnRecarregar;
 
+
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
@@ -52,6 +55,7 @@ public class TabForum extends Fragment  {
         progressBar = rootView.findViewById(R.id.prg_forum);
         btnRecarregar = rootView.findViewById(R.id.btn_recarregar_foruns);
         recyclerView = rootView.findViewById(R.id.rv_forum);
+        btnRecarregar.setVisibility(View.INVISIBLE);
         acessaServidor();
 
         return rootView;
@@ -89,7 +93,7 @@ public class TabForum extends Fragment  {
             @Override
             public void onFailure(Call<List<ForumBean>> call, Throwable t) {
                 Toast.makeText(getContext(),R.string.falha_de_acesso, Toast.LENGTH_SHORT).show();
-                Log.d("TabForum",t.getMessage());
+                Log.d("TabForum 2",t.getMessage());
                 barraProgresso.showProgress(false,progressBar);
                 btnRecarregar.setVisibility(View.VISIBLE);
                 // Acessa o servidor novamente em caso de falha
