@@ -2,6 +2,7 @@ package com.example.web.alimentesebem.view;
 
 import android.annotation.TargetApi;
 import android.content.Intent;
+import android.content.SharedPreferences;
 import android.content.pm.PackageManager;
 import android.graphics.Typeface;
 import android.support.annotation.NonNull;
@@ -446,6 +447,16 @@ public class LoginActivity extends AppCompatActivity implements LoaderCallbacks<
     }
 
     private void getUsuario(final String email,final String name){
+        //Salva usuario e Email nas preferencias
+        SharedPreferences preferencesPut = getSharedPreferences("KEY", getApplicationContext().MODE_PRIVATE);
+        SharedPreferences.Editor editor = preferencesPut.edit();
+        editor.remove("nome");
+        editor.remove("email");
+        editor.commit();
+        editor.putString("nome", name);
+        editor.putString("email", email);
+        editor.commit();
+
         email.replace("@","%40");
         Call<List<UsuarioBean>> call = new RetrofitConfig().getRestInterface().getUsuarioEmail(email);
         call.enqueue(new Callback<List<UsuarioBean>>() {
@@ -473,11 +484,8 @@ public class LoginActivity extends AppCompatActivity implements LoaderCallbacks<
         });
     }
 
-    private void cadastraUsuario(String name, String email){
+    private void cadastraUsuario(final String name, final String email){
         Call<ResponseBody> call2 = new RetrofitConfig().getRestInterface().cadastraUsuario(new UsuarioBean(name
-                ,email));
-
-        Call<UsuarioBean> callBean = new RetrofitConfig().getRestInterface().cadastrarUsuarioBean(new UsuarioBean(name
                 ,email));
 
         call2.enqueue(new Callback<ResponseBody>() {
@@ -485,6 +493,7 @@ public class LoginActivity extends AppCompatActivity implements LoaderCallbacks<
             public void onResponse(Call<ResponseBody> call, Response<ResponseBody> response) {
 
                 if (response.isSuccessful()) {
+
                     finish();
                     startActivity(intent);
                 }

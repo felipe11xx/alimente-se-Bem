@@ -61,13 +61,9 @@ public interface RestInterface {
     Call<UsuarioBean> cadastrarUsuarioBean(@Body UsuarioBean usuarioBean);
 
     @POST("Comentario")
-    Call<ResponseBody> cadastracomentario (@Body ComentarioForumBean comentarioForumBean);
+    Call<ResponseBody> cadastraComentario (@Body ComentarioForumBean comentarioForumBean);
 
     @POST("Comentario")
-    Call<ComentarioForumBean> cadastracomentarioBean (@Body ComentarioForumBean comentarioForumBean);
-
-
-
-
+    Call<ComentarioForumBean> cadastraComentarioBean (@Body ComentarioForumBean comentarioForumBean);
 
 }

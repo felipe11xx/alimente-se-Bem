@@ -23,6 +23,7 @@ import com.example.web.alimentesebem.model.AgendaBean;
 import com.example.web.alimentesebem.rest.config.RetrofitConfig;
 import com.example.web.alimentesebem.utils.Utilitarios;
 import com.example.web.alimentesebem.view.adapter.TagEventoAdapter;
+import com.squareup.picasso.Picasso;
 
 import java.text.DateFormat;
 import java.util.ArrayList;
@@ -158,15 +159,15 @@ public class EventoActivity extends AppCompatActivity {
             tvPreco.setText("R$: " + String.valueOf(String.format("%.2f", obj.getPreco())));
         }
 
-        if (obj.getCapa() != null) {
-            imgCapaEvento.setImageBitmap(Utilitarios.bitmapFromBase64(obj.getCapa()));
-        }
+      /*  if (obj.getCapa() != null) {
+            imgCapaEvento.setImageBitmap();
+        }*/
+        Picasso.with(getApplicationContext()).load("http://i.imgur.com/DvpvklR.png").into(imgCapaEvento);
         // Obtem a 1ª letra do nome da pessoa e converte para Maiuscula
         String dia = dtFmt.format(obj.getData_Evento()).substring(0, 2);
         String mes = dtFmt.format(obj.getData_Evento()).substring(5, 9).toUpperCase().trim();
         String diaMes = dia + " " + mes;
         // Cria um bitmap contendo Dia e mês
-        // Bitmap bitmap = Utilitarios.quadradoBitmapAndText(
         Bitmap bitmap = Utilitarios.circularBitmapAndText(
                 Color.parseColor("#ef8219"), 150, 150, diaMes, 40);
         imgData.setImageBitmap(bitmap);
@@ -186,7 +187,7 @@ public class EventoActivity extends AppCompatActivity {
        if(mostra){
            imgCapaEvento.setVisibility(View.VISIBLE);
            imgData.setVisibility(View.VISIBLE);
-           btnShare.setVisibility(View.VISIBLE);
+          // btnShare.setVisibility(View.VISIBLE);
            tvDecricao.setVisibility(View.VISIBLE);
            tvLocalHorario.setVisibility(View.VISIBLE);
            tvtitulo.setVisibility(View.VISIBLE);

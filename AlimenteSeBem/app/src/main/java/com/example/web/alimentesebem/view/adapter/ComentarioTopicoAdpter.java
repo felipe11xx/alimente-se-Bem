@@ -16,6 +16,10 @@ import com.example.web.alimentesebem.model.UsuarioBean;
 import com.example.web.alimentesebem.rest.config.RetrofitConfig;
 
 import java.text.DateFormat;
+import java.util.ArrayList;
+import java.util.Collections;
+import java.util.Comparator;
+import java.util.Date;
 import java.util.List;
 
 import retrofit2.Call;
@@ -28,11 +32,15 @@ import retrofit2.Response;
 
 public class ComentarioTopicoAdpter extends RecyclerView.Adapter {
     private Context context;
-    private List<ComentarioForumBean> comentarios;
+    private final List<ComentarioForumBean> comentarios;
+    private ArrayList<ComentarioForumBean> lista;
 
     public ComentarioTopicoAdpter(List<ComentarioForumBean> comentarios, Context context) {
         this.context = context;
         this.comentarios = comentarios;
+        this.lista = new ArrayList<>();
+        this.lista.addAll(comentarios);
+
     }
 
     @Override
@@ -40,9 +48,7 @@ public class ComentarioTopicoAdpter extends RecyclerView.Adapter {
         View view = LayoutInflater.from(context)
                 .inflate(R.layout.detalhe_comentario, parent, false);
 
-        ComentarioTopicoViewHolder holder = new ComentarioTopicoViewHolder(view, this);
-
-        return holder;
+        return new ComentarioTopicoViewHolder(view);
     }
 
     @Override
@@ -57,6 +63,20 @@ public class ComentarioTopicoAdpter extends RecyclerView.Adapter {
 
     }
 
+    public void ordena(){
+
+
+        Collections.sort(comentarios, new Comparator<ComentarioForumBean> () {
+            @Override
+            public int compare(ComentarioForumBean obj1, ComentarioForumBean obj2) {
+                return obj1.getData_criacao().compareTo(obj2.getData_criacao());
+            }
+        });
+        Collections.reverse(comentarios);
+
+    }
+
+
     @Override
     public int getItemCount() {
         return comentarios.size();
@@ -65,15 +85,13 @@ public class ComentarioTopicoAdpter extends RecyclerView.Adapter {
     public class ComentarioTopicoViewHolder extends RecyclerView.ViewHolder {
 
         private final TextView tvAutor, tvData, tvComentario;
-        private final ComentarioTopicoAdpter adpter;
         private long comentarioId;
         private DateFormat dtFmt = DateFormat.getDateInstance(DateFormat.LONG);
         private UsuarioBean usuario;
 
-        public ComentarioTopicoViewHolder(View itemView, ComentarioTopicoAdpter adpter) {
+        public ComentarioTopicoViewHolder(View itemView) {
 
             super(itemView);
-            this.adpter = adpter;
 
             tvAutor = itemView.findViewById(R.id.tv_autor_comentario);
             tvComentario = itemView.findViewById(R.id.tv_comentario);

@@ -17,6 +17,7 @@ import com.example.web.alimentesebem.R;
 import com.example.web.alimentesebem.model.AgendaBean;
 import com.example.web.alimentesebem.utils.Utilitarios;
 import com.example.web.alimentesebem.view.EventoActivity;
+import com.squareup.picasso.Picasso;
 
 import java.text.DateFormat;
 import java.util.ArrayList;
@@ -139,17 +140,9 @@ public class AgendaAdpter extends RecyclerView.Adapter implements AdapterInterfa
             tvLocal.setText(obj.getUnidades_Sesi().getNome() );
             String horario = String.valueOf(obj.getData_Evento());
             tvHorario.setText(horario.substring(11,16));
-          /*  byte[] foto = obj.getCapa();
-            if (foto != null) {
-                // Transforma o vetor de bytes de base64 para bitmap
-                Bitmap bitmap = Utilitarios.bitmapFromBase64(foto);
-                // Cria uma foto circular e atribui à foto
-                img_capa_evento.setImageBitmap(bitmap);
-            } else {
 
-                // atribui à foto
-                img_capa_evento.setBackgroundColor(Color.TRANSPARENT);
-            }*/
+            Picasso.with(context).load("http://i.imgur.com/DvpvklR.png").into(imgCapaEvento);
+            imgCapaEvento.setAdjustViewBounds(true);
             // Cria um bitmap contendo o dia e Mês
             String dia = dtFmt.format(obj.getData_Evento()).substring(0,2);
             String mes = dtFmt.format(obj.getData_Evento()).substring(5,9).toUpperCase().trim();

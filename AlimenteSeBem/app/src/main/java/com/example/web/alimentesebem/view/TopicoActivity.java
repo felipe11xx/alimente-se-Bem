@@ -1,13 +1,17 @@
 package com.example.web.alimentesebem.view;
 
+import android.app.Activity;
+import android.content.SharedPreferences;
 import android.graphics.Typeface;
 import android.os.Bundle;
+import android.preference.PreferenceManager;
 import android.support.annotation.Nullable;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.util.Log;
 import android.view.View;
+import android.view.inputmethod.InputMethodManager;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.ImageButton;
@@ -26,15 +30,21 @@ import com.example.web.alimentesebem.rest.config.RetrofitConfig;
 import com.example.web.alimentesebem.view.adapter.ComentarioTopicoAdpter;
 import com.example.web.alimentesebem.view.adapter.TagTopicoAdpter;
 import com.facebook.AccessToken;
+import com.facebook.FacebookCallback;
 import com.facebook.GraphRequest;
 import com.facebook.GraphResponse;
 import com.facebook.Profile;
+import com.facebook.login.LoginResult;
 
 import org.json.JSONException;
 import org.json.JSONObject;
 
 import java.text.DateFormat;
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
+import java.util.Calendar;
+import java.util.Date;
+import java.util.GregorianCalendar;
 import java.util.List;
 import java.util.Locale;
 
@@ -60,8 +70,11 @@ public class TopicoActivity extends AppCompatActivity {
     private BarraProgresso barraProgresso = BarraProgresso.getInstance();
     private NutricionistaBean nutricionista;
     private CategoriaForumBean categoria;
-    private ComentarioForumBean comentario;
     private List<UsuarioBean> usuario;
+    private ForumBean topico;
+    private String email;
+    private ComentarioTopicoAdpter topicoAdpter;
+
 
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
@@ -106,62 +119,45 @@ public class TopicoActivity extends AppCompatActivity {
         btnEnviar.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                if(!edComentario.equals("")){
+                if(!edComentario.getText().toString().isEmpty()){
+                    //Usa o Email e usuario cadastrado na SharedPrefeces
+                    SharedPreferences preferencesGet = getSharedPreferences("KEY", getApplicationContext().MODE_PRIVATE);
+                    email = preferencesGet.getString("email", "default");
 
-                  getToken();
-                   //getUsuario();
+                    getUsuario(email,edComentario.getText().toString());
+                    InputMethodManager inputManager = (InputMethodManager)
+
+                            getSystemService(TopicoActivity.INPUT_METHOD_SERVICE);
+                    inputManager.hideSoftInputFromWindow((null == getCurrentFocus()) ? null : getCurrentFocus().getWindowToken(), InputMethodManager.HIDE_NOT_ALWAYS);
+                    edComentario.setText("");
+
                 }
             }
         });
     }
-private void getToken(){
-    GraphRequest request = GraphRequest.newMeRequest(
-            AccessToken.getCurrentAccessToken(),
-            new GraphRequest.GraphJSONObjectCallback() {
-                @Override
-                public void onCompleted(
-                        JSONObject object,
-                        GraphResponse response) {
-                    Log.v("TopicoActivity Response", response.toString());
 
-                    try {
-                        final String email = object.getString("email");
-                        //verifica se ja existe um usuario com esse email se não existir realiza o cadastro
-                        Toast.makeText(getApplicationContext(),"hehehehe", Toast.LENGTH_SHORT).show();
-                        getUsuario(email);
+    private void insereComentario(long idUsuario,long idForum,String comentario){
 
-                    } catch (JSONException e) {
-                        e.printStackTrace();
-                    }
-                }
-            });
-
-}
-
-    private void insereComentario(){
-        Call<ResponseBody> call = new RetrofitConfig().getRestInterface().cadastracomentario(comentario);
-
-                  /*  Call<ComentarioForumBean> callBean = new RetrofitConfig().getRestInterface()
-                            .cadastrarUsuarioBean(new ComentarioForumBean(
-
-                    ));*/
+        Call<ResponseBody> call = new RetrofitConfig().getRestInterface().cadastraComentario(
+                new ComentarioForumBean(comentario,idUsuario,idForum
+                        , new GregorianCalendar().getTime()));
 
         call.enqueue(new Callback<ResponseBody>() {
             @Override
             public void onResponse(Call<ResponseBody> call, Response<ResponseBody> response) {
-
-
+                acessaServidor();
+                recyclerComentario.getAdapter().notifyDataSetChanged();
             }
 
             @Override
             public void onFailure(Call<ResponseBody> call, Throwable t) {
-
-                Toast.makeText(getApplicationContext(), R.string.falha_de_acesso, Toast.LENGTH_LONG).show();
+                Log.d("TopicoActivity 2", t.getMessage());
+                Toast.makeText(getApplicationContext(), "1" +R.string.falha_de_acesso, Toast.LENGTH_LONG).show();
             }
         });
     }
 
-    private void getUsuario(final String email){
+    private void getUsuario(final String email, final String comentario){
         email.replace("@","%40");
         Call<List<UsuarioBean>> call = new RetrofitConfig().getRestInterface().getUsuarioEmail(email);
         call.enqueue(new Callback<List<UsuarioBean>>() {
@@ -171,8 +167,8 @@ private void getToken(){
                 if (response.isSuccessful()) {
 
                     usuario = response.body();
-                    if (usuario.size() == 0){
-                         Toast.makeText(getApplicationContext(),"Email 1:"+ usuario.get(0).getEmail(), Toast.LENGTH_SHORT).show();
+                    if (usuario.size() > 0){
+                         insereComentario(usuario.get(0).getId(),topico.getId(),comentario);
                     }
 
                 }
@@ -181,7 +177,7 @@ private void getToken(){
             @Override
             public void onFailure(Call<List<UsuarioBean>> call, Throwable t) {
                 Toast.makeText(getApplicationContext(), t.getMessage(), Toast.LENGTH_SHORT).show();
-                Log.d("LoginActivity 1", t.getMessage());
+                Log.d("TopicoActivity 1", t.getMessage());
             }
 
         });
@@ -199,8 +195,8 @@ private void getToken(){
                     //mostra as views que componhe a activity
                     mostraViews(true);
                     btnRecarregar.setVisibility(View.INVISIBLE);
-                    ForumBean obj = response.body();
-                    inicializa(obj);
+                    topico = response.body();
+                    inicializa(topico);
 
                 }
             }
@@ -247,9 +243,11 @@ private void getToken(){
         recyclerTag.setAdapter(new TagTopicoAdpter(tags, this));
         recyclerTag.setLayoutManager(new LinearLayoutManager(this, LinearLayoutManager.HORIZONTAL, false));
 
+        topicoAdpter = new ComentarioTopicoAdpter(obj.getComentarios(), this);
         recyclerComentario = findViewById(R.id.rv_comentarios);
-        recyclerComentario.setAdapter(new ComentarioTopicoAdpter(obj.getComentarios(), this));
-        LinearLayoutManager layoutManager = new LinearLayoutManager(this, LinearLayoutManager.VERTICAL, false);
+        recyclerComentario.setAdapter(topicoAdpter);
+        topicoAdpter.ordena();
+        LinearLayoutManager layoutManager = new LinearLayoutManager(this, LinearLayoutManager.VERTICAL, true);
         //faz a lista começar pelo fim
         recyclerComentario.setLayoutManager(layoutManager);
 
