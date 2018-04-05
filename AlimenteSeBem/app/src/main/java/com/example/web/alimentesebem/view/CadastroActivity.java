@@ -130,7 +130,7 @@ public class CadastroActivity extends AppCompatActivity {
         }
 
         if(!cancel){
-            Call<ResponseBody> call = new RetrofitConfig().getRestInterface().cadastraUsuario(new UsuarioBean(edNome.getText().toString()
+           /* Call<ResponseBody> call = new RetrofitConfig().getRestInterface().cadastraUsuario(new UsuarioBean(edNome.getText().toString()
                     ,edEmail.getText().toString(),edSenha.getText().toString()));
 
             Call<UsuarioBean> callBean = new RetrofitConfig().getRestInterface().cadastrarUsuarioBean(new UsuarioBean(edNome.getText().toString()
@@ -153,7 +153,7 @@ public class CadastroActivity extends AppCompatActivity {
 
                     Toast.makeText(getApplicationContext(), R.string.falha_de_acesso, Toast.LENGTH_LONG).show();
                 }
-            });
+            });*/
         }else {
 
             focus.requestFocus();

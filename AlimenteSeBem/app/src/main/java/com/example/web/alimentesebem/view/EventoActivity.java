@@ -179,7 +179,7 @@ public class EventoActivity extends AppCompatActivity {
 
         recyclerView.setAdapter(new TagEventoAdapter(tags, getApplicationContext()));
         recyclerView.setLayoutManager(new StaggeredGridLayoutManager(3, StaggeredGridLayoutManager.HORIZONTAL));
-        Toast.makeText(this,dtFmt.format(obj.getData_Evento()),Toast.LENGTH_LONG).show();
+       // Toast.makeText(this,dtFmt.format(obj.getData_Evento()),Toast.LENGTH_LONG).show();
     }
 
     private void mostraViews(boolean mostra ){

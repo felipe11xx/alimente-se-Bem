@@ -33,20 +33,31 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.List;
 
 import com.example.web.alimentesebem.R;
+import com.example.web.alimentesebem.model.UsuarioBean;
+import com.example.web.alimentesebem.rest.config.RetrofitConfig;
 import com.facebook.AccessToken;
 import com.facebook.CallbackManager;
 import com.facebook.FacebookCallback;
 import com.facebook.FacebookException;
-import com.facebook.FacebookSdk;
+import com.facebook.GraphRequest;
+import com.facebook.GraphResponse;
 import com.facebook.Profile;
-import com.facebook.ProfileManager;
-import com.facebook.appevents.AppEventsLogger;
-import com.facebook.login.LoginManager;
+
 import com.facebook.login.LoginResult;
 import com.facebook.login.widget.LoginButton;
+
+
+import org.json.JSONException;
+import org.json.JSONObject;
+
+import okhttp3.ResponseBody;
+import retrofit2.Call;
+import retrofit2.Callback;
+import retrofit2.Response;
 
 import static android.Manifest.permission.READ_CONTACTS;
 
@@ -81,6 +92,7 @@ public class LoginActivity extends AppCompatActivity implements LoaderCallbacks<
     private BarraProgresso barraProgresso = BarraProgresso.getInstance();
     private LoginButton loginButton;
     private CallbackManager callbackManager;
+    private List<UsuarioBean> usuario;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -374,7 +386,7 @@ public class LoginActivity extends AppCompatActivity implements LoaderCallbacks<
             Toast.makeText(LoginActivity.this, "Olá ".concat(Profile.getCurrentProfile().getFirstName()) , Toast.LENGTH_SHORT).show();
         }
 
-        loginButton.setReadPermissions("email", "public_profile");
+        loginButton.setReadPermissions(Arrays.asList("email", "public_profile"));
 
         // AppEventsLogger.activateApp(this);
         callbackManager  = CallbackManager.Factory.create();
@@ -385,6 +397,32 @@ public class LoginActivity extends AppCompatActivity implements LoaderCallbacks<
                 if(Profile.getCurrentProfile() != null){
                     Toast.makeText(LoginActivity.this, "Olá ".concat(Profile.getCurrentProfile().getFirstName()) , Toast.LENGTH_SHORT).show();
                 }
+
+                // Facebook Email address
+                GraphRequest request = GraphRequest.newMeRequest(
+                        loginResult.getAccessToken(),
+                        new GraphRequest.GraphJSONObjectCallback() {
+                            @Override
+                            public void onCompleted(
+                                    JSONObject object,
+                                    GraphResponse response) {
+                                Log.v("LoginActivity Response ", response.toString());
+
+                                try {
+                                    final String name = object.getString("name");
+                                    final String email = object.getString("email");
+                                    //verifica se ja existe um usuario com esse email se não existir realiza o cadastro
+                                    getUsuario(email,name);
+
+                                } catch (JSONException e) {
+                                    e.printStackTrace();
+                                }
+                            }
+                        });
+                Bundle parameters = new Bundle();
+                parameters.putString("fields", "id,name,email,gender, birthday");
+                request.setParameters(parameters);
+                request.executeAsync();
 
                 finish();
                 startActivity(intent);
@@ -400,11 +438,64 @@ public class LoginActivity extends AppCompatActivity implements LoaderCallbacks<
             public void onError(FacebookException exception) {
                 // App code
                 Toast.makeText(LoginActivity.this, exception.getMessage(), Toast.LENGTH_SHORT).show();
-                Log.d("LoginActivity", exception.getMessage());
+                Log.d("LoginActivity 2", exception.getMessage());
             }
         });
 
 
+    }
+
+    private void getUsuario(final String email,final String name){
+        email.replace("@","%40");
+        Call<List<UsuarioBean>> call = new RetrofitConfig().getRestInterface().getUsuarioEmail(email);
+        call.enqueue(new Callback<List<UsuarioBean>>() {
+            @Override
+            public void onResponse(Call<List<UsuarioBean>> call, Response<List<UsuarioBean>> response) {
+
+                if (response.isSuccessful()) {
+
+                    usuario = response.body();
+                    if (usuario.size() == 0){
+                        cadastraUsuario(name,email);
+                       // Toast.makeText(LoginActivity.this,"Email 1:"+ usuario.get(0).getEmail(), Toast.LENGTH_SHORT).show();
+                    }
+
+
+                }
+            }
+
+            @Override
+            public void onFailure(Call<List<UsuarioBean>> call, Throwable t) {
+                Toast.makeText(LoginActivity.this, t.getMessage(), Toast.LENGTH_SHORT).show();
+                Log.d("LoginActivity 1", t.getMessage());
+            }
+
+        });
+    }
+
+    private void cadastraUsuario(String name, String email){
+        Call<ResponseBody> call2 = new RetrofitConfig().getRestInterface().cadastraUsuario(new UsuarioBean(name
+                ,email));
+
+        Call<UsuarioBean> callBean = new RetrofitConfig().getRestInterface().cadastrarUsuarioBean(new UsuarioBean(name
+                ,email));
+
+        call2.enqueue(new Callback<ResponseBody>() {
+            @Override
+            public void onResponse(Call<ResponseBody> call, Response<ResponseBody> response) {
+
+                if (response.isSuccessful()) {
+                    finish();
+                    startActivity(intent);
+                }
+            }
+
+            @Override
+            public void onFailure(Call<ResponseBody> call, Throwable t) {
+
+                Toast.makeText(getApplicationContext(), R.string.falha_de_acesso, Toast.LENGTH_LONG).show();
+            }
+        });
     }
 
     @Override

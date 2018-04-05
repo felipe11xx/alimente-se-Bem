@@ -9,24 +9,25 @@ import java.util.Date;
 public class ComentarioForumBean {
 
     private Long id_Comentario;
-    private String comentario;
+    private String descricao;
     private UsuarioBean usuario;
+    private long id_User;
     private ForumBean forum;
+    private long id_Forum;
     private Date data_Criacao;
 
     public ComentarioForumBean() {
     }
 
-    public ComentarioForumBean(Long id_Comentario) {
-        this.id_Comentario = id_Comentario;
+    public ComentarioForumBean(String descricao, long id_User, long id_Forum, Date data_Criacao) {
+        this.descricao = descricao;
+        this.id_User = id_User;
+        this.id_Forum = id_Forum;
+        this.data_Criacao = data_Criacao;
     }
 
-    public ComentarioForumBean(Long id_Comentario, String comentario, UsuarioBean usuario, ForumBean forum, Date data_Criacao) {
+    public ComentarioForumBean(Long id_Comentario) {
         this.id_Comentario = id_Comentario;
-        this.comentario = comentario;
-        this.usuario = usuario;
-        this.forum = forum;
-        this.data_Criacao = data_Criacao;
     }
 
     public Long getId_Comentario() {
@@ -37,12 +38,12 @@ public class ComentarioForumBean {
         this.id_Comentario = id_Comentario;
     }
 
-    public String getComentario() {
-        return comentario;
+    public String getDescricao() {
+        return descricao;
     }
 
-    public void setComentario(String comentario) {
-        this.comentario = comentario;
+    public void setDescricao(String descricao) {
+        this.descricao = descricao;
     }
 
     public UsuarioBean getUsuario() {
@@ -53,6 +54,14 @@ public class ComentarioForumBean {
         this.usuario = usuario;
     }
 
+    public long getId_user() {
+        return id_User;
+    }
+
+    public void setId_user(long id_User) {
+        this.id_User = id_User;
+    }
+
     public ForumBean getForum() {
         return forum;
     }
@@ -61,11 +70,11 @@ public class ComentarioForumBean {
         this.forum = forum;
     }
 
-    public Date getData_Criacao() {
+    public Date getData_criacao() {
         return data_Criacao;
     }
 
-    public void setData_Criacao(Date data_Criacao) {
+    public void setData_criacao(Date data_Criacao) {
         this.data_Criacao = data_Criacao;
     }
 }

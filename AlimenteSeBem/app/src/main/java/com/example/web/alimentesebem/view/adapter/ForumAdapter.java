@@ -130,7 +130,7 @@ public class ForumAdapter extends RecyclerView.Adapter implements AdapterInterfa
             v.getContext().startActivity(intent);
         }
 
-        public void getNutricionista(long idNutricionista){
+        private void getNutricionista(long idNutricionista){
             Call<NutricionistaBean> call = new RetrofitConfig().getRestInterface().getNutricionista(idNutricionista);
             call.enqueue(new Callback<NutricionistaBean>() {
                 @Override

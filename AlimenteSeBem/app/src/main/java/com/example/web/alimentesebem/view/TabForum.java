@@ -18,13 +18,10 @@ import android.view.ViewGroup;
 import android.widget.Toast;
 
 import com.example.web.alimentesebem.R;
-import com.example.web.alimentesebem.dao.ForumDaoOld;
-import com.example.web.alimentesebem.model.CategoriaForumBean;
 import com.example.web.alimentesebem.model.ForumBean;
-import com.example.web.alimentesebem.model.NutricionistaBean;
 import com.example.web.alimentesebem.rest.config.RetrofitConfig;
 import com.example.web.alimentesebem.view.adapter.ForumAdapter;
-import com.example.web.alimentesebem.view.adapter.OnItemClick;
+
 
 import java.util.List;
 

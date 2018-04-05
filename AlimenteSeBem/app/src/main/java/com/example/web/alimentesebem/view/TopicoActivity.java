@@ -17,16 +17,28 @@ import android.widget.Toast;
 
 import com.example.web.alimentesebem.Main;
 import com.example.web.alimentesebem.R;
+import com.example.web.alimentesebem.model.CategoriaForumBean;
+import com.example.web.alimentesebem.model.ComentarioForumBean;
 import com.example.web.alimentesebem.model.ForumBean;
+import com.example.web.alimentesebem.model.NutricionistaBean;
+import com.example.web.alimentesebem.model.UsuarioBean;
 import com.example.web.alimentesebem.rest.config.RetrofitConfig;
 import com.example.web.alimentesebem.view.adapter.ComentarioTopicoAdpter;
 import com.example.web.alimentesebem.view.adapter.TagTopicoAdpter;
+import com.facebook.AccessToken;
+import com.facebook.GraphRequest;
+import com.facebook.GraphResponse;
+import com.facebook.Profile;
+
+import org.json.JSONException;
+import org.json.JSONObject;
 
 import java.text.DateFormat;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Locale;
 
+import okhttp3.ResponseBody;
 import retrofit2.Call;
 import retrofit2.Callback;
 import retrofit2.Response;
@@ -46,6 +58,10 @@ public class TopicoActivity extends AppCompatActivity {
     private DateFormat dtFmt = DateFormat.getDateInstance(DateFormat.LONG, new Locale("pt", "BR"));
     private ProgressBar progressBar;
     private BarraProgresso barraProgresso = BarraProgresso.getInstance();
+    private NutricionistaBean nutricionista;
+    private CategoriaForumBean categoria;
+    private ComentarioForumBean comentario;
+    private List<UsuarioBean> usuario;
 
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
@@ -86,6 +102,89 @@ public class TopicoActivity extends AppCompatActivity {
                 finish();
             }
         });
+
+        btnEnviar.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                if(!edComentario.equals("")){
+
+                  getToken();
+                   //getUsuario();
+                }
+            }
+        });
+    }
+private void getToken(){
+    GraphRequest request = GraphRequest.newMeRequest(
+            AccessToken.getCurrentAccessToken(),
+            new GraphRequest.GraphJSONObjectCallback() {
+                @Override
+                public void onCompleted(
+                        JSONObject object,
+                        GraphResponse response) {
+                    Log.v("TopicoActivity Response", response.toString());
+
+                    try {
+                        final String email = object.getString("email");
+                        //verifica se ja existe um usuario com esse email se não existir realiza o cadastro
+                        Toast.makeText(getApplicationContext(),"hehehehe", Toast.LENGTH_SHORT).show();
+                        getUsuario(email);
+
+                    } catch (JSONException e) {
+                        e.printStackTrace();
+                    }
+                }
+            });
+
+}
+
+    private void insereComentario(){
+        Call<ResponseBody> call = new RetrofitConfig().getRestInterface().cadastracomentario(comentario);
+
+                  /*  Call<ComentarioForumBean> callBean = new RetrofitConfig().getRestInterface()
+                            .cadastrarUsuarioBean(new ComentarioForumBean(
+
+                    ));*/
+
+        call.enqueue(new Callback<ResponseBody>() {
+            @Override
+            public void onResponse(Call<ResponseBody> call, Response<ResponseBody> response) {
+
+
+            }
+
+            @Override
+            public void onFailure(Call<ResponseBody> call, Throwable t) {
+
+                Toast.makeText(getApplicationContext(), R.string.falha_de_acesso, Toast.LENGTH_LONG).show();
+            }
+        });
+    }
+
+    private void getUsuario(final String email){
+        email.replace("@","%40");
+        Call<List<UsuarioBean>> call = new RetrofitConfig().getRestInterface().getUsuarioEmail(email);
+        call.enqueue(new Callback<List<UsuarioBean>>() {
+            @Override
+            public void onResponse(Call<List<UsuarioBean>> call, Response<List<UsuarioBean>> response) {
+
+                if (response.isSuccessful()) {
+
+                    usuario = response.body();
+                    if (usuario.size() == 0){
+                         Toast.makeText(getApplicationContext(),"Email 1:"+ usuario.get(0).getEmail(), Toast.LENGTH_SHORT).show();
+                    }
+
+                }
+            }
+
+            @Override
+            public void onFailure(Call<List<UsuarioBean>> call, Throwable t) {
+                Toast.makeText(getApplicationContext(), t.getMessage(), Toast.LENGTH_SHORT).show();
+                Log.d("LoginActivity 1", t.getMessage());
+            }
+
+        });
     }
 
     private void acessaServidor() {
@@ -101,12 +200,8 @@ public class TopicoActivity extends AppCompatActivity {
                     mostraViews(true);
                     btnRecarregar.setVisibility(View.INVISIBLE);
                     ForumBean obj = response.body();
-                    try {
-                        inicializa(obj);
-                    } catch (Exception e) {
-                        Toast.makeText(getApplicationContext(), getString(R.string.falha_de_acesso),
-                                Toast.LENGTH_LONG).show();
-                    }
+                    inicializa(obj);
+
                 }
             }
 
@@ -140,7 +235,9 @@ public class TopicoActivity extends AppCompatActivity {
         });
     }
 
-    private void inicializa(ForumBean obj) throws Exception {
+    private void inicializa(ForumBean obj)  {
+
+        barraProgresso.showProgress(false,progressBar);
         recyclerTag = findViewById(R.id.rv_topico_tags);
         List<String> tags = new ArrayList<>();
 
@@ -157,9 +254,9 @@ public class TopicoActivity extends AppCompatActivity {
         recyclerComentario.setLayoutManager(layoutManager);
 
         lblAutor.setText("Aberto por: ");
-        tvAutor.setText(obj.getNutricionista().getNome());
+        getNutricionista(obj.getId_Nutricionista());
         lblCategoria.setText("Categoria: ");
-        tvCategoria.setText(obj.getCategoria().getNome());
+        getCategoria(obj.getId_Cat_Forum());
         tvTitulo.setText(obj.getTitulo());
         lblData.setText("Aberto em ");
         tvData.setText(dtFmt.format(obj.getData_criacao()));
@@ -209,4 +306,47 @@ public class TopicoActivity extends AppCompatActivity {
         tvToolbar.setTypeface(typeFont);
     }
 
+    private void getNutricionista(long idNutricionista){
+        Call<NutricionistaBean> call = new RetrofitConfig().getRestInterface().getNutricionista(idNutricionista);
+        call.enqueue(new Callback<NutricionistaBean>() {
+            @Override
+            public void onResponse(Call<NutricionistaBean> call, Response<NutricionistaBean> response) {
+
+                if (response.isSuccessful()) {
+
+                    nutricionista = response.body();
+                    if(nutricionista != null)
+                        tvAutor.setText( nutricionista.getNome());
+                }
+            }
+
+            @Override
+            public void onFailure(Call<NutricionistaBean> call, Throwable t) {
+                Log.d("ForumAdapter",t.getMessage());
+            }
+        });
+
+    }
+
+    private void getCategoria(long idCategoria){
+
+        Call<CategoriaForumBean> call = new RetrofitConfig().getRestInterface().getCategoriaForum(idCategoria);
+        call.enqueue(new Callback<CategoriaForumBean>() {
+            @Override
+            public void onResponse(Call<CategoriaForumBean> call, Response<CategoriaForumBean> response) {
+
+                if (response.isSuccessful()) {
+
+                    categoria = response.body();
+                    tvCategoria.setText(categoria.getNome());
+                }
+            }
+
+            @Override
+            public void onFailure(Call<CategoriaForumBean> call, Throwable t) {
+                Log.d("ForumAdapter",t.getMessage());
+            }
+        });
+
+    }
 }

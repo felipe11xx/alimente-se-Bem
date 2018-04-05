@@ -1,5 +1,7 @@
 package com.example.web.alimentesebem.rest;
 
+import android.icu.lang.UScript;
+
 import com.example.web.alimentesebem.model.AgendaBean;
 import com.example.web.alimentesebem.model.CategoriaForumBean;
 import com.example.web.alimentesebem.model.ComentarioForumBean;
@@ -18,6 +20,7 @@ import retrofit2.http.Body;
 import retrofit2.http.GET;
 import retrofit2.http.POST;
 import retrofit2.http.Path;
+import retrofit2.http.Query;
 
 public interface RestInterface {
 
@@ -44,6 +47,12 @@ public interface RestInterface {
 
     @GET("Categorias_Forum/{id}")
     Call<CategoriaForumBean> getCategoriaForum(@Path("id") Long id);
+
+    @GET("Usuario/{id}")
+    Call<UsuarioBean> getUsuario(@Path("id") Long id);
+
+    @GET("Usuario/email?")
+    Call<List<UsuarioBean>> getUsuarioEmail(@Query("email") String email);
 
     @POST("Usuario/Cadastrar")
     Call<ResponseBody> cadastraUsuario(@Body UsuarioBean usuarioBean);
