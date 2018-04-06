@@ -123,9 +123,7 @@ public class TopicoActivity extends AppCompatActivity {
                     //Usa o Email e usuario cadastrado na SharedPrefeces
                     SharedPreferences preferencesGet = getSharedPreferences("KEY", getApplicationContext().MODE_PRIVATE);
                     email = preferencesGet.getString("email", "default");
-                    if(preferencesGet.getBoolean("nutricionista",true)){
 
-                    }
                     getUsuario(email,edComentario.getText().toString());
                     InputMethodManager inputManager = (InputMethodManager)
 

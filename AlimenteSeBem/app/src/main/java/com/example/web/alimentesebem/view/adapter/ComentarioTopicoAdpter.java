@@ -126,8 +126,10 @@ public class ComentarioTopicoAdpter extends RecyclerView.Adapter {
                     if (response.isSuccessful()) {
 
                         usuario = response.body();
-                        if (usuario != null)
-                            tvAutor.setText(usuario.getNome());
+                        if (usuario != null){
+                                tvAutor.setText(usuario.getNome() + "Nutricionista");
+                        }
+
                     }
                 }
 

@@ -1,6 +1,7 @@
 package com.example.web.alimentesebem.view;
 
 import android.content.Intent;
+import android.content.SharedPreferences;
 import android.graphics.Typeface;
 import android.os.Bundle;
 import android.os.Handler;
@@ -9,6 +10,7 @@ import android.view.animation.Animation;
 import android.view.animation.AnimationUtils;
 import android.widget.ImageView;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import com.example.web.alimentesebem.R;
 
@@ -18,8 +20,9 @@ import com.example.web.alimentesebem.R;
 
 public class SplashScreenActivity extends AppCompatActivity{
     // Tempo que a nossa SplashScreen ficará visível para o usuário
-    private final int SPLASH_DISPLAY_LENGTH = 0;//2500;
+    private final int SPLASH_DISPLAY_LENGTH = 2500;
     private TextView tvLogo,tvRealiza;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -27,6 +30,7 @@ public class SplashScreenActivity extends AppCompatActivity{
 
         // Iremos criar um método carregar para realizar a nossa ação
         carregar();
+
 
     }
 

@@ -98,6 +98,8 @@ public class LoginActivity extends AppCompatActivity implements LoaderCallbacks<
     private List<NutricionistaBean> nutricionista;
     private SharedPreferences preferencesPut;
     private SharedPreferences.Editor editor;
+    private boolean cancel = false;
+    private View focusView = null;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -120,8 +122,8 @@ public class LoginActivity extends AppCompatActivity implements LoaderCallbacks<
             }
         });
 
-        mEmailView.setText("email@email.com");
-        mPasswordView.setText("12345678");
+        mEmailView.setText("naty@sesi.com");
+        mPasswordView.setText("1255");
 
         logarFacebook();
 
@@ -132,14 +134,7 @@ public class LoginActivity extends AppCompatActivity implements LoaderCallbacks<
                 attemptLogin();
             }
         });
-   /*     Button btnCadastrar = findViewById(R.id.btn_cadastrar);
-        btnCadastrar.setOnClickListener(new OnClickListener() {
 
-            public void onClick(View v) {
-                intent = new Intent(getApplicationContext(), CadastroActivity.class);
-                startActivity(intent);
-            }
-        });*/
         mProgressView = findViewById(R.id.login_progress);
 
         tvLogo = findViewById(R.id.tv_logo_alimente_se);
@@ -206,8 +201,8 @@ public class LoginActivity extends AppCompatActivity implements LoaderCallbacks<
      /*   if (mAuthTask != null) {
             return;
         }*/
-
         // Reset errors.
+
         mEmailView.setError(null);
         mPasswordView.setError(null);
 
@@ -215,15 +210,13 @@ public class LoginActivity extends AppCompatActivity implements LoaderCallbacks<
         String email = mEmailView.getText().toString();
         String password = mPasswordView.getText().toString();
 
-        boolean cancel = false;
-        View focusView = null;
+
 
         if (!TextUtils.isEmpty(password) && !isPasswordValid(password)) {
             mPasswordView.setError(getString(R.string.erro_senha_incorreta));
             focusView = mPasswordView;
             cancel = true;
         } else if (TextUtils.isEmpty(password)) {
-            if (TextUtils.isEmpty(password)) {
                 mPasswordView.setError(getString(R.string.erro_senha_n_preechida));
                 focusView = mPasswordView;
                 cancel = true;
@@ -239,36 +232,8 @@ public class LoginActivity extends AppCompatActivity implements LoaderCallbacks<
                 cancel = true;
             }
 
-            if (cancel) {
-                // There was an error; don't attempt login and focus the first
-                // form field with an error.
-                focusView.requestFocus();
-            } else {
+            logarNutricionista(email, Long.parseLong(password));
 
-                logarNutricionista(email, Long.parseLong(password));
-                getUsuario(email, "");
-
-                //Add email e nome nas Preferences
-
-                editor.remove("nome");
-                editor.remove("email");
-                editor.remove("nutricionista");
-                editor.commit();
-                // editor.putString("nome", name);
-                editor.putString("email", email);
-                editor.putBoolean("nutricionista", true);
-                editor.commit();
-
-                // Show a progress spinner, and kick off a background task to
-                // perform the user login attempt.
-                barraProgresso.showProgress(true, mProgressView);
-                //mAuthTask = new UserLoginTask(email, password);
-                // mAuthTask.execute((Void) null);
-                intent = new Intent(LoginActivity.this, MainActivity.class);
-                startActivity(intent);
-                finish();
-            }
-        }
     }
 
     private boolean isEmailValid(String email) {
@@ -279,8 +244,12 @@ public class LoginActivity extends AppCompatActivity implements LoaderCallbacks<
     private boolean isPasswordValid(String password) {
         boolean retorno = false;
 
-        if (password.contains("^[0-9]*$"))
+        try{
+            Long.parseLong(password);
             retorno = true;
+        }catch(Exception e){
+            retorno = false;
+        }
 
         return retorno;
     }
@@ -397,6 +366,7 @@ public class LoginActivity extends AppCompatActivity implements LoaderCallbacks<
     }
 
     private void logarFacebook() {
+        preferencesPut = getSharedPreferences("KEY", getApplicationContext().MODE_PRIVATE);
         boolean loggedIn;
         AccessToken.getCurrentAccessToken();
         if (Profile.getCurrentProfile() != null) {
@@ -411,6 +381,10 @@ public class LoginActivity extends AppCompatActivity implements LoaderCallbacks<
             finish();
             startActivity(intent);
             Toast.makeText(LoginActivity.this, "Olá ".concat(Profile.getCurrentProfile().getFirstName()), Toast.LENGTH_SHORT).show();
+        }else if (!preferencesPut.getString("nome","defValue").equals("defValue")  && !preferencesPut.getString("nome","defValue").equals("defValue")){
+            finish();
+            startActivity(intent);
+            Toast.makeText(this, "Olá " +preferencesPut.getString("nome","defValue"),Toast.LENGTH_SHORT).show();
         }
 
         loginButton.setReadPermissions(Arrays.asList("email", "public_profile"));
@@ -477,11 +451,9 @@ public class LoginActivity extends AppCompatActivity implements LoaderCallbacks<
 
         editor.remove("nome");
         editor.remove("email");
-        editor.remove("nutricionista");
         editor.commit();
         editor.putString("nome", name);
         editor.putString("email", email);
-        editor.putBoolean("nutricionista", false);
         editor.commit();
 
         email.replace("@", "%40");
@@ -513,7 +485,6 @@ public class LoginActivity extends AppCompatActivity implements LoaderCallbacks<
 
     private void logarNutricionista(final String email, final long nif) {
 
-
         email.replace("@", "%40");
         Call<List<NutricionistaBean>> call = new RetrofitConfig().getRestInterface().logarNutricionista(email, nif);
         call.enqueue(new Callback<List<NutricionistaBean>>() {
@@ -523,9 +494,37 @@ public class LoginActivity extends AppCompatActivity implements LoaderCallbacks<
                 if (response.isSuccessful()) {
 
                     nutricionista = response.body();
-                    if (nutricionista.size() == 0) {
-                        //cadastraUsuario(name,email);
-                        Toast.makeText(LoginActivity.this, "Email 1:" + nutricionista.get(0).getEmail(), Toast.LENGTH_SHORT).show();
+                    if (nutricionista != null && nutricionista.size() > 0) {
+
+                        editor.putBoolean("nutricionista", false);
+                        editor.commit();
+
+                        getUsuario(nutricionista.get(0).getEmail(), nutricionista.get(0).getNome());
+                        Toast.makeText(LoginActivity.this,"Olá " +nutricionista.get(0).getNome() , Toast.LENGTH_SHORT).show();
+                        cancel = false;
+                    }else{
+
+                            mEmailView.setError(getString(R.string.email_e_senha_invalidos));
+                            focusView = mEmailView;
+
+                        cancel = true;
+
+                    }
+
+                    if (cancel) {
+                        // There was an error; don't attempt login and focus the first
+                        // form field with an error.
+                        focusView.requestFocus();
+                    } else {
+
+                        // Show a progress spinner, and kick off a background task to
+                        // perform the user login attempt.
+                        barraProgresso.showProgress(true, mProgressView);
+                        //mAuthTask = new UserLoginTask(email, password);
+                        // mAuthTask.execute((Void) null);
+                        intent = new Intent(LoginActivity.this, MainActivity.class);
+                        startActivity(intent);
+                        finish();
                     }
 
                 }
@@ -533,8 +532,27 @@ public class LoginActivity extends AppCompatActivity implements LoaderCallbacks<
 
             @Override
             public void onFailure(Call<List<NutricionistaBean>> call, Throwable t) {
+                mEmailView.setError(getString(R.string.email_e_senha_invalidos));
+                focusView = mEmailView;
+                cancel = true;
                 Toast.makeText(LoginActivity.this, t.getMessage(), Toast.LENGTH_SHORT).show();
                 Log.d("LoginActivity 1", t.getMessage());
+
+                if (cancel) {
+                    // There was an error; don't attempt login and focus the first
+                    // form field with an error.
+                    focusView.requestFocus();
+                } else {
+
+                    // Show a progress spinner, and kick off a background task to
+                    // perform the user login attempt.
+                    barraProgresso.showProgress(true, mProgressView);
+                    //mAuthTask = new UserLoginTask(email, password);
+                    // mAuthTask.execute((Void) null);
+                    intent = new Intent(LoginActivity.this, MainActivity.class);
+                    startActivity(intent);
+                    finish();
+                }
             }
 
         });

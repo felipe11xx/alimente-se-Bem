@@ -43,6 +43,7 @@
     <string name="erro_nome_n_preechida">Preencha com o seu Nome</string>
     <string name="erro_cofirma_igual_senha">Senha deve ser igual a confirmação</string>
     <string name="erro_senha_deve_conter">Senha deve conter no minimo 8 caracteres</string>
+    <string name="email_e_senha_invalidos">Email e/ou senha invalidos !</string>
     <string name="permission_rationale">"Contacts permissions are needed for providing email
         completions."
     </string>

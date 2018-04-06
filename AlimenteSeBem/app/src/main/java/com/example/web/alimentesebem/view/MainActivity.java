@@ -47,6 +47,8 @@ public class MainActivity extends AppCompatActivity {
      * The {@link ViewPager} that will host the section contents.
      */
     private ViewPager mViewPager;
+    private SharedPreferences preferencesPut;
+    private SharedPreferences.Editor editor;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -57,6 +59,10 @@ public class MainActivity extends AppCompatActivity {
         toolbarTittle.setTypeface(typeFont);
         Toolbar toolbar = findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
+
+        //pega as preferencias
+        preferencesPut = getSharedPreferences("KEY", getApplicationContext().MODE_PRIVATE);
+        editor = preferencesPut.edit();
 
         // Create the adapter that will return a fragment for each of the three
         // primary sections of the activity.
@@ -89,7 +95,10 @@ public class MainActivity extends AppCompatActivity {
         int idView = item.getItemId();
 
         if (idView == R.id.ic_logoff){
-
+            editor.remove("nome");
+            editor.remove("email");
+            editor.remove("nutricionista");
+            editor.commit();
              //Cria o Builder do dialogo de exclusão
             AlertDialog.Builder builder = new AlertDialog.Builder(this);
             builder.setMessage("Deseja mesmo Sair ?")
