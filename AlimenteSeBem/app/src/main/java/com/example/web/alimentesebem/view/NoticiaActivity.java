@@ -65,8 +65,10 @@ public class NoticiaActivity extends AppCompatActivity {
         tvTitulo = findViewById(R.id.tv_titulo_noticia);
         imgNoticia = findViewById(R.id.img_noticia);
         progressBar = findViewById(R.id.prg_noticia2);
-        btnRecarregar = findViewById(R.id.btn_recarregar_noticia2);
         btnRecarregar.setVisibility(View.INVISIBLE);
+
+        //Muda a fonte de alguns textView
+        mudaFonts();
 
         final Bundle bundle = getIntent().getExtras();
         final Long noticiaId = (bundle != null) ? bundle.getLong("NoticiaId") : null;
@@ -151,18 +153,19 @@ public class NoticiaActivity extends AppCompatActivity {
     private void mostraViews(boolean mostra ){
         if(mostra){
 
+            tvTitulo.setVisibility(View.VISIBLE);
+            tvNoticia.setVisibility(View.VISIBLE);
+            tvHeadline.setVisibility(View.VISIBLE);
+            tvData.setVisibility(View.VISIBLE);
+            imgNoticia.setVisibility(View.VISIBLE);
+
+        }else {
             tvTitulo.setVisibility(View.INVISIBLE);
             tvNoticia.setVisibility(View.INVISIBLE);
             tvHeadline.setVisibility(View.INVISIBLE);
             tvData.setVisibility(View.INVISIBLE);
             imgNoticia.setVisibility(View.INVISIBLE);
 
-        }else {
-            tvTitulo.setVisibility(View.VISIBLE);
-            tvNoticia.setVisibility(View.VISIBLE);
-            tvHeadline.setVisibility(View.VISIBLE);
-            tvData.setVisibility(View.VISIBLE);
-            imgNoticia.setVisibility(View.VISIBLE);
         }
 
     }

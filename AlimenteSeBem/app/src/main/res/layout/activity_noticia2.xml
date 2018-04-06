@@ -1,10 +1,10 @@
 <?xml version="1.0" encoding="utf-8"?>
-    <android.support.constraint.ConstraintLayout
-        xmlns:android="http://schemas.android.com/apk/res/android"
-        xmlns:app="http://schemas.android.com/apk/res-auto"
-        xmlns:tools="http://schemas.android.com/tools"
-        android:layout_width="match_parent"
-        android:layout_height="match_parent">
+<android.support.constraint.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent">
+
     <android.support.v7.widget.Toolbar
         android:id="@+id/toolbar_noticia2"
         android:layout_width="match_parent"
@@ -18,12 +18,13 @@
             android:id="@+id/btn_voltar_noticia2"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
+            android:layout_margin="10dp"
             android:background="@color/colorPrimary"
             android:foregroundGravity="left"
-            android:layout_margin="10dp"
             app:srcCompat="@drawable/ic_arrow_back_white_24dp"
             tools:layout_editor_absoluteX="16dp"
             tools:layout_editor_absoluteY="6dp" />
+
         <TextView
             android:id="@+id/toolbar_noticia_text2"
             android:layout_width="wrap_content"
@@ -34,13 +35,22 @@
             android:textSize="24sp" />
     </android.support.v7.widget.Toolbar>
 
+    <android.support.constraint.ConstraintLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        app:layout_constraintTop_toBottomOf="@id/toolbar_noticia2">
+
         <ScrollView
+            android:id="@+id/scv_noticia"
             android:layout_width="match_parent"
-            android:layout_height="match_parent">
+            android:layout_height="match_parent"
+            android:clipToPadding="false"
+            android:fillViewport="true">
 
             <android.support.constraint.ConstraintLayout
                 android:layout_width="match_parent"
-                android:layout_height="wrap_content">
+                android:layout_height="wrap_content"
+                android:paddingBottom="54dp">
 
                 <TextView
                     android:id="@+id/tv_headline"
@@ -51,6 +61,7 @@
                     android:layout_marginTop="8dp"
                     android:maxLines="2"
                     android:text="TextView"
+                    android:textAlignment="center"
                     android:textSize="18sp"
                     android:textStyle="bold"
                     app:layout_constraintEnd_toEndOf="parent"
@@ -62,10 +73,12 @@
                     android:layout_width="0dp"
                     android:layout_height="wrap_content"
                     android:layout_marginEnd="8dp"
+                    android:layout_marginStart="8dp"
                     android:layout_marginTop="8dp"
                     android:fontFamily="@font/galada"
                     android:maxLines="1"
                     android:text="TextView"
+                    android:textAlignment="center"
                     android:textSize="20sp"
                     android:textStyle="bold"
                     app:layout_constraintEnd_toEndOf="parent"
@@ -79,23 +92,28 @@
                     android:layout_marginEnd="8dp"
                     android:layout_marginStart="8dp"
                     android:layout_marginTop="8dp"
-                    android:minLines="20"
+                    android:background="@color/com_facebook_button_login_silver_background_color_pressed"
+                    android:minLines="30"
                     android:text="TextView"
                     android:textSize="14sp"
+                    app:layout_constraintBottom_toBottomOf="@+id/tv_data_noticia"
                     app:layout_constraintEnd_toEndOf="parent"
                     app:layout_constraintHorizontal_bias="0.0"
                     app:layout_constraintStart_toStartOf="parent"
+
                     app:layout_constraintTop_toBottomOf="@+id/img_noticia" />
 
                 <TextView
                     android:id="@+id/tv_data_noticia"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
+                    android:layout_marginBottom="16dp"
                     android:layout_marginEnd="8dp"
                     android:layout_marginStart="8dp"
                     android:layout_marginTop="8dp"
                     android:text="TextView"
-                    android:textSize="10sp"
+                    android:textSize="12sp"
+                    app:layout_constraintBottom_toBottomOf="parent"
                     app:layout_constraintEnd_toEndOf="parent"
                     app:layout_constraintHorizontal_bias="1.0"
                     app:layout_constraintStart_toStartOf="parent"
@@ -113,7 +131,10 @@
                     app:layout_constraintTop_toBottomOf="@+id/tv_headline"
                     app:srcCompat="@mipmap/ic_launcher_round" />
             </android.support.constraint.ConstraintLayout>
+
         </ScrollView>
+    </android.support.constraint.ConstraintLayout>
+
     <ProgressBar
         android:id="@+id/prg_noticia2"
         style="?android:attr/progressBarStyle"

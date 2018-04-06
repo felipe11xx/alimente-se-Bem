@@ -90,7 +90,7 @@ public class LoginActivity extends AppCompatActivity implements LoaderCallbacks<
     private EditText mPasswordView;
     private ProgressBar mProgressView;
     private Intent intent;
-    private TextView tvLogo,tvRealiza;
+    private TextView tvLogo, tvRealiza;
     private BarraProgresso barraProgresso = BarraProgresso.getInstance();
     private LoginButton loginButton;
     private CallbackManager callbackManager;
@@ -104,7 +104,7 @@ public class LoginActivity extends AppCompatActivity implements LoaderCallbacks<
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_login);
         // Set up the login form.
-        mEmailView =  findViewById(R.id.ed_email);
+        mEmailView = findViewById(R.id.ed_email);
         loginButton = findViewById(R.id.btn_logar_face);
         populateAutoComplete();
 
@@ -144,12 +144,12 @@ public class LoginActivity extends AppCompatActivity implements LoaderCallbacks<
 
         tvLogo = findViewById(R.id.tv_logo_alimente_se);
         tvRealiza = findViewById(R.id.tv_realiza_2);
-        Typeface typeFont = Typeface.createFromAsset(getAssets(),"fonts/tahu.ttf");
+        Typeface typeFont = Typeface.createFromAsset(getAssets(), "fonts/tahu.ttf");
         tvLogo.setTypeface(typeFont);
-        typeFont = Typeface.createFromAsset(getAssets(),"fonts/Gotham_Condensed_Bold.otf");
+        typeFont = Typeface.createFromAsset(getAssets(), "fonts/Gotham_Condensed_Bold.otf");
         tvRealiza.setTypeface(typeFont);
         preferencesPut = getSharedPreferences("KEY", getApplicationContext().MODE_PRIVATE);
-        editor  = preferencesPut.edit();
+        editor = preferencesPut.edit();
 
     }
 
@@ -218,50 +218,56 @@ public class LoginActivity extends AppCompatActivity implements LoaderCallbacks<
         boolean cancel = false;
         View focusView = null;
 
-        if (TextUtils.isEmpty(password)){
-            mPasswordView.setError(getString(R.string.erro_senha_n_preechida));
+        if (!TextUtils.isEmpty(password) && !isPasswordValid(password)) {
+            mPasswordView.setError(getString(R.string.erro_senha_incorreta));
             focusView = mPasswordView;
             cancel = true;
-        }
-        // Check for a valid email address.
-        if (TextUtils.isEmpty(email)) {
-            mEmailView.setError(getString(R.string.erro_email_n_preechida));
-            focusView = mEmailView;
-            cancel = true;
-        } else if (!isEmailValid(email)) {
-            mEmailView.setError(getString(R.string.erro_email_invalido));
-            focusView = mEmailView;
-            cancel = true;
-        }
+        } else if (TextUtils.isEmpty(password)) {
+            if (TextUtils.isEmpty(password)) {
+                mPasswordView.setError(getString(R.string.erro_senha_n_preechida));
+                focusView = mPasswordView;
+                cancel = true;
+            }
+            // Check for a valid email address.
+            if (TextUtils.isEmpty(email)) {
+                mEmailView.setError(getString(R.string.erro_email_n_preechida));
+                focusView = mEmailView;
+                cancel = true;
+            } else if (!isEmailValid(email)) {
+                mEmailView.setError(getString(R.string.erro_email_invalido));
+                focusView = mEmailView;
+                cancel = true;
+            }
 
-        if (cancel) {
-            // There was an error; don't attempt login and focus the first
-            // form field with an error.
-            focusView.requestFocus();
-        } else {
+            if (cancel) {
+                // There was an error; don't attempt login and focus the first
+                // form field with an error.
+                focusView.requestFocus();
+            } else {
 
-            logarNutricionista(email,Long.parseLong(password));
-            getUsuario(email,"");
+                logarNutricionista(email, Long.parseLong(password));
+                getUsuario(email, "");
 
-            //Add email e nome nas Preferences
+                //Add email e nome nas Preferences
 
-            editor.remove("nome");
-            editor.remove("email");
-            editor.remove("nutricionista");
-            editor.commit();
-           // editor.putString("nome", name);
-            editor.putString("email", email);
-            editor.putBoolean("nutricionista",true);
-            editor.commit();
+                editor.remove("nome");
+                editor.remove("email");
+                editor.remove("nutricionista");
+                editor.commit();
+                // editor.putString("nome", name);
+                editor.putString("email", email);
+                editor.putBoolean("nutricionista", true);
+                editor.commit();
 
-            // Show a progress spinner, and kick off a background task to
-            // perform the user login attempt.
-            barraProgresso.showProgress(true,mProgressView);
-            //mAuthTask = new UserLoginTask(email, password);
-            // mAuthTask.execute((Void) null);
-            intent = new Intent(LoginActivity.this, MainActivity.class);
-            startActivity(intent);
-            finish();
+                // Show a progress spinner, and kick off a background task to
+                // perform the user login attempt.
+                barraProgresso.showProgress(true, mProgressView);
+                //mAuthTask = new UserLoginTask(email, password);
+                // mAuthTask.execute((Void) null);
+                intent = new Intent(LoginActivity.this, MainActivity.class);
+                startActivity(intent);
+                finish();
+            }
         }
     }
 
@@ -271,11 +277,10 @@ public class LoginActivity extends AppCompatActivity implements LoaderCallbacks<
     }
 
     private boolean isPasswordValid(String password) {
-        //TODO: Replace this with your own logic
-       boolean retorno = false;
+        boolean retorno = false;
 
-       if( password.contains("^[0-9]*$"))
-           retorno = true;
+        if (password.contains("^[0-9]*$"))
+            retorno = true;
 
         return retorno;
     }
@@ -374,7 +379,7 @@ public class LoginActivity extends AppCompatActivity implements LoaderCallbacks<
         @Override
         protected void onPostExecute(final Boolean success) {
             mAuthTask = null;
-            barraProgresso.showProgress(false,mProgressView);
+            barraProgresso.showProgress(false, mProgressView);
 
             if (success) {
                 finish();
@@ -387,37 +392,37 @@ public class LoginActivity extends AppCompatActivity implements LoaderCallbacks<
         @Override
         protected void onCancelled() {
             mAuthTask = null;
-            barraProgresso.showProgress(false,mProgressView);
+            barraProgresso.showProgress(false, mProgressView);
         }
     }
 
-    private void logarFacebook(){
+    private void logarFacebook() {
         boolean loggedIn;
         AccessToken.getCurrentAccessToken();
         if (Profile.getCurrentProfile() != null) {
-            loggedIn= true;
-        }else{
+            loggedIn = true;
+        } else {
             loggedIn = false;
         }
 
         intent = new Intent(this, MainActivity.class);
-        if(loggedIn){
+        if (loggedIn) {
 
             finish();
             startActivity(intent);
-            Toast.makeText(LoginActivity.this, "Olá ".concat(Profile.getCurrentProfile().getFirstName()) , Toast.LENGTH_SHORT).show();
+            Toast.makeText(LoginActivity.this, "Olá ".concat(Profile.getCurrentProfile().getFirstName()), Toast.LENGTH_SHORT).show();
         }
 
         loginButton.setReadPermissions(Arrays.asList("email", "public_profile"));
 
         // AppEventsLogger.activateApp(this);
-        callbackManager  = CallbackManager.Factory.create();
+        callbackManager = CallbackManager.Factory.create();
         // Callback registration
         loginButton.registerCallback(callbackManager, new FacebookCallback<LoginResult>() {
             @Override
             public void onSuccess(LoginResult loginResult) {
-                if(Profile.getCurrentProfile() != null){
-                    Toast.makeText(LoginActivity.this, "Olá ".concat(Profile.getCurrentProfile().getFirstName()) , Toast.LENGTH_SHORT).show();
+                if (Profile.getCurrentProfile() != null) {
+                    Toast.makeText(LoginActivity.this, "Olá ".concat(Profile.getCurrentProfile().getFirstName()), Toast.LENGTH_SHORT).show();
                 }
 
                 // Facebook Email address
@@ -434,7 +439,7 @@ public class LoginActivity extends AppCompatActivity implements LoaderCallbacks<
                                     final String name = object.getString("name");
                                     final String email = object.getString("email");
                                     //verifica se ja existe um usuario com esse email se não existir realiza o cadastro
-                                    getUsuario(email,name);
+                                    getUsuario(email, name);
 
                                 } catch (JSONException e) {
                                     e.printStackTrace();
@@ -467,7 +472,7 @@ public class LoginActivity extends AppCompatActivity implements LoaderCallbacks<
 
     }
 
-    private void getUsuario(final String email,final String name){
+    private void getUsuario(final String email, final String name) {
         //Salva usuario e Email nas preferencias
 
         editor.remove("nome");
@@ -476,10 +481,10 @@ public class LoginActivity extends AppCompatActivity implements LoaderCallbacks<
         editor.commit();
         editor.putString("nome", name);
         editor.putString("email", email);
-        editor.putBoolean("nutricionista",false);
+        editor.putBoolean("nutricionista", false);
         editor.commit();
 
-        email.replace("@","%40");
+        email.replace("@", "%40");
         Call<List<UsuarioBean>> call = new RetrofitConfig().getRestInterface().getUsuarioEmail(email);
         call.enqueue(new Callback<List<UsuarioBean>>() {
             @Override
@@ -488,9 +493,9 @@ public class LoginActivity extends AppCompatActivity implements LoaderCallbacks<
                 if (response.isSuccessful()) {
 
                     usuario = response.body();
-                    if (usuario.size() == 0){
-                        cadastraUsuario(name,email);
-                       // Toast.makeText(LoginActivity.this,"Email 1:"+ usuario.get(0).getEmail(), Toast.LENGTH_SHORT).show();
+                    if (usuario.size() == 0) {
+                        cadastraUsuario(name, email);
+                        // Toast.makeText(LoginActivity.this,"Email 1:"+ usuario.get(0).getEmail(), Toast.LENGTH_SHORT).show();
                     }
 
 
@@ -506,11 +511,11 @@ public class LoginActivity extends AppCompatActivity implements LoaderCallbacks<
         });
     }
 
-    private void logarNutricionista(final String email,final long nif){
+    private void logarNutricionista(final String email, final long nif) {
 
 
-        email.replace("@","%40");
-        Call<List<NutricionistaBean>> call = new RetrofitConfig().getRestInterface().logarNutricionista(email,nif);
+        email.replace("@", "%40");
+        Call<List<NutricionistaBean>> call = new RetrofitConfig().getRestInterface().logarNutricionista(email, nif);
         call.enqueue(new Callback<List<NutricionistaBean>>() {
             @Override
             public void onResponse(Call<List<NutricionistaBean>> call, Response<List<NutricionistaBean>> response) {
@@ -518,9 +523,9 @@ public class LoginActivity extends AppCompatActivity implements LoaderCallbacks<
                 if (response.isSuccessful()) {
 
                     nutricionista = response.body();
-                    if (nutricionista.size() == 0){
+                    if (nutricionista.size() == 0) {
                         //cadastraUsuario(name,email);
-                         Toast.makeText(LoginActivity.this,"Email 1:"+ nutricionista.get(0).getEmail(), Toast.LENGTH_SHORT).show();
+                        Toast.makeText(LoginActivity.this, "Email 1:" + nutricionista.get(0).getEmail(), Toast.LENGTH_SHORT).show();
                     }
 
                 }
@@ -534,9 +539,10 @@ public class LoginActivity extends AppCompatActivity implements LoaderCallbacks<
 
         });
     }
-    private void cadastraUsuario(final String name, final String email){
+
+    private void cadastraUsuario(final String name, final String email) {
         Call<ResponseBody> call2 = new RetrofitConfig().getRestInterface().cadastraUsuario(new UsuarioBean(name
-                ,email));
+                , email));
 
         call2.enqueue(new Callback<ResponseBody>() {
             @Override

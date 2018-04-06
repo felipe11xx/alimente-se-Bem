@@ -12,7 +12,7 @@ public class NoticiaBean {
     private String titulo;
     private String headline;
     private String descricao;
-    private Date data_criacao;
+    private Date data_Criacao;
     private CategoriaNoticiaBean categoria;
     private String imagem;
 
@@ -54,11 +54,11 @@ public class NoticiaBean {
     }
 
     public Date getData_criacao() {
-        return data_criacao;
+        return data_Criacao;
     }
 
-    public void setData_criacao(Date data_criacao) {
-        this.data_criacao = data_criacao;
+    public void setData_criacao(Date data_Criacao) {
+        this.data_Criacao = data_Criacao;
     }
 
     public CategoriaNoticiaBean getCategoria() {

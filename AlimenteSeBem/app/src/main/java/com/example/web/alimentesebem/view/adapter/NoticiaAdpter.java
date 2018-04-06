@@ -9,7 +9,7 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ImageView;
 import android.widget.TextView;
-import android.widget.Toast;
+
 
 import com.example.web.alimentesebem.R;
 import com.example.web.alimentesebem.model.NoticiaBean;
@@ -43,7 +43,7 @@ public class NoticiaAdpter extends RecyclerView.Adapter implements AdapterInterf
         View view = LayoutInflater.from(context)
                 .inflate(R.layout.detalhe_noticias, parent,false);
 
-        NoticiaViewHolder holder = new NoticiaViewHolder(view,this);
+        NoticiaViewHolder holder = new NoticiaViewHolder(view);
 
         return holder;
     }
@@ -52,12 +52,8 @@ public class NoticiaAdpter extends RecyclerView.Adapter implements AdapterInterf
     public void onBindViewHolder(RecyclerView.ViewHolder holder, int position) {
 
         NoticiaBean noticiaBean = listaNoticias.get(position);
-        try{
-            ((NoticiaViewHolder)holder).preencher(noticiaBean);
-        }catch (Exception e){
-            Toast.makeText(context, "Falha ao trazer noticia", Toast.LENGTH_LONG).show();
-        }
 
+            ((NoticiaViewHolder)holder).preencher(noticiaBean);
 
     }
 
@@ -83,18 +79,16 @@ public class NoticiaAdpter extends RecyclerView.Adapter implements AdapterInterf
     }
 
     public class NoticiaViewHolder extends RecyclerView.ViewHolder implements View.OnClickListener {
-        public final TextView tvTitulo;
-        public final TextView tvConteudo;
-        public final TextView tvPublicacao;
-        public final ImageView imgCapa;
+        private final TextView tvTitulo;
+        private final TextView tvConteudo;
+        private final TextView tvPublicacao;
+        private final ImageView imgCapa;
         private Long noticiaId;
-        public final NoticiaAdpter adpter;
-        public DateFormat dtFmt =  DateFormat.getDateInstance(DateFormat.LONG,new Locale("pt","BR"));
 
-        public NoticiaViewHolder(final View view, final NoticiaAdpter adpter) {
+        private DateFormat dtFmt =  DateFormat.getDateInstance(DateFormat.LONG,new Locale("pt","BR"));
+
+        private NoticiaViewHolder(final View view) {
             super(view);
-
-            this.adpter = adpter;
 
             view.setOnClickListener(this);
 
@@ -111,13 +105,14 @@ public class NoticiaAdpter extends RecyclerView.Adapter implements AdapterInterf
 
         }
 
-        public void preencher(NoticiaBean noticiaBean) throws Exception{
+        private void preencher(NoticiaBean noticiaBean) {
 
             noticiaId = noticiaBean.getId();
             tvTitulo.setText(noticiaBean.getTitulo());
             tvConteudo.setText(noticiaBean.getDescricao());
             tvPublicacao.setText(dtFmt.format(noticiaBean.getData_criacao()) );
             Picasso.with(context).load(noticiaBean.getImagem()).into(imgCapa);
+            imgCapa.setAdjustViewBounds(true);
 
         }
 
