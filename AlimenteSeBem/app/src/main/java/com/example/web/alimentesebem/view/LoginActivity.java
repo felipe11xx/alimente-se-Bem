@@ -38,6 +38,7 @@ import java.util.Arrays;
 import java.util.List;
 
 import com.example.web.alimentesebem.R;
+import com.example.web.alimentesebem.model.NutricionistaBean;
 import com.example.web.alimentesebem.model.UsuarioBean;
 import com.example.web.alimentesebem.rest.config.RetrofitConfig;
 import com.facebook.AccessToken;
@@ -94,6 +95,9 @@ public class LoginActivity extends AppCompatActivity implements LoaderCallbacks<
     private LoginButton loginButton;
     private CallbackManager callbackManager;
     private List<UsuarioBean> usuario;
+    private List<NutricionistaBean> nutricionista;
+    private SharedPreferences preferencesPut;
+    private SharedPreferences.Editor editor;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -128,14 +132,14 @@ public class LoginActivity extends AppCompatActivity implements LoaderCallbacks<
                 attemptLogin();
             }
         });
-        Button btnCadastrar = findViewById(R.id.btn_cadastrar);
+   /*     Button btnCadastrar = findViewById(R.id.btn_cadastrar);
         btnCadastrar.setOnClickListener(new OnClickListener() {
 
             public void onClick(View v) {
                 intent = new Intent(getApplicationContext(), CadastroActivity.class);
                 startActivity(intent);
             }
-        });
+        });*/
         mProgressView = findViewById(R.id.login_progress);
 
         tvLogo = findViewById(R.id.tv_logo_alimente_se);
@@ -144,6 +148,8 @@ public class LoginActivity extends AppCompatActivity implements LoaderCallbacks<
         tvLogo.setTypeface(typeFont);
         typeFont = Typeface.createFromAsset(getAssets(),"fonts/Gotham_Condensed_Bold.otf");
         tvRealiza.setTypeface(typeFont);
+        preferencesPut = getSharedPreferences("KEY", getApplicationContext().MODE_PRIVATE);
+        editor  = preferencesPut.edit();
 
     }
 
@@ -212,12 +218,7 @@ public class LoginActivity extends AppCompatActivity implements LoaderCallbacks<
         boolean cancel = false;
         View focusView = null;
 
-        // Check for a valid password, if the user entered one.
-        if (!TextUtils.isEmpty(password) && !isPasswordValid(password)) {
-            mPasswordView.setError(getString(R.string.erro_senha_incorreta));
-            focusView = mPasswordView;
-            cancel = true;
-        }else if (TextUtils.isEmpty(password)){
+        if (TextUtils.isEmpty(password)){
             mPasswordView.setError(getString(R.string.erro_senha_n_preechida));
             focusView = mPasswordView;
             cancel = true;
@@ -238,10 +239,25 @@ public class LoginActivity extends AppCompatActivity implements LoaderCallbacks<
             // form field with an error.
             focusView.requestFocus();
         } else {
+
+            logarNutricionista(email,Long.parseLong(password));
+            getUsuario(email,"");
+
+            //Add email e nome nas Preferences
+
+            editor.remove("nome");
+            editor.remove("email");
+            editor.remove("nutricionista");
+            editor.commit();
+           // editor.putString("nome", name);
+            editor.putString("email", email);
+            editor.putBoolean("nutricionista",true);
+            editor.commit();
+
             // Show a progress spinner, and kick off a background task to
             // perform the user login attempt.
             barraProgresso.showProgress(true,mProgressView);
-            mAuthTask = new UserLoginTask(email, password);
+            //mAuthTask = new UserLoginTask(email, password);
             // mAuthTask.execute((Void) null);
             intent = new Intent(LoginActivity.this, MainActivity.class);
             startActivity(intent);
@@ -256,7 +272,12 @@ public class LoginActivity extends AppCompatActivity implements LoaderCallbacks<
 
     private boolean isPasswordValid(String password) {
         //TODO: Replace this with your own logic
-        return password.length() >= 8;
+       boolean retorno = false;
+
+       if( password.contains("^[0-9]*$"))
+           retorno = true;
+
+        return retorno;
     }
 
     @Override
@@ -448,13 +469,14 @@ public class LoginActivity extends AppCompatActivity implements LoaderCallbacks<
 
     private void getUsuario(final String email,final String name){
         //Salva usuario e Email nas preferencias
-        SharedPreferences preferencesPut = getSharedPreferences("KEY", getApplicationContext().MODE_PRIVATE);
-        SharedPreferences.Editor editor = preferencesPut.edit();
+
         editor.remove("nome");
         editor.remove("email");
+        editor.remove("nutricionista");
         editor.commit();
         editor.putString("nome", name);
         editor.putString("email", email);
+        editor.putBoolean("nutricionista",false);
         editor.commit();
 
         email.replace("@","%40");
@@ -484,6 +506,34 @@ public class LoginActivity extends AppCompatActivity implements LoaderCallbacks<
         });
     }
 
+    private void logarNutricionista(final String email,final long nif){
+
+
+        email.replace("@","%40");
+        Call<List<NutricionistaBean>> call = new RetrofitConfig().getRestInterface().logarNutricionista(email,nif);
+        call.enqueue(new Callback<List<NutricionistaBean>>() {
+            @Override
+            public void onResponse(Call<List<NutricionistaBean>> call, Response<List<NutricionistaBean>> response) {
+
+                if (response.isSuccessful()) {
+
+                    nutricionista = response.body();
+                    if (nutricionista.size() == 0){
+                        //cadastraUsuario(name,email);
+                         Toast.makeText(LoginActivity.this,"Email 1:"+ nutricionista.get(0).getEmail(), Toast.LENGTH_SHORT).show();
+                    }
+
+                }
+            }
+
+            @Override
+            public void onFailure(Call<List<NutricionistaBean>> call, Throwable t) {
+                Toast.makeText(LoginActivity.this, t.getMessage(), Toast.LENGTH_SHORT).show();
+                Log.d("LoginActivity 1", t.getMessage());
+            }
+
+        });
+    }
     private void cadastraUsuario(final String name, final String email){
         Call<ResponseBody> call2 = new RetrofitConfig().getRestInterface().cadastraUsuario(new UsuarioBean(name
                 ,email));

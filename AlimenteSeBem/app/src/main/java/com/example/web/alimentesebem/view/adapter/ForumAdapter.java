@@ -9,7 +9,6 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.TextView;
-import android.widget.Toast;
 
 import com.example.web.alimentesebem.R;
 import com.example.web.alimentesebem.model.CategoriaForumBean;
@@ -96,7 +95,7 @@ public class ForumAdapter extends RecyclerView.Adapter implements AdapterInterfa
             view.setOnClickListener(this);
 
             tvTitulo = view.findViewById(R.id.tv_titulo_forum);
-            tvAutor = view.findViewById(R.id.tv_autor);
+            tvAutor = view.findViewById(R.id.tv_autor_noticia);
             tvCategoria = view.findViewById(R.id.tv_categoria_forum);
             tvDataAbertura = view.findViewById(R.id.tv_data_forum);
             tvLblAutor = view.findViewById(R.id.tv_lbl_autor);

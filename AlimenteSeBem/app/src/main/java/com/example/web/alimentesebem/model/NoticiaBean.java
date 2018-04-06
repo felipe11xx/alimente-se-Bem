@@ -12,20 +12,13 @@ public class NoticiaBean {
     private String titulo;
     private String headline;
     private String descricao;
-    private Date data_Criacao;
+    private Date data_criacao;
     private CategoriaNoticiaBean categoria;
-    private byte[] capa;
+    private String imagem;
 
 
-    public NoticiaBean(long id) {
+    public NoticiaBean(Long id) {
         this.id = id;
-    }
-
-    public NoticiaBean(Long id, String titulo, Date data_Criacao) {
-        this.id = id;
-        this.titulo = titulo;
-        this.data_Criacao = data_Criacao;
-
     }
 
     public Long getId() {
@@ -60,24 +53,12 @@ public class NoticiaBean {
         this.descricao = descricao;
     }
 
-    public NoticiaBean(){
-
+    public Date getData_criacao() {
+        return data_criacao;
     }
 
-    public Date getDataPublica() {
-        return data_Criacao;
-    }
-
-    public void setDataPublica(Date dataPublica) {
-        this.data_Criacao = dataPublica;
-    }
-
-    public byte[] getCapa() {
-        return capa;
-    }
-
-    public void setCapa(byte[] capa) {
-        this.capa = capa;
+    public void setData_criacao(Date data_criacao) {
+        this.data_criacao = data_criacao;
     }
 
     public CategoriaNoticiaBean getCategoria() {
@@ -86,5 +67,13 @@ public class NoticiaBean {
 
     public void setCategoria(CategoriaNoticiaBean categoria) {
         this.categoria = categoria;
+    }
+
+    public String getImagem() {
+        return imagem;
+    }
+
+    public void setImagem(String imagem) {
+        this.imagem = imagem;
     }
 }

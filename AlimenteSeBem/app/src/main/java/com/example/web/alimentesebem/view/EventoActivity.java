@@ -162,11 +162,12 @@ public class EventoActivity extends AppCompatActivity {
       /*  if (obj.getCapa() != null) {
             imgCapaEvento.setImageBitmap();
         }*/
-        Picasso.with(getApplicationContext()).load("http://i.imgur.com/DvpvklR.png").into(imgCapaEvento);
+        Picasso.with(getApplicationContext()).load(obj.getUrl_Imagem()).into(imgCapaEvento);
         // Obtem a 1ª letra do nome da pessoa e converte para Maiuscula
         String dia = dtFmt.format(obj.getData_Evento()).substring(0, 2);
         String mes = dtFmt.format(obj.getData_Evento()).substring(5, 9).toUpperCase().trim();
-        String diaMes = dia + " " + mes;
+
+        String diaMes = dia + " " + mes.substring(0,3);
         // Cria um bitmap contendo Dia e mês
         Bitmap bitmap = Utilitarios.circularBitmapAndText(
                 Color.parseColor("#ef8219"), 150, 150, diaMes, 40);

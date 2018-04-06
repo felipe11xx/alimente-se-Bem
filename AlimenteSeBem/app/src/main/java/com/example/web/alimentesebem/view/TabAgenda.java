@@ -65,7 +65,6 @@ public class TabAgenda extends Fragment {
         return rootView;
     }
 
-
     private void acessaServidor(){
         Call<List<AgendaBean>> call = new RetrofitConfig().getRestInterface().listarEventos();
         call.enqueue(new Callback<List<AgendaBean>>() {

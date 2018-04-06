@@ -16,7 +16,7 @@ public class AgendaBean {
     private UnidadeBean unidades_Sesi;
     private Date data_Evento;
     private String horario;
-    private byte[] capa;
+    private String url_Imagem;
     private String tag;
     private CategoriaAgendaBean categoria;
     private double preco;
@@ -27,16 +27,6 @@ public class AgendaBean {
         this.id = id;
     }
 
-    public AgendaBean(Long id, String titulo, String descricao, UnidadeBean unidades_Sesi, Date data_Evento, String horario, double preco) {
-        this.id = id;
-        this.titulo = titulo;
-        this.descricao = descricao;
-        this.unidades_Sesi = unidades_Sesi;
-        this.data_Evento = data_Evento;
-        this.horario = horario;
-        this.preco = preco;
-
-    }
 
     public Long getId() {
         return id;
@@ -66,7 +56,7 @@ public class AgendaBean {
         return unidades_Sesi;
     }
 
-    public void setUnidades_Sesi(String local) {
+    public void setUnidades_Sesi(UnidadeBean unidades_Sesi) {
         this.unidades_Sesi = unidades_Sesi;
     }
 
@@ -74,8 +64,8 @@ public class AgendaBean {
         return data_Evento;
     }
 
-    public void setData_Evento(Date data) {
-        this.data_Evento = data;
+    public void setData_Evento(Date data_Evento) {
+        this.data_Evento = data_Evento;
     }
 
     public String getHorario() {
@@ -86,28 +76,20 @@ public class AgendaBean {
         this.horario = horario;
     }
 
-    public byte[] getCapa() {
-        return capa;
+    public String getUrl_Imagem() {
+        return url_Imagem;
     }
 
-    public void setCapa(byte[] capa) {
-        this.capa = capa;
+    public void setUrl_Imagem(String url_Imagem) {
+        this.url_Imagem = url_Imagem;
     }
 
     public String getTags() {
         return tag;
     }
 
-    public void setTags(String tags) {
-        this.tag = tags;
-    }
-
-    public double getPreco() {
-        return preco;
-    }
-
-    public void setPreco(double preco) {
-        this.preco = preco;
+    public void setTags(String tag) {
+        this.tag = tag;
     }
 
     public CategoriaAgendaBean getCategoria() {
@@ -118,4 +100,11 @@ public class AgendaBean {
         this.categoria = categoria;
     }
 
+    public double getPreco() {
+        return preco;
+    }
+
+    public void setPreco(double preco) {
+        this.preco = preco;
+    }
 }

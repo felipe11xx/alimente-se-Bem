@@ -4,7 +4,6 @@ import android.content.Context;
 import android.content.Intent;
 import android.graphics.Typeface;
 import android.support.v7.widget.RecyclerView;
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -15,6 +14,7 @@ import android.widget.Toast;
 import com.example.web.alimentesebem.R;
 import com.example.web.alimentesebem.model.NoticiaBean;
 import com.example.web.alimentesebem.view.NoticiaActivity;
+import com.squareup.picasso.Picasso;
 
 import java.text.DateFormat;
 import java.util.ArrayList;
@@ -99,7 +99,7 @@ public class NoticiaAdpter extends RecyclerView.Adapter implements AdapterInterf
             view.setOnClickListener(this);
 
             tvTitulo = view.findViewById(R.id.tv_titulo_forum);
-            tvConteudo = view.findViewById(R.id.tv_autor);
+            tvConteudo = view.findViewById(R.id.tv_autor_noticia);
             tvPublicacao = view.findViewById(R.id.tv_data_noticia);
             imgCapa = view.findViewById(R.id.img_capa_noticia);
 
@@ -116,7 +116,9 @@ public class NoticiaAdpter extends RecyclerView.Adapter implements AdapterInterf
             noticiaId = noticiaBean.getId();
             tvTitulo.setText(noticiaBean.getTitulo());
             tvConteudo.setText(noticiaBean.getDescricao());
-            tvPublicacao.setText(dtFmt.format(noticiaBean.getDataPublica()) );
+            tvPublicacao.setText(dtFmt.format(noticiaBean.getData_criacao()) );
+            Picasso.with(context).load(noticiaBean.getImagem()).into(imgCapa);
+
         }
 
 

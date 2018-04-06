@@ -27,6 +27,9 @@ public interface RestInterface {
     @GET("Noticias")
     Call<List<NoticiaBean>> listarNoticias();
 
+    @GET("Noticias/{id}")
+    Call<NoticiaBean> getNoticia(@Path("id") Long id);
+
     @GET("Agenda")
     Call<List<AgendaBean>> listarEventos();
 
@@ -44,6 +47,10 @@ public interface RestInterface {
 
     @GET("Nutricionistas/{id}")
     Call<NutricionistaBean> getNutricionista(@Path("id") Long id);
+
+    @GET("Nutricionistas/Login")
+    Call<List<NutricionistaBean>> logarNutricionista( @Query("email") String email,
+                                                @Query("nif") Long nif);
 
     @GET("Categorias_Forum/{id}")
     Call<CategoriaForumBean> getCategoriaForum(@Path("id") Long id);

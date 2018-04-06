@@ -1,6 +1,7 @@
 package com.example.web.alimentesebem.view.adapter;
 
 import android.content.Context;
+import android.content.SharedPreferences;
 import android.graphics.Typeface;
 import android.support.v7.widget.RecyclerView;
 import android.util.Log;
@@ -88,6 +89,7 @@ public class ComentarioTopicoAdpter extends RecyclerView.Adapter {
         private long comentarioId;
         private DateFormat dtFmt = DateFormat.getDateInstance(DateFormat.LONG);
         private UsuarioBean usuario;
+        private SharedPreferences preferencesGet;
 
         public ComentarioTopicoViewHolder(View itemView) {
 
@@ -111,6 +113,7 @@ public class ComentarioTopicoAdpter extends RecyclerView.Adapter {
             getUsuario(comentario.getId_user());
             tvComentario.setText(comentario.getDescricao());
             tvData.setText(dtFmt.format(comentario.getData_criacao()));
+
         }
 
 

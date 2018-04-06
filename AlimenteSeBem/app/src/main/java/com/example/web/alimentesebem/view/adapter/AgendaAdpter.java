@@ -141,16 +141,15 @@ public class AgendaAdpter extends RecyclerView.Adapter implements AdapterInterfa
             String horario = String.valueOf(obj.getData_Evento());
             tvHorario.setText(horario.substring(11,16));
 
-            Picasso.with(context).load("http://i.imgur.com/DvpvklR.png").into(imgCapaEvento);
+            Picasso.with(context).load(obj.getUrl_Imagem()).into(imgCapaEvento);
             imgCapaEvento.setAdjustViewBounds(true);
             // Cria um bitmap contendo o dia e Mês
             String dia = dtFmt.format(obj.getData_Evento()).substring(0,2);
             String mes = dtFmt.format(obj.getData_Evento()).substring(5,9).toUpperCase().trim();
-            String diaMes = dia + " " + mes;
+            String diaMes = dia + " " + mes.substring(0,3);
             Bitmap bitmap = Utilitarios.circularBitmapAndText(
                     Color.parseColor("#ef8219"), 150, 150,diaMes,40 );
             imgData.setImageBitmap(bitmap);
-
 
         }
 
