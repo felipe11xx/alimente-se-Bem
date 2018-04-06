@@ -121,10 +121,7 @@ public class LoginActivity extends AppCompatActivity implements LoaderCallbacks<
                 return false;
             }
         });
-
-        mEmailView.setText("naty@sesi.com");
-        mPasswordView.setText("1255");
-
+        
         logarFacebook();
 
         Button mEmailSignInButton = (Button) findViewById(R.id.btn_logar);
