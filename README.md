@@ -1,2 +1,2 @@
 # alimente-se-Bem
-<b>Projeto para aumentar </b> o </br>engajamento de pessoas em nutrição e alimentação saudável para o Sesi-SP 
+<p>Projeto para aumentar  o engajamento de pessoas em nutrição e alimentação saudável para o Sesi-SP </p>
